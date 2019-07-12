@@ -22,14 +22,42 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          {
+            loader: "style-loader",
+            options: {
+              hmr: true
+            }
+          },
+          "css-loader"
+        ]
       },
       {
         test: /\.scss$/,
         use: [
-          "style-loader", // creates style nodes from JS strings
+          {
+            loader: "style-loader",
+            options:{
+              hmr:true
+            }
+          },
           "css-loader", // translates CSS into CommonJS
-          "sass-loader" // compiles Sass to CSS, using Node Sass by default
+          {
+            loader:"postcss-loader",
+            options:{
+              ident:"postcss",
+              sourceMap:true,
+              plugins: [
+								require('autoprefixer'),
+							]
+            }
+          },
+          {
+            loader:"sass-loader",
+            options:{
+              sourceMap:true
+            }
+          }
         ]
       }
     ]

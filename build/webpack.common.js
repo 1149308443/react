@@ -5,7 +5,6 @@ const webpack = require("webpack");
 
 module.exports = {
   entry: {
-    // polyfill: "@/entry/polyfill.js",
     index: "@/entry/index.js"
   },
   output: {
@@ -15,6 +14,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
+      title:"react",
       template: "./src/entry/index.html",
       minify: {
         //是否去除空格，默认false

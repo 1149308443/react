@@ -1,13 +1,13 @@
-const merge = require("webpack-merge");
-const common = require("./webpack.common.js");
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-  mode: "development",
-  devtool: "inline-source-map",
+  mode: 'development',
+  devtool: 'inline-source-map',
   devServer: {
     hot: true,
-    historyApiFallback: true, //页面出错不会弹出 404 页面。
-    compress: true, //开启虚拟服务器时，为你的代码进行压缩
+    historyApiFallback: true, // 页面出错不会弹出 404 页面。
+    compress: true, // 开启虚拟服务器时，为你的代码进行压缩
     port: 8080
     // open:true
     // proxy:{
@@ -24,38 +24,38 @@ module.exports = merge(common, {
         test: /\.css$/,
         use: [
           {
-            loader: "style-loader",
+            loader: 'style-loader',
             options: {
               hmr: true
             }
           },
-          "css-loader"
+          'css-loader'
         ]
       },
       {
         test: /\.scss$/,
         use: [
           {
-            loader: "style-loader",
-            options:{
-              hmr:true
+            loader: 'style-loader',
+            options: {
+              hmr: true
             }
           },
-          "css-loader", // translates CSS into CommonJS
+          'css-loader', // translates CSS into CommonJS
           {
-            loader:"postcss-loader",
-            options:{
-              ident:"postcss",
-              sourceMap:true,
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              sourceMap: true,
               plugins: [
-								require('autoprefixer'),
-							]
+                require('autoprefixer')
+              ]
             }
           },
           {
-            loader:"sass-loader",
-            options:{
-              sourceMap:true
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
             }
           }
         ]

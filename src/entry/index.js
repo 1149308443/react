@@ -1,7 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
+import ReactDom from 'react-dom';
+import Router from '../routes';
 
-ReactDOM.render(
-  <h1>Hello, world! 1232213</h1>,
-  document.getElementById('root'),
-);
+class App extends Component {
+  componentDidMount() {}
+
+  render() {
+    return (
+      <div>
+        <Router />
+      </div>
+    );
+  }
+}
+
+export default App;
+
+ReactDom.render(<App />, document.getElementById('root'));

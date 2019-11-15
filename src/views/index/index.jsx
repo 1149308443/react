@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
-export default class Detial extends Component {
+export default class Index extends Component {
   componentDidMount() {}
 
   render() {
     return (
       <div>
-        <a>去index</a>
+        <NavLink to="/detail">去detail</NavLink>
       </div>
     );
   }

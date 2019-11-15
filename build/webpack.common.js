@@ -31,7 +31,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.vue', '.json', '.css', '.scss', '.html'],
+    extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.scss', '.html'],
     alias: {
       '@': path.resolve(__dirname, '../src')
     }
@@ -48,7 +48,7 @@ module.exports = {
       //   }
       // },
       {
-        test: /\.m?js$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         options: {

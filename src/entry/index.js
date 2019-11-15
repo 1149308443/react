@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDom from 'react-dom';
 import Router from '../routes';
 
-class App extends Component {
-  componentDidMount() {}
+const renderDom = () => {
+  ReactDom.render(
+    <div>
+      <Router />
+    </div>,
+    document.getElementById('root')
+  );
+};
 
-  render() {
-    return (
-      <div>
-        <Router />
-      </div>
-    );
-  }
+if (module.hot) {
+  // enable HMR
+  module.hot.accept('../routes', () => renderDom());
 }
 
-export default App;
-
-ReactDom.render(<App />, document.getElementById('root'));
+renderDom();

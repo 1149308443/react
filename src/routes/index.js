@@ -12,8 +12,14 @@ const BasicRoute = () => (
     <Router history={history}>
       <Switch>
         <Route exact path="/" component={Index} />
-        <Route exact path="/detail" component={Detail} />
-        <Route exact path="/nofind" component={NoFind} />
+        <Route
+          path="/detail"
+          render={() => (
+            <Detail>
+              <Route path="/detail/nofind" component={NoFind} />
+            </Detail>
+          )}
+        />
       </Switch>
     </Router>
   </BrowserRouter>

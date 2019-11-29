@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import Router from '../routes';
+
+import todoApp from '../views/index/reducer';
+
+const store = createStore(todoApp);
 
 const renderDom = () => {
   ReactDom.render(
-    <div>
+    <Provider store={store}>
       <Router />
-    </div>,
+    </Provider>,
     document.getElementById('root')
   );
 };

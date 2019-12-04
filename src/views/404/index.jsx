@@ -1,15 +1,15 @@
-import React,{PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import { NavLink } from 'react-router-dom';
 
 class NoFound extends PureComponent {
-    componentDidMount() {}
+  componentDidMount() {}
 
-    render() {
-        return (
-        <div>
-            <NavLink to="/">404</NavLink>
-        </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <NavLink to="/">404</NavLink>
+      </div>
+    );
+  }
 }
 export default NoFound;

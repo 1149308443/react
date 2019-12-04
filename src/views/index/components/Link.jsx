@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const Link = ({ active, children, onClick }) => {
   if (active) {
     return <span>{children}</span>;
   }
+  const [count, setCount] = useState(1);
 
   return (
     <a
@@ -15,6 +16,15 @@ const Link = ({ active, children, onClick }) => {
       }}
     >
       {children}
+      <br />
+      <span onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setCount(count + 1);
+      }}
+      >
+        {count}
+      </span>
     </a>
   );
 };

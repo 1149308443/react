@@ -10,7 +10,6 @@ export default class Detial extends PureComponent {
         <NavLink to="/">去index</NavLink>
         <br />
         <NavLink to="/detail/nofind">nofind</NavLink>
-        {this.props.children || 'detail'}
       </div>
     );
   }

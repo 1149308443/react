@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { DatePicker, Button } from 'antd';
 import Footer from './components/Footer';
 import AddTodo from './containers/AddTodo';
 import VisibleTodoList from './containers/VisibleTodoList';
@@ -11,6 +12,8 @@ class Index extends Component {
   render() {
     return (
       <div className={style.container}>
+        <DatePicker />
+        <Button type="primary">121</Button>
         <div className={style.empty} />
         <div className={style.py} />
         <NavLink to="/detail">去detail</NavLink>

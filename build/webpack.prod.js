@@ -2,8 +2,12 @@ const webpack = require('webpack');
 // const path = require('path');
 const merge = require('webpack-merge');
 // const UglifyJSPlugin = require("uglifyjs-webpack-plugin");//好像不支持es6语法
+// 主要用于提取css
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// 主要用于css压缩、去重
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+// 压缩js
+const TerserPlugin = require('terser-webpack-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {

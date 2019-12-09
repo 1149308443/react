@@ -1,7 +1,9 @@
 const merge = require('webpack-merge');
+const path = require('path');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
+  // [会将 process.env.NODE_ENV 的值设置为 development. 启用 NamedChunksPlugin 和 NamedModulesPlugin]
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
@@ -13,6 +15,7 @@ module.exports = merge(common, {
     // proxy:{
     //     "/api": {
     //         target: urlEnv.api,
+    // 如果是https接口，需要配置这个参数为false
     //         secure: true,
     //         changeOrigin: true
     //     }
@@ -24,24 +27,23 @@ module.exports = merge(common, {
         test: /\.css$/,
         use: [
           {
-            loader: 'style-loader',
-            options: {
-              hmr: true
-            }
+            loader: 'style-loader'
           },
           'css-loader'
         ]
       },
       {
-        test: /\.scss$/,
+        test: /\.s(c|a)ss$/,
         use: [
+          'style-loader',
           {
-            loader: 'style-loader',
+            loader: 'css-loader',
             options: {
-              hmr: true
+              modules: {
+                localIdentName: '[local]_[sha1:hash:base64:5]'
+              }
             }
-          },
-          'css-loader', // translates CSS into CommonJS
+          }, // translates CSS into CommonJS
           {
             loader: 'postcss-loader',
             options: {

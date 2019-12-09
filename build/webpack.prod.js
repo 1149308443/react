@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 // const path = require('path');
 const merge = require('webpack-merge');
-// const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+// const UglifyJSPlugin = require("uglifyjs-webpack-plugin");//好像不支持es6语法
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const common = require('./webpack.common.js');

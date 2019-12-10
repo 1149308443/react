@@ -16,3 +16,14 @@
 1. 修改 .eslintrc.js 配置 "extends":"airbnb",
 
 1. 添加一下规则
+
+## css模块化
+1. 配置webpack css-loader;
+```
+	options: {
+		modules: {
+			localIdentName: '[local]_[sha1:hash:base64:5]'
+		}
+	}
+	```
+2. 如果需要覆盖其他库的样式入antd之类的需要 在:global中添加样式

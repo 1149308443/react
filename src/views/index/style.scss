@@ -1,7 +1,10 @@
 .container{
     background: pink;
-    .ant-btn-primary{
-        background-color:chocolate !important;
+   
+    :global{
+        .ant-btn-primary{
+            background-color:chocolate !important;
+        }
     }
     .empty{
         height: 30px;

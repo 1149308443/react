@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
@@ -19,6 +20,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'react',
       template: './src/entry/index.html',
+      filename: 'index.html',
       minify: {
         // 是否去除空格，默认false
         collapseWhitespace: true,
@@ -27,6 +29,14 @@ module.exports = {
         // 是否压缩html里的js（使用uglify-js进行的压缩）
         minifyJS: true
       }
+    }),
+    new HtmlWebpackTagsPlugin({
+      append: false,
+      files: ['index.html'],
+      tags: [
+        'css/normalize.css'
+      ],
+      publicPath: 'static'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
@@ -50,7 +60,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(j|t)s(x)?$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader'
         // options: {

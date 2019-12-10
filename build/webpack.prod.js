@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 // const path = require('path');
 const merge = require('webpack-merge');
-// const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+// 主要用于提取css
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const common = require('./webpack.common.js');
@@ -9,9 +9,6 @@ const common = require('./webpack.common.js');
 module.exports = merge(common, {
   mode: 'production',
   plugins: [
-    // new UglifyJSPlugin({
-    //   sourceMap: true
-    // }),
     // 样式分离
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash:5].css',
@@ -55,39 +52,55 @@ module.exports = merge(common, {
   optimization: {
     minimizer: [
       // 压缩css
-      new OptimizeCSSAssetsPlugin()
+      new OptimizeCSSAssetsPlugin({
+        cssProcessor: require('cssnano'), // 引入cssnano配置压缩选项
+        cssProcessorOptions: {
+          discardComments: { removeAll: true }
+        },
+        canPrint: true // 表示插件能够在console中打印信息，默认值是true
+      }),
+      // 压缩JS
+      new TerserPlugin({
+        sourceMap: false
+      })
     ],
+    // 代码分离
     splitChunks: {
-      //   chunks: "all",
-      //   minSize: 30000,
-      //   minChunks: 1,
-      //   maxAsyncRequests: 5,
-      //   maxInitialRequests: 3,
-      //   name: true,
-      //   cacheGroups: {
-      //     styles: {
-      //       name: "style",
-      //       test: /\.(scss|css)$/,
-      //       chunks: "all",
-      //       enforce: true
-      //     }
-      //   }
-
-      //   cacheGroups: {
-      //     commons: {
-      //       test: /[\\/]node_modules[\\/]/,
-      //       // cacheGroupKey here is `commons` as the key of the cacheGroup
-      //       name(module, chunks, cacheGroupKey) {
-      //         const moduleFileName = module
-      //           .identifier()
-      //           .split("/")
-      //           .reduceRight(item => item);
-      //         const allChunksNames = chunks.map(item => item.name).join("~");
-      //         return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
-      //       },
-      //       chunks: "all"
-      //     }
-      //   }
+      // 这表示将选择哪些块进行优化。当提供一个字符串，有效值为 all, async 和 initial. 提供 all 可以特别强大，因为这意味着即使在异步和非异步块之间也可以共享块
+      chunks: 'all',
+      minSize: 30000,
+      minChunks: 1, // 分割前必须共享模块的最小块数
+      maxAsyncRequests: 5, // 按需加载时的最大并行请求数
+      maxInitialRequests: 3, // 入口点处的最大并行请求数
+      name: true,
+      cacheGroups: {
+        styles: {
+          name: '/js/chunk-style',
+          test: /\.(scss|css)$/,
+          chunks: 'all',
+          enforce: true
+        },
+        react: {
+          name: '/js/chunk-react',
+          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          priority: 10
+        },
+        antd: {
+          name: '/js/chunk-antd',
+          test: /[\\/]node_modules[\\/](antd)[\\/]/,
+          priority: 10 // 权重
+        },
+        // 默认配置
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10 // 权重
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
     }
   }
 });

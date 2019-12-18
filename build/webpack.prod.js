@@ -78,18 +78,18 @@ module.exports = merge(common, {
       name: true,
       cacheGroups: {
         styles: {
-          name: '/js/chunk-style',
+          name: 'chunk-style',
           test: /\.(scss|css)$/,
           chunks: 'all',
           enforce: true
         },
         react: {
-          name: '/js/chunk-react',
+          name: 'js/chunk-react',
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
           priority: 10
         },
         antd: {
-          name: '/js/chunk-antd',
+          name: 'js/chunk-antd',
           test: /[\\/]node_modules[\\/](antd)[\\/]/,
           priority: 10 // 权重
         },

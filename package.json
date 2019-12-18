@@ -60,8 +60,8 @@
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "build": "webpack --config ./build/webpack.prod.js",
-    "dev": "webpack-dev-server  --config ./build/webpack.dev.js",
+    "build": "webpack --progress --colors -p --config ./build/webpack.prod.js",
+    "dev": "webpack-dev-server --progress --colors  --config ./build/webpack.dev.js",
     "start": "npm run build && http-server dist"
   },
   "author": "wuweixing",

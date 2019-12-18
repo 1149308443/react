@@ -8,7 +8,9 @@ import Router from '../routes';
 
 import todoApp from '../views/index/reducer';
 
-const loggerMiddleware = createLogger();
+const loggerMiddleware = createLogger({
+  collapsed: true // 折叠日志组
+});
 
 const store = createStore(todoApp, applyMiddleware(
   thunkMiddleware, // 允许我们 dispatch() 函数

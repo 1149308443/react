@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
-import method from 'lodash/fromPairs';
+import method from 'lodash/intersection';
 import Footer from './components/Footer';
 import AddTodo from './containers/AddTodo';
 import VisibleTodoList from './containers/VisibleTodoList';
@@ -10,7 +10,7 @@ import * as style from './style.scss';
 class Index extends Component {
   componentDidMount() {
     const array = [['fred', 30, 44], ['barney', 40]];
-    const result = method(array, 1);
+    const result = method([2, 1], [4, 2], [1, 3]);
     console.log(result);
   }
 

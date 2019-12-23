@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 /**
  * @description Action Creators 生成器
  * @param {string} type
@@ -59,4 +61,21 @@ export const createReducer = (initialState, handlers) => (
     return handlers[action.type](state, action);
   }
   return state;
+};
+
+/**
+ * state 计算衍生器
+ * @param argNames
+ * @param callback
+ */
+export const makeCreateSelector = (argNames = [], callback) => {
+  const inputSelectors = argNames.map((item) => {
+    if (Object.prototype.toString.call(item) === '[object Function]') {
+      return item;
+    } if (Object.prototype.toString.call(item) === '[object String]') {
+      return (state) => state[item];
+    }
+    throw new Error('makeCreateSelector参数不是有效的值');
+  });
+  return createSelector(inputSelectors, callback);
 };

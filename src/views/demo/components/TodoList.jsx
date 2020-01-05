@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Todo from './Todo';
 
-const TodoList = ({ todos, onTodoClick }) => (
+const TodoList = ({ todos = [], onTodoClick }) => (
   <ul>
     {todos.map((todo, index) => (
       // eslint-disable-next-line react/jsx-props-no-spreading

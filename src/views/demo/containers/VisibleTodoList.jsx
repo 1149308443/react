@@ -1,8 +1,12 @@
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import { toggleTodo } from '../actions';
 import TodoList from '../components/TodoList';
 
-const getVisibleTodos = ({ todos, filter }) => {
+const getVisibilityFilter = (state) => state.filter;
+const getTodos = (state) => state.todos;
+
+const getVisibleTodos = createSelector([getTodos, getVisibilityFilter], (todos, filter) => {
   switch (filter) {
     case 'SHOW_ALL':
       return todos;
@@ -13,7 +17,7 @@ const getVisibleTodos = ({ todos, filter }) => {
     default:
       return null;
   }
-};
+});
 
 const mapStateToProps = (state) => ({
   todos: getVisibleTodos(state.demo)

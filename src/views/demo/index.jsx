@@ -23,7 +23,9 @@ class Index extends Component {
         <div className={style.py} />
         <NavLink to="/detail">去detail</NavLink>
         <AddTodo />
-        <VisibleTodoList />
+        <VisibleTodoList listId="1" />
+        <VisibleTodoList listId="2" />
+        <VisibleTodoList listId="3" />
         <Footer />
       </div>
     );

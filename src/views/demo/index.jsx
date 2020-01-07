@@ -5,6 +5,7 @@ import method from 'lodash/intersection';
 import Footer from './components/Footer';
 import AddTodo from './containers/AddTodo';
 import VisibleTodoList from './containers/VisibleTodoList';
+import UndoRedo from './containers/UndoRedo';
 import * as style from './style.scss';
 
 class Index extends Component {
@@ -24,9 +25,8 @@ class Index extends Component {
         <NavLink to="/detail">去detail</NavLink>
         <AddTodo />
         <VisibleTodoList listId="1" />
-        <VisibleTodoList listId="2" />
-        <VisibleTodoList listId="3" />
         <Footer />
+        <UndoRedo />
       </div>
     );
   }

@@ -20,7 +20,7 @@ const getVisibleTodos = createSelector([getTodos, getVisibilityFilter], (todos, 
 });
 
 const mapStateToProps = (state) => ({
-  todos: getVisibleTodos(state.demo)
+  todos: getVisibleTodos(state.demo.present)
 });
 
 const mapDispatchToProps = (dispatch) => ({

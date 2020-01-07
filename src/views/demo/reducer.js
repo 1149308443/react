@@ -1,3 +1,4 @@
+import undoable, { distinctState } from 'redux-undo';
 import { createReducer } from '@/utils/reduxUtil';
 
 import {
@@ -32,4 +33,6 @@ const reducer = createReducer({
   })
 });
 
-export default reducer;
+const undoableTodos = undoable(reducer);
+
+export default undoableTodos;

@@ -36,7 +36,7 @@ module.exports = {
       tags: [
         'css/normalize.css'
       ],
-      publicPath: 'static'
+      publicPath: '/static'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()

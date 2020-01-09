@@ -7,19 +7,60 @@ import Demo from '../views/demo';
 import Detail from '../views/detial';
 import NoFind from '../views/404';
 
+const router = [
+  {
+    path: '/',
+    component: Demo,
+    exact: true
+  },
+  {
+    path: '/detail',
+    component: Detail,
+    children: [{
+      path: '/detail/nofind',
+      component: NoFind
+    }]
+  }
+];
+
+const renderRoute = (routerArr) => routerArr.map((el, index) => {
+  if (el.children) {
+    return (
+      <Route
+        key={index.toString()}
+        path={el.path}
+        component={() => (
+          <el.component>
+            {renderRoute(el.children)}
+          </el.component>
+        )}
+      />
+    );
+  }
+  return (
+    <Route
+      key={index.toString()}
+      exact={el.exact}
+      path={el.path}
+      component={el.component}
+    />
+  );
+});
+
 const BasicRoute = () => (
   <BrowserRouter>
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={Demo} />
+        {/* <Route exact path="/" component={Demo} />
         <Route
           path="/detail"
-          render={() => (
+          component={() => (
             <Detail>
               <Route path="/detail/nofind" component={NoFind} />
             </Detail>
           )}
-        />
+        /> */}
+        {renderRoute(router)}
       </Switch>
     </Router>
   </BrowserRouter>

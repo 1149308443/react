@@ -19,6 +19,11 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.1.3",
     "redux-thunk": "^2.3.0",
+<<<<<<< HEAD
+=======
+    "redux-undo": "^1.0.0",
+    "reselect": "^4.0.0",
+>>>>>>> dev
     "terser-webpack-plugin": "^2.2.2"
   },
   "devDependencies": {
@@ -60,8 +65,8 @@
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "build": "webpack --config ./build/webpack.prod.js",
-    "dev": "webpack-dev-server  --config ./build/webpack.dev.js",
+    "build": "webpack --progress --colors -p --config ./build/webpack.prod.js",
+    "dev": "webpack-dev-server --progress --colors  --config ./build/webpack.dev.js",
     "start": "npm run build && http-server dist"
   },
   "author": "wuweixing",

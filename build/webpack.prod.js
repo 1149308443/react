@@ -3,7 +3,10 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 // 主要用于提取css
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// 主要用于css压缩、去重
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+// 压缩js
+const TerserPlugin = require('terser-webpack-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -75,18 +78,18 @@ module.exports = merge(common, {
       name: true,
       cacheGroups: {
         styles: {
-          name: '/js/chunk-style',
+          name: 'chunk-style',
           test: /\.(scss|css)$/,
           chunks: 'all',
           enforce: true
         },
         react: {
-          name: '/js/chunk-react',
+          name: 'js/chunk-react',
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
           priority: 10
         },
         antd: {
-          name: '/js/chunk-antd',
+          name: 'js/chunk-antd',
           test: /[\\/]node_modules[\\/](antd)[\\/]/,
           priority: 10 // 权重
         },

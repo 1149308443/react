@@ -16,6 +16,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new CopyWebpackPlugin([path.resolve(__dirname, '../static/**/*')]),
     new HtmlWebpackPlugin({
       title: 'react',
       template: './src/entry/index.html',
@@ -41,32 +42,33 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.vue', '.json', '.css', '.scss', '.html'],
+    extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.scss', '.html'],
     alias: {
       '@': path.resolve(__dirname, '../src')
     }
   },
+  // 防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)
+  // 可以通过html-webpack-tags-plugin从静态引入到模板 或者直接在模板手动引入
+  externals: {
+    jquery: 'jQuery'
+  },
+  // 配置如何展示性能提示
+  performance: {
+    // 定一个创建后超过 500kb 的资源，将展示一条警告
+    maxAssetSize: 1024 * 500
+  },
   module: {
     rules: [
-      // {
-      //   test: /\.(js|jsx)$/,
-      //   loader: 'eslint-loader',
-      //   exclude: /node_modules/,
-      //   enforce: 'pre',
-      //   options: {
-      //       formatter: require('eslint-friendly-formatter')
-      //   }
-      // },
       {
         test: /\.(j|t)s(x)?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-env', '@babel/preset-react'],
-          plugins: [
-            '@babel/transform-runtime'
-          ]
-        }
+        loader: 'babel-loader'
+        // options: {
+        //   presets: ['@babel/preset-env', '@babel/preset-react'],
+        //   plugins: [
+        //     '@babel/transform-runtime'
+        //   ]
+        // }
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,

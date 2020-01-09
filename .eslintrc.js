@@ -33,6 +33,10 @@ module.exports = {
     'no-underscore-dangle': 'off',
     "linebreak-style": [0 ,"error", "windows"], 
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-    "global-require":"off"
+    "global-require":"off",
+    "react/require-default-props":"off",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export":"off",
+    "react/button-has-type": "off"
   }
 };

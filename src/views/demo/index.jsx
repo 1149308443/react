@@ -8,12 +8,45 @@ import VisibleTodoList from './containers/VisibleTodoList';
 import UndoRedo from './containers/UndoRedo';
 import * as style from './style.scss';
 
+const obj = {};
 class Index extends Component {
   componentDidMount() {
-    const array = [['fred', 30, 44], ['barney', 40]];
     const result = method([2, 1], [4, 2], [1, 3]);
     console.log(result);
+    this.init().then(() => {
+      console.log(obj);
+    });
   }
+
+  init = async () => {
+    await this.promise().then(async (data) => {
+      await this.promise2().then((data2) => {
+        console.log(data2);
+        obj.name = data2.age;
+      });
+      obj.age = data.age;
+    });
+  }
+
+  promise = () => new Promise((resolve) => {
+    console.log(1);
+    setTimeout(() => {
+      resolve({
+        name: '张三',
+        age: 18
+      });
+    }, 1000);
+  })
+
+  promise2 = () => new Promise((resolve) => {
+    console.log(2);
+    setTimeout(() => {
+      resolve({
+        name: '张三2',
+        age: 182
+      });
+    }, 500);
+  })
 
   render() {
     return (

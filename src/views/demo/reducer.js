@@ -1,4 +1,4 @@
-import undoable, { distinctState } from 'redux-undo';
+import undoable from 'redux-undo';
 import { createReducer } from '@/utils/reduxUtil';
 
 import {

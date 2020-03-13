@@ -19,8 +19,8 @@ const UndoRedo = ({
 );
 
 const mapStateToProps = (state) => ({
-  canUndo: state.demo.past.length > 0,
-  canRedo: state.demo.future.length > 0
+  canUndo: state.module.demo.past.length > 0,
+  canRedo: state.module.demo.future.length > 0
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -7,7 +7,11 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    hot: true,
+    // hot: true, // 默认false，会自动刷新页面，设置为true自动更新不会刷新页面
+    inline: true,
+    overlay: true, // 编译出现错误时，将错误直接显示在页面上
+    clientLogLevel: 'none',
+    // quiet: true, // 需要设为true，禁止显示devServer的console信息
     historyApiFallback: true, // 页面出错不会弹出 404 页面。
     compress: true, // 开启虚拟服务器时，为你的代码进行压缩
     port: 8080

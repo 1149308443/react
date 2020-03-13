@@ -37,6 +37,8 @@ module.exports = {
     "react/require-default-props":"off",
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export":"off",
-    "react/button-has-type": "off"
+    "react/button-has-type": "off",
+    "no-restricted-globals": "off",
+    "no-multi-assign": "off"
   }
 };

@@ -1,7 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 // import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
+import { routerMiddleware } from 'react-router-redux';
+import history from '@/utils/historyUtil';
 import reducers from './reducer';
+import mySaga from './saga';
 
 // 处理 compose 容器
 let composeEnhancers = compose;
@@ -19,6 +23,10 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(loggerMiddleware);
 }
 // middlewares.push(thunkMiddleware);
+const sagaMiddleware = createSagaMiddleware();
+middlewares.push(sagaMiddleware);
+const routeMiddleware = routerMiddleware(history);
+middlewares.push(routeMiddleware);
 
 /**
  * 创建store函数
@@ -34,6 +42,9 @@ const storeFn = (preloadedState) => {
   if (process.env.NODE_ENV === 'development' && module.hot) {
     module.hot.accept('./reducer', () => store.replaceReducer(reducers));
   }
+
+  // return saga task promise
+  store.asyncTask = sagaMiddleware.run(mySaga).done;
   return store;
 };
 

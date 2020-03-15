@@ -39,6 +39,7 @@ module.exports = {
     "import/prefer-default-export":"off",
     "react/button-has-type": "off",
     "no-restricted-globals": "off",
-    "no-multi-assign": "off"
+    "no-multi-assign": "off",
+    "no-shadow": "off"
   }
 };

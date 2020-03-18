@@ -1,4 +1,5 @@
 import Demo from '../views/demo';
+import Index from '../views/index';
 import Detail from '../views/detial';
 import NoFind from '../views/404';
 import Login from '../views/login';
@@ -6,6 +7,11 @@ import Login from '../views/login';
 export default [
   {
     path: '/',
+    component: Index,
+    exact: true
+  },
+  {
+    path: '/demo',
     component: Demo,
     exact: true
   },

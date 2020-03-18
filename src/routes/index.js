@@ -3,25 +3,8 @@ import {
   BrowserRouter, Route, Switch, Router
 } from 'react-router-dom';
 import history from '../utils/historyUtil';
-import Demo from '../views/demo';
-import Detail from '../views/detial';
-import NoFind from '../views/404';
+import router from './router';
 
-const router = [
-  {
-    path: '/',
-    component: Demo,
-    exact: true
-  },
-  {
-    path: '/detail',
-    component: Detail,
-    children: [{
-      path: '/detail/nofind',
-      component: NoFind
-    }]
-  }
-];
 
 const renderRoute = (routerArr) => routerArr.map((el, index) => {
   if (el.children) {

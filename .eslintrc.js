@@ -14,7 +14,8 @@ module.exports = {
  
   // 第三方插件
   "plugins": [
-      "react"
+      "react",
+      "react-hooks"
   ],
   // 规则
   "rules": {
@@ -37,6 +38,7 @@ module.exports = {
     "react/require-default-props":"off",
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export":"off",
-    "react/button-has-type": "off"
+    "react/button-has-type": "off",
+    "react-hooks/rules-of-hooks": "error"
   }
 };

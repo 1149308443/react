@@ -39,6 +39,8 @@ module.exports = {
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export":"off",
     "react/button-has-type": "off",
-    "react-hooks/rules-of-hooks": "error"
+    "react-hooks/rules-of-hooks": "error", // 检查 Hook 的规则
+    "react-hooks/exhaustive-deps": "warn", // 检查 effect 的依赖
+    "max-len":"off"
   }
 };

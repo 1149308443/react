@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default class Detial extends PureComponent {
   componentDidMount() {}
 
   render() {
+    const { children } = this.props;
     return (
       <div>
         <NavLink to="/">去index</NavLink>
@@ -12,8 +14,11 @@ export default class Detial extends PureComponent {
         <NavLink to="/detail">detail</NavLink>
         <br />
         <NavLink to="/detail/nofind">nofind</NavLink>
-        {this.props.children}
+        {children}
       </div>
     );
   }
 }
+Detial.propTypes = {
+  children: PropTypes.node
+};

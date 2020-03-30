@@ -4,15 +4,13 @@ import { DatePicker, Button } from 'antd';
 import * as style from './style.scss';
 import MessageList from './component/Context';
 import ContextNew from './component/ContextNew';
+import UseRedux from './component/useRedux';
+import UseMemo from './component/useMemo';
+import StyledComponent from './component/styleComponent';
 
 const Index = () => {
   const message = [{
     color: 'purple', text: 'one'
-  }, {
-    color: 'yello', text: 'two'
-  },
-  {
-    color: 'pink', text: 'three'
   }];
 
   // 声明一个新的叫做 “count” 的 state 变量
@@ -41,6 +39,10 @@ const Index = () => {
 
       <MessageList messages={message} />
       <ContextNew />
+      <UseRedux />
+      <StyledComponent />
+      <UseMemo />
+
     </div>
   );
 };

@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import { Provider } from 'mobx-react';
 import Router from '../routes';
+import store from '../store';
 
 const renderDom = () => {
   ReactDom.render(
-    <Router />,
+    <Provider store={store}>
+      <Router />
+    </Provider>,
     document.getElementById('root')
   );
 };

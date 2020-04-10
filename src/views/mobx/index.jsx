@@ -11,10 +11,13 @@ class Mobx extends PureComponent {
     const { RootStore } = store;
     console.log(toJS(RootStore));
     return (
-      <button>
+      <>
+        <div>git提交回退测试</div>
+        <button>
         Seconds passed:
-        {RootStore.age}
-      </button>
+          {RootStore.age}
+        </button>
+      </>
     );
   }
 }

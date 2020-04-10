@@ -13,6 +13,7 @@ class Mobx extends PureComponent {
     return (
       <>
         <div>git提交回退测试</div>
+        <div>git提交回退测试2</div>
         <button>
         Seconds passed:
           {RootStore.age}

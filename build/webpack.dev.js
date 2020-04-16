@@ -14,8 +14,9 @@ module.exports = merge(common, {
     // quiet: true, // 需要设为true，禁止显示devServer的console信息
     historyApiFallback: true, // 页面出错不会弹出 404 页面。
     compress: true, // 开启虚拟服务器时，为你的代码进行压缩
-    port: 8080
-    // open:true
+    port: 8080,
+    host: '0.0.0.0'
+    // open: true
     // proxy:{
     //     "/api": {
     //         target: urlEnv.api,

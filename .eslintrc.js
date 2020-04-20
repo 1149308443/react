@@ -41,6 +41,7 @@ module.exports = {
     "react/button-has-type": "off",
     "react-hooks/rules-of-hooks": "error", // 检查 Hook 的规则
     "react-hooks/exhaustive-deps": "warn", // 检查 effect 的依赖
-    "max-len":"off"
+    "max-len":"off",
+    "react/jsx-props-no-spreading":"off"
   }
 };

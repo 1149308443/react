@@ -7,7 +7,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    index: '@/entry/index.js'
+    index: '@/entry/index.tsx'
   },
   output: {
     filename: '[name].bundle.js',
@@ -42,7 +42,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.scss', '.html'],
+    extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.scss', '.html', '.ts', '.tsx'],
     alias: {
       '@': path.resolve(__dirname, '../src')
     }
@@ -60,15 +60,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(j|t)s(x)?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader'
-        // options: {
-        //   presets: ['@babel/preset-env', '@babel/preset-react'],
-        //   plugins: [
-        //     '@babel/transform-runtime'
-        //   ]
-        // }
+        test: /\.(j|t)sx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,

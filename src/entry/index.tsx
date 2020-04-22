@@ -9,9 +9,9 @@ const renderDom = () => {
   );
 };
 
-if (module.hot) {
+if (module['hot']) {
   // enable HMR
-  module.hot.accept('../routes', () => renderDom());
+  module['hot'].accept('../routes', () => renderDom());
 }
 
 renderDom();

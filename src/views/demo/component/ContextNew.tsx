@@ -1,7 +1,7 @@
 import React from 'react';
 
 // 创建Context组件
-const wrapContext = React.createContext();
+const wrapContext = React.createContext('this is provider');
 
 // 运行APP
 const Father = () => (

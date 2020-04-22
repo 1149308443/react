@@ -61,6 +61,11 @@ module.exports = {
     rules: [
       {
         test: /\.(j|t)sx?$/,
+        use: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(j|t)sx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
       },

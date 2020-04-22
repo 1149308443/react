@@ -8,6 +8,7 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   devServer: {
     hot: true,
+    clientLogLevel: 'none',
     historyApiFallback: true, // 页面出错不会弹出 404 页面。
     compress: true, // 开启虚拟服务器时，为你的代码进行压缩
     port: 8080

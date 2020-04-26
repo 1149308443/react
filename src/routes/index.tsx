@@ -3,18 +3,17 @@ import {
   BrowserRouter, Route, Switch, Router
 } from 'react-router-dom';
 import history from '../utils/historyUtil';
-import router from './router';
+import router, { RouterBuildOptions } from './router';
 
-
-const renderRoute = (routerArr) => routerArr.map((el, index) => {
+const renderRoute = (routerArr: RouterBuildOptions[]): JSX.Element[] => routerArr.map((el: RouterBuildOptions, index: number) => {
   if (el.children) {
     return (
       <Route
         key={index.toString()}
         path={el.path}
-        component={() => (
+        component={(): JSX.Element => (
           <el.component>
-            {renderRoute(el.children)}
+            {el.children && renderRoute(el.children)}
           </el.component>
         )}
       />
@@ -30,7 +29,7 @@ const renderRoute = (routerArr) => routerArr.map((el, index) => {
   );
 });
 
-const BasicRoute = () => (
+const BasicRoute = (): JSX.Element => (
   <BrowserRouter>
     <Router history={history}>
       <Switch>

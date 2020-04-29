@@ -29,7 +29,7 @@ Color.propTypes = {
 
 const ShowArea = () => {
   const { color } = useContext(ColorContext);
-  return <div style={{ color: 'blue' }}>{`字体颜色为${color}`}</div>;
+  return <div style={{ color }}>{`字体颜色为${color}`}</div>;
 };
 
 const Buttons = () => {

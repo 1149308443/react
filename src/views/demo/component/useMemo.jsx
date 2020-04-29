@@ -15,7 +15,7 @@ const MemoTest = () => {
 
 const ChildComponent = ({ name, children }) => {
   const changeXiaohong = (names) => {
-    console.log('她来了，她来了。小红向我们走来了');
+    console.log('小红');
     return `${names},小红向我们走来了`;
   };
   //   const actionXiaohong = changeXiaohong(name);

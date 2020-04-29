@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
@@ -27,11 +26,10 @@ class MessageList extends React.Component {
     const { messages } = this.props;
     const { obj } = this.state;
     const children = messages.map((message, i) => {
-      console.log(isEqual(message, obj));
       if (!isEqual(message, obj)) {
         this.setNew(message);
       }
-      return (<Message key={i.toString()} text={message.text} />);
+      return (<Message key={i.toString()} />);
     });
     return <div>{children}</div>;
   }

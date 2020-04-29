@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
-import HOC from '@view/common/HOC';
+import PropTypes, { bool } from 'prop-types';
+import HOC from '@views/common/HOC';
 import * as style from './style.scss';
 import MessageList from './component/Context';
 import ContextNew from './component/ContextNew';
@@ -21,6 +22,7 @@ const Index = ({ globalData }) => {
   useEffect(() => {
     // 使用浏览器的 API 更新页面标题
     document.title = '测试页面';
+    console.log('componentDidmount');
 
     return () => {
       console.log('componentWillUnmount');
@@ -49,5 +51,18 @@ const Index = ({ globalData }) => {
   );
 };
 
+Index.propTypes = {
+  globalData: PropTypes.shape({
+    isLogin: PropTypes.bool
+  })
+};
+
+Index.defaultProps = {
+  globalData: {
+    isLogin: true
+  }
+};
+
 const IndexHOC = HOC(Index);
+
 export default IndexHOC;

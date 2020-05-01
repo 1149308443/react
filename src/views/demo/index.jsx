@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
-import PropTypes, { bool } from 'prop-types';
+import PropTypes from 'prop-types';
 import HOC from '@views/common/HOC';
 import * as style from './style.scss';
 import MessageList from './component/Context';
@@ -63,6 +63,6 @@ Index.defaultProps = {
   }
 };
 
-const IndexHOC = HOC(Index);
+const IndexHOC = HOC(Index)(Index);
 
 export default IndexHOC;

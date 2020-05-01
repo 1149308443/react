@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import HOC from '@views/common/HOC';
 
 @HOC
-class Detial extends PureComponent {
+export default class Detial extends PureComponent {
   componentDidMount() {
     console.log(this.props);
   }
@@ -31,4 +31,4 @@ Detial.propTypes = {
 
 // export default DetialHOC;
 
-export default Detial;
+// export default Detial;

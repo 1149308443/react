@@ -17,6 +17,21 @@ module.exports = {
       "react",
       "react-hooks"
   ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecorators": true
+    }
+  },
+  "settings": {
+    'import/resolver': {
+      "webpack": {
+        "config":
+          process.env.NODE_ENV === 'production'
+            ? './build/webpack.prod.js'
+            : './build/webpack.dev.js'
+      }
+    },
+  },
   // 规则
   "rules": {
     'comma-dangle': ['error', 'never'],
@@ -43,6 +58,16 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn", // 检查 effect 的依赖
     "max-len":"off",
     "react/jsx-props-no-spreading":"off",
-    "no-unused-expressions":"off"
+    'import/no-unresolved': [2, { ignore: ['^@', '^@views'] }],
+    'import/extensions': [
+      'error',
+      'always',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never'
+      }
+    ],
   }
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const HOC = (WrappedComponent) => {
+const HOC = (options) => (WrappedComponent) => {
   console.log('initApp');
   return function App() {
     const [globalData, setGlobalData] = useState({

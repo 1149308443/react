@@ -1,4 +1,5 @@
-import Demo from '../views/demo';
+import loadable from '@loadable/component';
+// import Demo from '../views/demo';
 // import Detail from '../views/detial';
 // import NoFind from '../views/404';
 
@@ -6,16 +7,16 @@ import Demo from '../views/demo';
 const router = [
   {
     path: '/',
-    component: Demo,
+    component: loadable(() => import('../views/demo')),
     exact: true
+  },
+  {
+    path: '/detail',
+    component: loadable(() => import('../views/detial')),
+    children: [{
+      path: '/detail/nofind',
+      component: loadable(() => import('../views/404'))
+    }]
   }
-  // {
-  //   path: '/detail',
-  //   component: Detail,
-  //   children: [{
-  //     path: '/detail/nofind',
-  //     component: NoFind
-  //   }]
-  // }
 ];
 export default router;

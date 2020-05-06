@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import HOC from '@views/common/HOC';
 
-@HOC
+@HOC()
 export default class Detial extends PureComponent {
   componentDidMount() {
     console.log(this.props);
@@ -26,9 +26,3 @@ export default class Detial extends PureComponent {
 Detial.propTypes = {
   children: PropTypes.node
 };
-
-// const DetialHOC = HOC(Detial);
-
-// export default DetialHOC;
-
-// export default Detial;

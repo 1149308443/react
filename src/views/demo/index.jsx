@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
 import PropTypes from 'prop-types';
+import Qs from 'qs';
 import HOC from '@views/common/HOC';
 import * as style from './style.scss';
 import MessageList from './component/Context';
@@ -20,11 +21,13 @@ const Index = ({ globalData, history }) => {
     query: { name: 'hello' }
   };
   const go = (params) => {
-    let url = '';
-    if (Object.keys(params).length > 0) {
-      Object.keys(params).forEach((i) => url += url ? `&${i}=${params[i]}` : `?${i}=${params[i]}`);
-    }
-    console.log(url);
+    // let url = '';
+    // if (Object.keys(params).length > 0) {
+    //   Object.keys(params).forEach((i) => { url += url ? `&${i}=${params[i]}` : `?${i}=${params[i]}`; });
+    // }
+    // const urlStr = `?${Qs.stringify(params)}`;
+    // console.log(urlStr, 'xxx');
+    // console.log(url);
     // history.push(`/404${url}`);
     history.push({
       pathname: '/404',

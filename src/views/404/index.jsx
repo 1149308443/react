@@ -1,15 +1,21 @@
 import React, { PureComponent } from 'react';
-import { NavLink } from 'react-router-dom';
+import {
+  NavLink, useParams, useHistory, useLocation
+} from 'react-router-dom';
 
-class NoFound extends PureComponent {
-  componentDidMount() {}
+const NoFound = () => {
+  const params = useParams();
+  console.log('params', params);
+  const history = useHistory();
+  console.log('history', history);
 
-  render() {
-    return (
-      <div>
-        <NavLink to="/">404</NavLink>
-      </div>
-    );
-  }
-}
+  const location = useLocation();
+  console.log('location', location);
+
+  return (
+    <div>
+      <NavLink to="/">404</NavLink>
+    </div>
+  );
+};
 export default NoFound;

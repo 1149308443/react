@@ -11,12 +11,17 @@ const router = [
     exact: true
   },
   {
-    path: '/detail',
+    path: '/detail/:name',
     component: loadable(() => import('../views/detial')),
     children: [{
       path: '/detail/nofind',
       component: loadable(() => import('../views/404'))
     }]
+  },
+  {
+    path: '/404',
+    component: loadable(() => import('../views/404')),
+    exact: true
   }
 ];
 export default router;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 const HOC = (options) => (WrappedComponent) => {
-  console.log('initApp');
-  return function App() {
+  console.log('initApp', options);
+  return function App(props) {
     const [globalData, setGlobalData] = useState({
       isLogin: false
     });
@@ -10,7 +10,7 @@ const HOC = (options) => (WrappedComponent) => {
       setGlobalData({ isLogin: true });
     }, []);
 
-    return <WrappedComponent globalData={globalData} />;
+    return <WrappedComponent globalData={globalData} {...props} />;
   };
 };
 

@@ -10,11 +10,27 @@ import UseRedux from './component/useRedux';
 import UseMemo from './component/useMemo';
 import StyledComponent from './component/styleComponent';
 
-const Index = ({ globalData }) => {
+const Index = ({ globalData, history }) => {
   console.log('isLogin:', globalData.isLogin);
   const message = [{
     color: 'purple', text: 'one'
   }];
+  const query = {
+    pathname: '/404',
+    query: { name: 'hello' }
+  };
+  const go = (params) => {
+    let url = '';
+    if (Object.keys(params).length > 0) {
+      Object.keys(params).forEach((i) => url += url ? `&${i}=${params[i]}` : `?${i}=${params[i]}`);
+    }
+    console.log(url);
+    // history.push(`/404${url}`);
+    history.push({
+      pathname: '/404',
+      query: params
+    });
+  };
 
   // 声明一个新的叫做 “count” 的 state 变量
   const [count, setCount] = useState(0);
@@ -34,7 +50,12 @@ const Index = ({ globalData }) => {
       <Button type="primary">primary</Button>
       <div className={style.empty} />
       <div className={style.py} />
-      <NavLink to="/detail">去detail</NavLink>
+      <NavLink to="/detail/hello">去detail</NavLink>
+      <br />
+      <NavLink to="/404?name=hello">去404</NavLink>
+      <br />
+      <NavLink to={query}>query方式去404</NavLink>
+      <p onClick={() => go({ name: 'hello', age: 20 })}>函数方式去404</p>
 
       <p>{`You clicked ${count} times`}</p>
       <button onClick={() => setCount(count + 1)}>
@@ -54,7 +75,8 @@ const Index = ({ globalData }) => {
 Index.propTypes = {
   globalData: PropTypes.shape({
     isLogin: PropTypes.bool
-  })
+  }),
+  history: PropTypes.object
 };
 
 Index.defaultProps = {
@@ -63,6 +85,6 @@ Index.defaultProps = {
   }
 };
 
-const IndexHOC = HOC(Index)(Index);
+const IndexHOC = HOC('111')(Index);
 
 export default IndexHOC;

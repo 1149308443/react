@@ -12,6 +12,7 @@ const renderRoute = (routerArr) => routerArr.map((el, index) => {
       <Route
         key={index.toString()}
         path={el.path}
+        exact={el.exact}
         component={() => (
           <el.component>
             {renderRoute(el.children)}

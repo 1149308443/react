@@ -2,8 +2,10 @@ import React, { PureComponent } from 'react';
 import {
   NavLink, useParams, useHistory, useLocation
 } from 'react-router-dom';
+import HOC from '@views/common/HOC';
 
-const NoFound = () => {
+const NoFound = (props) => {
+  console.log(props);
   const params = useParams();
   console.log('params', params);
   const history = useHistory();
@@ -18,4 +20,6 @@ const NoFound = () => {
     </div>
   );
 };
-export default NoFound;
+
+const NoFoundHOC = HOC('NoFound')(NoFound);
+export default NoFoundHOC;

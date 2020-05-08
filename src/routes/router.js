@@ -11,8 +11,9 @@ const router = [
     exact: true
   },
   {
-    path: '/detail/:name',
+    path: '/detail',
     component: loadable(() => import('../views/detial')),
+    // exact: true,
     children: [{
       path: '/detail/nofind',
       component: loadable(() => import('../views/404'))
@@ -22,6 +23,9 @@ const router = [
     path: '/404',
     component: loadable(() => import('../views/404')),
     exact: true
+  },
+  { // 所有错误页面都跳转这边,必须放置在最后
+    component: loadable(() => import('../views/404'))
   }
 ];
 export default router;

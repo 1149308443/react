@@ -53,7 +53,7 @@ const Index = ({ globalData, history }) => {
       <Button type="primary">primary</Button>
       <div className={style.empty} />
       <div className={style.py} />
-      <NavLink to="/detail/hello">去detail</NavLink>
+      <NavLink to="/detail">去detail</NavLink>
       <br />
       <NavLink to="/404?name=hello">去404</NavLink>
       <br />
@@ -88,6 +88,6 @@ Index.defaultProps = {
   }
 };
 
-const IndexHOC = HOC('111')(Index);
+const IndexHOC = HOC('index')(Index);
 
 export default IndexHOC;

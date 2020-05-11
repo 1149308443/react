@@ -77,12 +77,12 @@ module.exports = merge(common, {
       maxInitialRequests: 3, // 入口点处的最大并行请求数
       name: true,
       cacheGroups: {
-        styles: {
-          name: 'chunk-style',
-          test: /\.(scss|css)$/,
-          chunks: 'all',
-          enforce: true
-        },
+        // styles: {
+        //   name: 'chunk-style',
+        //   test: /\.(scss|css)$/,
+        //   chunks: 'all',
+        //   enforce: true
+        // },
         react: {
           name: 'js/chunk-react',
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
@@ -90,7 +90,12 @@ module.exports = merge(common, {
         },
         antd: {
           name: 'js/chunk-antd',
-          test: /[\\/]node_modules[\\/](antd)[\\/]/,
+          test: /[\\/]node_modules[\\/](antd|@ant-design)[\\/]/,
+          priority: 10 // 权重
+        },
+        moment: {
+          name: 'js/chunk-moment',
+          test: /[\\/]node_modules[\\/](moment)[\\/]/,
           priority: 10 // 权重
         },
         // 默认配置

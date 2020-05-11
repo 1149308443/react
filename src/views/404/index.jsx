@@ -1,11 +1,10 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
   NavLink, useParams, useHistory, useLocation
 } from 'react-router-dom';
 import HOC from '@views/common/HOC';
 
-const NoFound = (props) => {
-  console.log(props);
+const NoFound = () => {
   const params = useParams();
   console.log('params', params);
   const history = useHistory();

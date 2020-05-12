@@ -16,6 +16,21 @@ module.exports = {
   "plugins": [
       "react"
   ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecorators": true
+    }
+  },
+  "settings": {
+    'import/resolver': {
+      "webpack": {
+        "config":
+          process.env.NODE_ENV === 'production'
+            ? './build/webpack.prod.js'
+            : './build/webpack.dev.js'
+      }
+    },
+  },
   // 规则
   "rules": {
     'comma-dangle': ['error', 'never'],

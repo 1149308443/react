@@ -44,7 +44,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.scss', '.html'],
     alias: {
-      '@': path.resolve(__dirname, '../src')
+      '@': path.resolve(__dirname, '../src'),
+      '@views': path.resolve(__dirname, '../src/views')
     }
   },
   // 防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)

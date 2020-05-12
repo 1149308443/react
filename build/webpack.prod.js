@@ -7,6 +7,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // 压缩js
 const TerserPlugin = require('terser-webpack-plugin');
+// 打包情况可视化插件
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -19,7 +21,9 @@ module.exports = merge(common, {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
-    })
+    }),
+    // 打包情况可视化插件
+    new BundleAnalyzerPlugin({ analyzerPort: 8919 })
   ],
   module: {
     rules: [
@@ -77,12 +81,12 @@ module.exports = merge(common, {
       maxInitialRequests: 3, // 入口点处的最大并行请求数
       name: true,
       cacheGroups: {
-        styles: {
-          name: 'chunk-style',
-          test: /\.(scss|css)$/,
-          chunks: 'all',
-          enforce: true
-        },
+        // styles: {
+        //   name: 'chunk-style',
+        //   test: /\.(scss|css)$/,
+        //   chunks: 'all',
+        //   enforce: true
+        // },
         react: {
           name: 'js/chunk-react',
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
@@ -91,6 +95,16 @@ module.exports = merge(common, {
         antd: {
           name: 'js/chunk-antd',
           test: /[\\/]node_modules[\\/](antd)[\\/]/,
+          priority: 10 // 权重
+        },
+        antDesign: {
+          name: 'js/chunk-antDesign',
+          test: /[\\/]node_modules[\\/](@ant-design)[\\/]/,
+          priority: 10 // 权重
+        },
+        moment: {
+          name: 'js/chunk-moment',
+          test: /[\\/]node_modules[\\/](moment)[\\/]/,
           priority: 10 // 权重
         },
         // 默认配置

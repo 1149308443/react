@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@views/*": ["src/views/*"]
+    },
+    "experimentalDecorators": true
+  }
+}

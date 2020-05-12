@@ -1,7 +1,5 @@
 export { default as createBrowserHistory } from './historyUtil';
 
-export { default as sevice } from './axiosUtil';
-
 export { setCookie, getCookie } from './cookieUtil';
 
 export { default as isNumber } from './isNumber';

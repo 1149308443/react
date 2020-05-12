@@ -1,31 +1,27 @@
-import Demo from '../views/demo';
-import Index from '../views/index';
-import Detail from '../views/detial';
-import NoFind from '../views/404';
-import Login from '../views/login';
+import loadable from '@loadable/component';
 
 export default [
   {
     path: '/',
-    component: Index,
+    component: loadable(() => import('../views/index')),
     exact: true
   },
   {
     path: '/demo',
-    component: Demo,
+    component: loadable(() => import('../views/demo')),
     exact: true
   },
   {
     path: '/detail',
-    component: Detail,
+    component: loadable(() => import('../views/detial')),
     children: [{
       path: '/detail/nofind',
-      component: NoFind
+      component: loadable(() => import('../views/404'))
     }]
   },
   {
     path: '/login',
-    component: Login,
+    component: loadable(() => import('../views/login')),
     exact: true
   }
 ];

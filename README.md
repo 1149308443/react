@@ -22,6 +22,26 @@
    ├── images
    └── js
 ```
+## 安装依赖
+```
+npm i / npm install  / yarn install
+```
+## 启动项目 
+```
+npm run dev 
+
+访问localhost:8080
+
+```
+## 打包
+```
+npm run build 
+生成的文件在dist 目录中
+```
+
+
+---
+以下是项目搭建过程的一些说明,您也可以认为是笔记,毕竟好记性不然烂笔头,有时候回过头来看着的代码,竟然看不懂了!!!
 
 ## webpack配置
 
@@ -29,13 +49,51 @@
 
 新增
 
-1. 配置打包后查看包大小可视化`webpack-bundle-analyzer`插件 ,webpack配置如下
+### css模块化
+1. 配置webpack css-loader;
 ```
+options: {
+	modules: {
+		localIdentName: '[local]_[sha1:hash:base64:5]'
+	}
+}
+```
+2. 如果需要覆盖其他库的样式入antd之类的需要 在:global中添加样式
+
+### 配置打包后查看包大小可视化`webpack-bundle-analyzer`插件 
+1. 下载 npm i webpack-bundle-analyzer -D
+2. webpack配置如下
+```
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 plugins:[
     new BundleAnalyzerPlugin({ analyzerPort: 8919 })
 ]
 ```
-在打包完成之后会自动打开`localhost:8919`展示各个包的具体详情
+3. 在打包完成之后会自动打开`localhost:8919`展示各个包的具体详情
+### VSCode配置webpack别名提示生效
+1. webpack配置
+```
+ resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+      '@views': path.resolve(__dirname, '../src/views')
+    }
+  }
+```
+2. 安装插件 `npm i eslint-import-resolver-alias eslint-import-resolver-webpack -D`
+3. 在根目录添加配置文件`jsconfig.json`,配置如下
+```
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@views/*": ["src/views/*"]
+    },
+    "experimentalDecorators": true
+  }
+}
+```
 
 ## 配置eslint
 1. 安装 `npm i eslint -D`
@@ -52,17 +110,6 @@ plugins:[
 
 6. 添加一下规则
 
-## css模块化
-1. 配置webpack css-loader;
-```
-options: {
-	modules: {
-		localIdentName: '[local]_[sha1:hash:base64:5]'
-	}
-}
-```
-2. 如果需要覆盖其他库的样式入antd之类的需要 在:global中添加样式
-
 ## 路由配置动态加载
 1. 下载`@loadable/component`模块, `npm i  @loadable/component -S`
 2. 在路由的引入处动态引入 
@@ -77,4 +124,24 @@ const router = [
   }
   ...
 ]
+```
+## 装饰器
+1. 环境支持 下载插件
+   `npm i @babel/plugin-proposal-decorators -D` 支持装饰器插件,
+     `npm i @babel/plugin-proposal-class-properties -D` 支持类里面添加属性(包括静态),
+2. .babelrc中配置
+```
+"plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }]
+  ]
+```
+3. vscode中配置 `"experimentalDecorators": true`
+4. .eslint中配置,装饰器语法支持export关键字
+```
+ "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecorators": true
+    }
+  },
 ```

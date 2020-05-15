@@ -1,59 +1,30 @@
-import loadable from '@loadable/component';
-// import Demo from '../views/demo';
-// import Detail from '../views/detial';
-// import NoFind from '../views/404';
-// const fun = (component) => {
-//   if (typeof component === 'string') {
-//     return loadable(() => import('../../component'));
-//     // return loadable(() => import(`${component}`));
-//   }
-//   return component;
-// };
-
-// /**
-//  * @description loadableComponent 动态加载资源
-//  * @param {string} component 需加载的组件路径
-//  * @param {string} dir 加载组件跟路径
-//  * @returns {Function} 返回组件或loadable动态组件
-//  */
-// export const loadableComponent = (
-//   component: ComponentBuildOptions,
-//   dir = 'page/',
-// ): React.ComponentType<any> => {
-//   if (typeof component === 'string') {
-//     return loadable(() => import(`../../${dir}${component}`));
-//   }
-//   return component;
-// };
-
+// 路由的component 路径是相对于 views文件夹的,要和loadable的 路径拼接起来
 const router = [
   {
     path: '/',
-    component: loadable(() => import('../views/demo')),
-    exact: true
+    component: '/demo',
+    exact: true,
+    requiresAuth: false
   },
   {
     path: '/login',
-    component: loadable(() => import('../views/login')),
+    component: '/login',
     exact: true,
-    isLogin: true
+    requiresAuth: false
   },
   {
     path: '/detail',
-    component: loadable(() => import('../views/detial')),
+    component: '/detial',
+    requiresAuth: true,
     // exact: true,
     children: [{
       path: '/detail/nofind',
-      component: loadable(() => import('../views/404'))
+      component: '/404'
     }]
   },
-  {
-    path: '/404',
-    component: loadable(() => import('../views/404')),
-    exact: true
-  },
   { // 所有错误页面都跳转这边,必须放置在最后
-    component: loadable(() => import('../views/404'))
+    component: '/404',
+    requiresAuth: false
   }
 ];
 export default router;

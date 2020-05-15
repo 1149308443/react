@@ -1,30 +1,34 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import {
   BrowserRouter, Route, Switch, Router, Redirect
 } from 'react-router-dom';
 import history from '../utils/historyUtil';
 import router from './router';
+import loadCom from './loadable';
 
-
-const renderRoute = (routerArr) => routerArr.map((el, index) => (
-  <Route
-    key={index.toString()}
-    path={el.path}
-    exact={el.exact}
-    render={(props) => {
-      console.log(props);
-      // const Component = lazy(() => import(`${el.component}/index.jsx`));
-      if (el.children) {
-        return (
-          <el.component {...props}>
-            {renderRoute(el.children)}
-          </el.component>
-        );
-      }
-      return <el.component />;
-    }}
-  />
-));
+const renderRoute = (routerArr) => routerArr.map((el, index) => {
+  const {
+    component, children, path, exact, requiresAuth
+  } = el;
+  const Component = loadCom(component);
+  return (
+    <Route
+      key={index.toString()}
+      path={path}
+      exact={exact}
+      render={(props) => {
+        if (children) {
+          return (
+            <Component {...props} isLogin={requiresAuth}>
+              {renderRoute(children)}
+            </Component>
+          );
+        }
+        return <Component {...props} isLogin={requiresAuth} />;
+      }}
+    />
+  );
+});
 
 const BasicRoute = () => (
   <BrowserRouter>

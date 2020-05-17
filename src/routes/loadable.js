@@ -12,4 +12,4 @@ const loadCom = (component) => {
   return component;
 };
 
-export  default loadCom;
+export default loadCom;

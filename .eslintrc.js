@@ -59,6 +59,7 @@ module.exports = {
     "max-len":"off",
     "react/jsx-props-no-spreading":"off",
     'import/no-unresolved': [2, { ignore: ['^@', '^@views'] }],
+    'import/no-unresolved': 'off',
     'import/extensions': [
       'error',
       'always',

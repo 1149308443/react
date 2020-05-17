@@ -12,7 +12,7 @@ import UseMemo from './component/useMemo';
 import StyledComponent from './component/styleComponent';
 
 const Index = ({ globalData, history }) => {
-  console.log('isLogin:', globalData.isLogin);
+  console.log('isLogin:', globalData);
   const message = [{
     color: 'purple', text: 'one'
   }];

@@ -17,6 +17,9 @@ const renderRoute = (routerArr) => routerArr.map((el, index) => {
       path={path}
       exact={exact}
       render={(props) => {
+        if (requiresAuth) {
+          return <Redirect to="/login" />;
+        }
         if (children) {
           return (
             <Component {...props} isLogin={requiresAuth}>

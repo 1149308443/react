@@ -1,8 +1,17 @@
 {
     "plugins":[
-        "@babel/transform-runtime",
-        ["@babel/plugin-proposal-decorators", { "legacy": true }],
-        ["@babel/plugin-proposal-class-properties", { "loose": true }],
+        /**
+        作用 1. 避免多次编译出helper函数：
+            2解决@babel/polyfill提供的类或者实例方法污染全局作用域的情况
+        */
+        ["@babel/plugin-transform-runtime",{
+            "corejs": false, //默认false，或者数字：{ corejs: 2 }，代表需要使用corejs的版本
+            "helpers": true, // 默认是true，是否替换helpers。
+            "regenerator": true, // 默认true，generator是否被转译成用regenerator runtime包装不污染全局作用域的代码。
+            "useESModules": false // 默认false，如果是true将不会用@babel/plugin-transform-modules-commonjs进行转译，这样会减小打包体积，因为不需要保持语义。
+        }],
+        ["@babel/plugin-proposal-decorators", { "legacy": true }], //支持装饰器
+        ["@babel/plugin-proposal-class-properties", { "loose": true }], //支持箭头函数
         ["import", {
             "libraryName": "antd",
             "libraryDirectory": "es",

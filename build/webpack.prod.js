@@ -67,7 +67,13 @@ module.exports = merge(common, {
       }),
       // 压缩JS
       new TerserPlugin({
-        sourceMap: false
+        sourceMap: false,
+        terserOptions: {
+          compress: {
+            // 去除console
+            pure_funcs: ['console.log']
+          }
+        }
       })
     ],
     // 代码分离

@@ -41,8 +41,11 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],
+  // 解析模块请求的选项
   resolve: {
+    // 自动解析确定的扩展
     extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.scss', '.html'],
+    // 模块别名列表
     alias: {
       '@': path.resolve(__dirname, '../src'),
       '@views': path.resolve(__dirname, '../src/views'),
@@ -60,6 +63,10 @@ module.exports = {
     maxAssetSize: 1024 * 500
   },
   module: {
+    // 忽略的文件中不应该含有 import, require, define 的调用，或任何其他导入机制
+    noParse(content) {
+      return content.includes('jquery');
+    },
     rules: [
       {
         test: /\.(j|t)s(x)?$/,

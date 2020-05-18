@@ -17,6 +17,7 @@ module.exports = {
       "react",
       "react-hooks"
   ],
+  // 解析器配置
   "parserOptions": {
     "ecmaFeatures": {
       "legacyDecorators": true
@@ -35,8 +36,6 @@ module.exports = {
   // 规则
   "rules": {
     'comma-dangle': ['error', 'never'],
-    'import/no-unresolved': 'off',
-    'import/extensions': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
     'react/forbid-prop-types': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
@@ -58,7 +57,6 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn", // 检查 effect 的依赖
     "max-len":"off",
     "react/jsx-props-no-spreading":"off",
-    'import/no-unresolved': [2, { ignore: ['^@', '^@views'] }],
     'import/no-unresolved': 'off',
     'import/extensions': [
       'error',

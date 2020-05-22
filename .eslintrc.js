@@ -55,6 +55,9 @@ module.exports = {
     "react/button-has-type": "off",
     "no-restricted-globals": "off",
     "no-multi-assign": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    //解决 Cannot read property 'range' of null
+    "template-curly-spacing" : "off",
+    "indent" : "off"
   }
 };

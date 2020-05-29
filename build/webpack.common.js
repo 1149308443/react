@@ -4,6 +4,10 @@ const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const os = require('os');
+const HappyPack = require('happypack');
+
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
   entry: {
@@ -39,7 +43,24 @@ module.exports = {
       publicPath: '/static'
     }),
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new HappyPack({
+      // 用id来标识 happypack处理那里类文件
+      id: 'happyBabel',
+      // 如何处理  用法和loader 的配置一样
+      loaders: [{
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true
+        }
+      }],
+      // 共享进程池
+      threadPool: happyThreadPool,
+      // 允许 HappyPack 输出日志, 默认是 true
+      verbose: true,
+      // 用于故障排查。默认 false。
+      debug: false
+    })
   ],
   // 解析模块请求的选项
   resolve: {
@@ -68,16 +89,23 @@ module.exports = {
       return content.includes('jquery');
     },
     rules: [
+      // {
+      //   test: /\.(j|t)s(x)?$/,
+      //   exclude: /(node_modules|bower_components)/,
+      //   loader: 'babel-loader'
+      //   // options: {
+      //   //   presets: ['@babel/preset-env', '@babel/preset-react'],
+      //   //   plugins: [
+      //   //     '@babel/transform-runtime'
+      //   //   ]
+      //   // }
+      // },
       {
         test: /\.(j|t)s(x)?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader'
-        // options: {
-        //   presets: ['@babel/preset-env', '@babel/preset-react'],
-        //   plugins: [
-        //     '@babel/transform-runtime'
-        //   ]
-        // }
+        // 把对.js 的文件处理交给id为happyBabel 的HappyPack 的实例执行
+        loader: 'happypack/loader?id=happyBabel',
+        // 排除node_modules 目录下的文件
+        exclude: /node_modules/
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,

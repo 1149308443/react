@@ -70,6 +70,48 @@ plugins:[
 ]
 ```
 3. 在打包完成之后会自动打开`localhost:8919`展示各个包的具体详情
+
+### HappyPack优化webpack
+1. 安装`npm i happypack -D`
+2. 修改`webpack.common.js`配置文件如下:
+```
+const HappyPack = require('happypack');
+const os = require('os');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        //把对.js 的文件处理交给id为happyBabel 的HappyPack 的实例执行
+        loader: 'happypack/loader?id=happyBabel',
+        //排除node_modules 目录下的文件
+        exclude: /node_modules/
+      },
+    ]
+  },
+plugins: [
+    new HappyPack({
+        //用id来标识 happypack处理那里类文件
+      id: 'happyBabel',
+      //如何处理  用法和loader 的配置一样
+      loaders: [{
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true
+        }
+      }],
+      //共享进程池
+      threadPool: happyThreadPool,
+      //允许 HappyPack 输出日志
+      verbose: true,
+    })
+  ]
+}
+```
+这个时候就可以去除原本的`babel-loader`配置内容,交给`HappyPack`来处理,由于`HappyPack` 对`file-loader、url-loader `支持的不友好，所以不建议对该loader使用。
+
 ### VSCode配置webpack别名提示生效
 1. webpack配置
 ```

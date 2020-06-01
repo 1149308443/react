@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter, Route, Switch, Router
+  BrowserRouter, Route, Switch, Router, HashRouter
 } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import history from '../utils/historyUtil';
@@ -31,7 +31,7 @@ const renderRoute = (routerArr) => routerArr.map((el, index) => {
 });
 
 const BasicRoute = () => (
-  <BrowserRouter>
+  <HashRouter>
     <Router history={history}>
       {/* <ConnectedRouter history={history}> */}
       <Switch history={history}>
@@ -48,7 +48,7 @@ const BasicRoute = () => (
       </Switch>
       {/* </ConnectedRouter> */}
     </Router>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 export default BasicRoute;

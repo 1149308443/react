@@ -1,0 +1,19 @@
+.container{
+    color: #000;
+    .searchBar{
+        color: #000;
+    }
+
+    .btnGroup{
+        margin: 10px 0;
+        :global{
+            .ant-btn-primary{
+                margin-right: 10px !important;
+            }
+        }
+    }
+
+    .searchResult{
+        color: #000;
+    }
+}

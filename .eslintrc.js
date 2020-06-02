@@ -58,6 +58,7 @@ module.exports = {
     "no-shadow": "off",
     //解决 Cannot read property 'range' of null
     "template-curly-spacing" : "off",
-    "indent" : "off"
+    "indent" : "off",
+    "react/jsx-props-no-spreading":"off" 
   }
 };

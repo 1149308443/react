@@ -37,14 +37,17 @@ const columns = [
   {
     title: '操作',
     dataIndex: 'action',
-    render: () => (
-      <span>
-        <a style={{ marginRight: 16 }}>查看推送名单</a>
-        <a className="ant-dropdown-link">
-            查看
-        </a>
-      </span>
-      )
+    render: (text, record, i) => {
+      console.log(text, record, i);
+      return (
+        <span>
+          <a style={{ marginRight: 16 }}>查看推送名单</a>
+          <a className="ant-dropdown-link">
+              查看
+          </a>
+        </span>
+        );
+    }
   }
 ];
 

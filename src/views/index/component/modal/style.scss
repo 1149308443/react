@@ -14,9 +14,6 @@
   .ant-form-item{
       margin-bottom:12px !important;
   }
-  textarea.ant-input{
-      max-width: 75%;
-  }
 }
 .btnGroup{
     margin: 20px 0;
@@ -40,6 +37,11 @@
     p{
         display: none;
     }
+    :global{
+        textarea.ant-input{
+            max-width: 75%;
+        }
+    }
     &.waring{
         textarea{
             border-color: #ff4d4f !important;
@@ -52,6 +54,7 @@
         }
     }
     span{
+        color:rgba(0, 0, 0, 0.85);
         display: inline-block;
         width: 25%;
         text-align: right;

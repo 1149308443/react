@@ -14,6 +14,9 @@
   .ant-form-item{
       margin-bottom:12px !important;
   }
+  .ant-form-item-extra{
+      font-size: 12px;
+  }
 }
 .btnGroup{
     margin: 20px 0;
@@ -39,7 +42,7 @@
     }
     :global{
         textarea.ant-input{
-            max-width: 75%;
+            max-width: 70%;
         }
     }
     &.waring{

@@ -37,18 +37,6 @@ function getBase64(img, callback) {
   reader.readAsDataURL(img);
 }
 
-function beforeUpload(file) {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-  if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!');
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
-  }
-  return isJpgOrPng && isLt2M;
-}
-
 const ModalBox = () => {
   const [addSend] = Form.useForm();
   const [addLink] = Form.useForm();
@@ -62,6 +50,8 @@ const ModalBox = () => {
   const [sendObj, setSendObj] = useState({});
   const [uploadImg, setUploadImg] = useState(false);
   const [img, setImg] = useState(null);
+  const [excelFile, setExcelFile] = useState([]);
+  const [pdfFile, setPdfFile] = useState([]);
 
   const showModal = (type) => {
     setTitle(type);
@@ -77,11 +67,11 @@ const ModalBox = () => {
       setVisibleLink(false);
       addLink.resetFields();
     })
-    .catch((info) => {
-      console.log('Link Failed:', info);
-    });
+      .catch((info) => {
+        console.log('Link Failed:', info);
+      });
   };
- // 点击添加超链接框取消按钮
+  // 点击添加超链接框取消按钮
   const handleLickCancel = () => {
     addLink.resetFields();
     setVisibleLink(false);
@@ -106,9 +96,9 @@ const ModalBox = () => {
         setConfirmLoading(false);
       }, 2000);
     })
-    .catch((info) => {
-      console.log('Send Failed:', info);
-    });
+      .catch((info) => {
+        console.log('Send Failed:', info);
+      });
   };
 
   // 群推取消
@@ -160,6 +150,52 @@ const ModalBox = () => {
         setImg(imageUrl);
       });
     }
+  };
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('当前只支持 JPG/PNG 格式!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('图片必须小于 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
+  };
+
+
+  // 上传 EXCEL
+  const beforeUploadExcel = (file) => new Promise((resolve, reject) => {
+    const isXsls = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    if (!isXsls) {
+      message.error('当前只支持 .xsls 格式!');
+      // eslint-disable-next-line prefer-promise-reject-errors
+      return reject(false);
+    }
+    return resolve(true);
+  });
+  const onExcelChaneg = (info) => {
+    console.log('onExcelChaneg', info);
+    let fileList = [...info.fileList];
+    fileList = fileList.slice(-1);
+    setExcelFile(fileList);
+  };
+
+  // 上传 PDF
+  const beforeUploadPdf = (file) => new Promise((resolve, reject) => {
+    const isPDF = file.type === 'application/pdf';
+    if (!isPDF) {
+      message.error('请选择 PDF 文件!');
+      // eslint-disable-next-line prefer-promise-reject-errors
+      return reject(false);
+    }
+    return resolve(true);
+  });
+  const onPdfChange = (info) => {
+    console.log('onExcelChaneg', info);
+    let fileList = [...info.fileList];
+    fileList = fileList.slice(-1);
+    setPdfFile(fileList);
   };
 
   // 渲染上传图片按钮
@@ -219,8 +255,8 @@ const ModalBox = () => {
           <Form.Item
             name="upload"
             label="待发送名单"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
+            // valuePropName="fileList"
+            // getValueFromEvent={normFile}
             rules={[
               {
                 required: true,
@@ -229,7 +265,15 @@ const ModalBox = () => {
             ]}
             extra="（第一列为客户资金账号、第一行为表头，数据从第二行开始,仅支持xlsx格式的文件)"
           >
-            <Upload name="logo" action="/upload.do" listType="picture">
+            <Upload
+              name="EXCEL"
+              // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              listType="text"
+              beforeUpload={beforeUploadExcel}
+              showUploadList={{ showRemoveIcon: false }}
+              onChange={onExcelChaneg}
+              fileList={excelFile}
+            >
               <Button>选择文件</Button>
             </Upload>
           </Form.Item>
@@ -259,8 +303,8 @@ const ModalBox = () => {
                 </div>
                 <div className={style.insert} onClick={insertLink}>插入超链接</div>
               </>
-          )
-         }
+            )
+          }
           {
             type === 'b' && (
               <>
@@ -272,7 +316,7 @@ const ModalBox = () => {
                   rules={[
                     {
                       required: true,
-                      message: '请选择PDF'
+                      message: '请选择图片'
                     }
                   ]}
                 >
@@ -281,7 +325,7 @@ const ModalBox = () => {
                     listType="picture-card"
                     className="avatar-uploader"
                     showUploadList={false}
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                     beforeUpload={beforeUpload}
                     onChange={handleChange}
                   >
@@ -289,16 +333,16 @@ const ModalBox = () => {
                   </Upload>
                 </Form.Item>
               </>
-          )
-         }
+            )
+          }
           {
             type === 'c' && (
               <>
                 <Form.Item
                   name="uploadPDF"
                   label="选择PDF"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
+                  // valuePropName="fileList"
+                  // getValueFromEvent={normFile}
                   rules={[
                     {
                       required: true,
@@ -306,13 +350,21 @@ const ModalBox = () => {
                     }
                   ]}
                 >
-                  <Upload name="logo" action="/upload.do" listType="picture">
+                  <Upload
+                    name="PDF"
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    listType="picture"
+                    beforeUpload={beforeUploadPdf}
+                    showUploadList={{ showRemoveIcon: false }}
+                    onChange={onPdfChange}
+                    fileList={pdfFile}
+                  >
                     <Button>选择PDF</Button>
                   </Upload>
                 </Form.Item>
               </>
-          )
-         }
+            )
+          }
           {
             type === 'd' && (
               <>
@@ -341,8 +393,8 @@ const ModalBox = () => {
                   <Input type="text" />
                 </Form.Item>
               </>
-          )
-         }
+            )
+          }
         </Form>
       </Modal>
       <Modal

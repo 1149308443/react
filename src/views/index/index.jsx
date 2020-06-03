@@ -8,48 +8,10 @@ import style from './style.scss';
 import { loadData } from './action';
 import { getData } from '@/axios';
 import ModalBox from './component/modal';
-
+import ModalRow from './component/modalRow';
+import server from '@/axios/api';
 
 const { Option } = Select;
-
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    render: (name) => `${name.first} ${name.last}`,
-    width: '10%'
-  },
-  {
-    title: 'Gender',
-    dataIndex: 'gender',
-    width: '10%'
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    width: '20%'
-  },
-  {
-    title: 'phone',
-    dataIndex: 'phone',
-    width: '20%'
-  },
-  {
-    title: '操作',
-    dataIndex: 'action',
-    render: (text, record, i) => {
-      console.log(text, record, i);
-      return (
-        <span>
-          <a style={{ marginRight: 16 }}>查看推送名单</a>
-          <a className="ant-dropdown-link">
-              查看
-          </a>
-        </span>
-        );
-    }
-  }
-];
 
 const getRandomuserParams = (params) => ({
     results: params.pagination.pageSize,
@@ -67,13 +29,50 @@ const getRandomuserParams = (params) => ({
 class Index extends PureComponent {
   constructor(props) {
     super(props);
+    this.columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        render: (name) => `${name.first} ${name.last}`,
+        width: '10%'
+      },
+      {
+        title: 'Gender',
+        dataIndex: 'gender',
+        width: '10%'
+      },
+      {
+        title: 'Email',
+        dataIndex: 'email',
+        width: '20%'
+      },
+      {
+        title: 'phone',
+        dataIndex: 'phone',
+        width: '20%'
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        render: (text, record) => (
+          <span>
+            <a style={{ marginRight: 16 }}>查看推送名单</a>
+            <a className="ant-dropdown-link" onClick={() => this.showRowModal(record)}>
+                  查看
+            </a>
+          </span>
+            )
+      }
+    ];
     this.state = {
       data: [],
       pagination: {
         current: 1,
         pageSize: 10
       },
-      loading: false
+      loading: false,
+      visibleRow: false,
+      rowData: {}
     };
   }
 
@@ -84,16 +83,20 @@ class Index extends PureComponent {
     this.fetch({ pagination });
   }
 
+  // 点击表格分页
   handleTableChange = (pagination) => {
     this.fetch({
       pagination
     });
   };
 
+  // 拉取表格数据
   fetch = (params = {}) => {
     this.setState({ loading: true });
     getData(
-      'https://randomuser.me/api',
+      // 'https://randomuser.me/api',
+      // '/api/api',
+      server.server,
       getRandomuserParams(params)
     ).then((data) => {
       console.log(data);
@@ -109,16 +112,39 @@ class Index extends PureComponent {
     });
   };
 
+  // 点击查询
    onFinish = (data) => {
      console.log(data);
    };
 
+   // 点击表格每一行查看
+   showRowModal = (data) => {
+    console.log(data);
+    this.setState({
+      visibleRow: true,
+      rowData: data
+    });
+  };
+
+  // 取消查看弹窗
+  channelRowModal = () => {
+    this.setState({
+      visibleRow: false
+    });
+  }
+
+
    render() {
     const {
-    data, pagination, loading
+    data, pagination, loading, visibleRow, rowData
     } = this.state;
      return (
        <div className={style.container}>
+         <ModalRow
+           visibleRow={visibleRow}
+           handleRowCancel={this.channelRowModal}
+           data={rowData}
+         />
          <div className={style.searchBar}>
            <Form
              name="customized_form_controls"
@@ -188,7 +214,7 @@ class Index extends PureComponent {
          </div>
          <div className={style.searchResult}>
            <Table
-             columns={columns}
+             columns={this.columns}
              rowKey={(record) => record.login.uuid}
              dataSource={data}
              pagination={pagination}

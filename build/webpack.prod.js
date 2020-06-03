@@ -10,6 +10,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 // 打包情况可视化插件
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const common = require('./webpack.common.js');
+const { prod } = require('../src/config');
+
 
 module.exports = merge(common, {
   mode: 'production',
@@ -20,7 +22,8 @@ module.exports = merge(common, {
       chunkFilename: 'css/[name].[hash:5].css'
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.BASE_API': JSON.stringify(prod.BASE_API)
     }),
     // 打包情况可视化插件
     new BundleAnalyzerPlugin({ analyzerPort: 8919 })

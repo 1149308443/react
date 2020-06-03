@@ -5,11 +5,11 @@ import {
   Form, Input, Select, Button, Table
 } from 'antd';
 import style from './style.scss';
-import { loadData } from './action';
+import { loadData, submit, addSend } from './action';
 import { getData } from '@/axios';
 import ModalBox from './component/modal';
 import ModalRow from './component/modalRow';
-import server from '@/axios/api';
+import server, { loadDatas } from '@/axios/api';
 
 const { Option } = Select;
 
@@ -23,7 +23,9 @@ const getRandomuserParams = (params) => ({
   (state) => ({
     ...state.module.index
   }), {
-    loadData
+    loadData: loadData.request,
+    submit: submit.request,
+    addSend: addSend.request
   }
 )
 class Index extends PureComponent {
@@ -31,29 +33,59 @@ class Index extends PureComponent {
     super(props);
     this.columns = [
       {
-        title: 'Name',
+        title: '操作人',
         dataIndex: 'name',
-        render: (name) => `${name.first} ${name.last}`,
         width: '10%'
       },
       {
-        title: 'Gender',
-        dataIndex: 'gender',
+        title: '服务类型',
+        dataIndex: 'serviceType',
+        width: '12%'
+      },
+      {
+        title: '消息类型',
+        dataIndex: 'msgType',
         width: '10%'
       },
       {
-        title: 'Email',
-        dataIndex: 'email',
+        title: '发送内容',
+        dataIndex: 'context',
         width: '20%'
       },
       {
-        title: 'phone',
-        dataIndex: 'phone',
+        title: '创建时间',
+        dataIndex: 'time',
+        width: '20%'
+      },
+      {
+        title: '审核转态',
+        dataIndex: 'status',
+        width: '10%'
+      },
+      {
+        title: '审核理由',
+        dataIndex: 'status',
+        width: '10%'
+      },
+      {
+        title: '审核时间',
+        dataIndex: 'time',
+        width: '20%'
+      },
+      {
+        title: '发送状态',
+        dataIndex: 'status',
+        width: '10%'
+      },
+      {
+        title: '发送时间',
+        dataIndex: 'time',
         width: '20%'
       },
       {
         title: '操作',
         dataIndex: 'action',
+        width: '20%',
         render: (text, record) => (
           <span>
             <a style={{ marginRight: 16 }}>查看推送名单</a>
@@ -77,8 +109,12 @@ class Index extends PureComponent {
   }
 
   componentDidMount() {
-    // const { loadData } = this.props;
-    // loadData();
+    const { loadData, addSend, submit } = this.props;
+    loadData();
+    addSend();
+    submit();
+    const xxx = loadDatas();
+    console.log(xxx);
     const { pagination } = this.state;
     this.fetch({ pagination });
   }
@@ -96,7 +132,8 @@ class Index extends PureComponent {
     getData(
       // 'https://randomuser.me/api',
       // '/api/api',
-      server.server,
+      // server.server,
+      '/api2/static/mock.json',
       getRandomuserParams(params)
     ).then((data) => {
       console.log(data);
@@ -220,6 +257,7 @@ class Index extends PureComponent {
              pagination={pagination}
              loading={loading}
              onChange={this.handleTableChange}
+             scroll={{ x: 1500, y: 800 }}
              bordered
            />
          </div>
@@ -228,6 +266,8 @@ class Index extends PureComponent {
    }
 }
 Index.propTypes = {
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  submit: PropTypes.func,
+  addSend: PropTypes.func
 };
 export default Index;

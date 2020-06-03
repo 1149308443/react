@@ -265,17 +265,22 @@ const ModalBox = () => {
             ]}
             extra="（第一列为客户资金账号、第一行为表头，数据从第二行开始,仅支持xlsx格式的文件)"
           >
-            <Upload
-              name="EXCEL"
+            <div className={style.upload}>
+              <Upload
+                name="EXCEL"
               // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              listType="text"
-              beforeUpload={beforeUploadExcel}
-              showUploadList={{ showRemoveIcon: false }}
-              onChange={onExcelChaneg}
-              fileList={excelFile}
-            >
-              <Button>选择文件</Button>
-            </Upload>
+                listType="text"
+                beforeUpload={beforeUploadExcel}
+                // showUploadList={{ showRemoveIcon: false }}
+                onChange={onExcelChaneg}
+                fileList={excelFile}
+                customRequest={(opt) => {
+                console.log(opt);// 阻止表单默认提交
+              }}
+              >
+                <Button>选择文件</Button>
+              </Upload>
+            </div>
           </Form.Item>
           <Form.Item
             name="radio-group"

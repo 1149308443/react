@@ -40,7 +40,7 @@ export default instance;
  * @param config  axios请求配置项
  * @returns {Promise<AxiosResponse>}
  */
-export function getData(urlLink, param, config = {}) {
+export function getData(urlLink, param = {}, config = {}) {
   const url = urlLink;
   const data = { ...commonParams, ...param };
 
@@ -65,7 +65,7 @@ export function getData(urlLink, param, config = {}) {
    * @param config  axios请求配置项
    * @returns {Promise<AxiosResponse>}
    */
-export function postData(urlLink, param, config = {}) {
+export function postData(urlLink, param = {}, config = {}) {
   const data = { ...commonParams, ...param };
   return instance.post(urlLink, qs.stringify(data), config)
     .then((res) => Promise.resolve(res.data))

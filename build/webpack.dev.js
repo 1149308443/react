@@ -30,6 +30,16 @@ module.exports = merge(common, {
         secure: false,
         // 如果接口跨域，需要进行这个参数配置
         changeOrigin: true
+      },
+      {
+        context: ['/api2/'],
+        pathRewrite: { '^/api2/': '' },
+        // 接口域名
+        target: 'http://localhost:8080/',
+        // 如果是https接口，需要配置这个参数为false
+        secure: false,
+        // 如果接口跨域，需要进行这个参数配置
+        changeOrigin: true
       }
     ]
   },

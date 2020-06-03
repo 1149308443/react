@@ -26,7 +26,24 @@
         }
     }
 }
-
+.upload{
+    position: relative;
+    margin-bottom: 10px;
+    :global{
+        .ant-upload-list-item-progress,.ant-upload-text-icon{
+            display: none;
+        }
+        .ant-upload-list-item-name{
+            padding-left: 0px;
+        }
+        .ant-upload-list-text{
+            position: absolute;
+            width: 200px;
+            top: 0;
+            left: 95px;
+        }
+    }
+}
 .insert{
     margin-left: 25%;
     color: #3196EB;

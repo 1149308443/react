@@ -7,12 +7,33 @@ import { loadDatas } from '@/axios/api';
 
 
 function* loadData() {
-  const xxx = yield select();
-  yield put(
-    actions.setModuleState({
-      isLoading: true
-    })
-  );
+  try {
+    yield put(
+      actions.setModuleState({
+        loading: true
+      })
+    );
+    const store = yield select();
+    const { index } = store.module;
+    const { current = 1, pageSize = 10, conditions = {} } = index;
+    const { data } = yield call(loadDatas, { current, pageSize, conditions });
+    console.log(data);
+    yield put(
+      actions.setModuleState({
+        data: data.results,
+        // total: data.results.length,
+        loading: false
+      })
+    );
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(
+      actions.setModuleState({
+        loading: false
+      })
+    );
+  }
 }
 
 function* serach() {

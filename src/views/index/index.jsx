@@ -5,28 +5,26 @@ import {
   Form, Input, Select, Button, Table
 } from 'antd';
 import style from './style.scss';
-import { loadData, submit, addSend } from './action';
-import { getData } from '@/axios';
+import {
+  loadData, submit, addSend, setModuleState
+} from './action';
 import ModalBox from './component/modal';
 import ModalRow from './component/modalRow';
-import server, { loadDatas } from '@/axios/api';
+import { setCookie } from '@/utils/cookieUtil';
 
 const { Option } = Select;
 
-const getRandomuserParams = (params) => ({
-    results: params.pagination.pageSize,
-    page: params.pagination.current,
-    ...params
-  });
+const defaultSize = 10;
 
 @connect(
   (state) => ({
     ...state.module.index
   }), {
-    loadData: loadData.request,
-    submit: submit.request,
-    addSend: addSend.request
-  }
+  setModuleState,
+  loadData: loadData.request,
+  submit: submit.request,
+  addSend: addSend.request
+}
 )
 class Index extends PureComponent {
   constructor(props) {
@@ -90,19 +88,13 @@ class Index extends PureComponent {
           <span>
             <a style={{ marginRight: 16 }}>查看推送名单</a>
             <a className="ant-dropdown-link" onClick={() => this.showRowModal(record)}>
-                  查看
+              查看
             </a>
           </span>
-            )
+        )
       }
     ];
     this.state = {
-      data: [],
-      pagination: {
-        current: 1,
-        pageSize: 10
-      },
-      loading: false,
       visibleRow: false,
       rowData: {}
     };
@@ -110,52 +102,36 @@ class Index extends PureComponent {
 
   componentDidMount() {
     const { loadData, addSend, submit } = this.props;
+    // addSend();
+    // submit();
+    setCookie(' ycas_token', 'wwx');
     loadData();
-    addSend();
-    submit();
-    const xxx = loadDatas();
-    console.log(xxx);
-    const { pagination } = this.state;
-    this.fetch({ pagination });
   }
 
   // 点击表格分页
   handleTableChange = (pagination) => {
-    this.fetch({
-      pagination
+    const { setModuleState, loadData } = this.props;
+    setModuleState({
+      current: pagination.current,
+      pageSize: pagination.pageSize
     });
-  };
-
-  // 拉取表格数据
-  fetch = (params = {}) => {
-    this.setState({ loading: true });
-    getData(
-      // 'https://randomuser.me/api',
-      // '/api/api',
-      // server.server,
-      '/api2/static/mock.json',
-      getRandomuserParams(params)
-    ).then((data) => {
-      console.log(data);
-      this.setState({
-        loading: false,
-        data: data.results,
-        pagination: {
-          ...params.pagination,
-          total: 200
-          // total: data.totalCount,
-        }
-      });
-    });
+    loadData();
   };
 
   // 点击查询
-   onFinish = (data) => {
-     console.log(data);
-   };
+  onFinish = (data) => {
+    console.log(data);
+    const { setModuleState, loadData } = this.props;
+    setModuleState({
+      current: 1,
+      pageSize: defaultSize,
+      conditions: data
+    });
+    loadData();
+  };
 
-   // 点击表格每一行查看
-   showRowModal = (data) => {
+  // 点击表格每一行查看
+  showRowModal = (data) => {
     console.log(data);
     this.setState({
       visibleRow: true,
@@ -171,103 +147,115 @@ class Index extends PureComponent {
   }
 
 
-   render() {
+  render() {
     const {
-    data, pagination, loading, visibleRow, rowData
+      visibleRow, rowData
     } = this.state;
-     return (
-       <div className={style.container}>
-         <ModalRow
-           visibleRow={visibleRow}
-           handleRowCancel={this.channelRowModal}
-           data={rowData}
-         />
-         <div className={style.searchBar}>
-           <Form
-             name="customized_form_controls"
-             layout="inline"
-             onFinish={this.onFinish}
-           >
-             <Form.Item
-               name="people"
-               label="操作人"
-             >
-               <Input
-                 type="text"
-                 placeholder="请输入操作人"
-                 style={{
-                   width: 150
-                 }}
-               />
-             </Form.Item>
-             <Form.Item
-               name="msgType"
-               label="消息类型"
-             >
-               <Select
-                 placeholder="请选择"
-                 allowClear
-               >
-                 <Option value="male">male</Option>
-                 <Option value="female">female</Option>
-                 <Option value="other">other</Option>
-               </Select>
-             </Form.Item>
-             <Form.Item
-               name="status"
-               label="审核状态"
-             >
-               <Select
-                 placeholder="请选择"
-                 allowClear
-               >
-                 <Option value="0">待审和</Option>
-                 <Option value="1">已审核</Option>
-                 <Option value="2">审核中</Option>
-               </Select>
-             </Form.Item>
-             <Form.Item
-               name="sendStatus"
-               label="发送状态"
-             >
-               <Select
-                 placeholder="请选择"
-                 allowClear
-               >
-                 <Option value="0">发送失败</Option>
-                 <Option value="1">发送成功</Option>
-                 <Option value="2">发送中</Option>
-               </Select>
-             </Form.Item>
-             <Form.Item>
-               <Button type="primary" htmlType="submit">
+    const {
+      data, pageSize = defaultSize, current = 1, total = 100, loading, setModuleState
+    } = this.props;
+    return (
+      <div className={style.container}>
+        <ModalRow
+          visibleRow={visibleRow}
+          handleRowCancel={this.channelRowModal}
+          data={rowData}
+        />
+        <div className={style.searchBar}>
+          <Form
+            name="customized_form_controls"
+            layout="inline"
+            onFinish={this.onFinish}
+          >
+            <Form.Item
+              name="people"
+              label="操作人"
+            >
+              <Input
+                type="text"
+                placeholder="请输入操作人"
+                style={{
+                  width: 150
+                }}
+              />
+            </Form.Item>
+            <Form.Item
+              name="msgType"
+              label="消息类型"
+            >
+              <Select
+                placeholder="请选择"
+                allowClear
+              >
+                <Option value="male">male</Option>
+                <Option value="female">female</Option>
+                <Option value="other">other</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="status"
+              label="审核状态"
+            >
+              <Select
+                placeholder="请选择"
+                allowClear
+              >
+                <Option value="0">待审和</Option>
+                <Option value="1">已审核</Option>
+                <Option value="2">审核中</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="sendStatus"
+              label="发送状态"
+            >
+              <Select
+                placeholder="请选择"
+                allowClear
+              >
+                <Option value="0">发送失败</Option>
+                <Option value="1">发送成功</Option>
+                <Option value="2">发送中</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
                 查询
-               </Button>
-             </Form.Item>
-           </Form>
-         </div>
-         <div className={style.btnGroup}>
-           <ModalBox />
-         </div>
-         <div className={style.searchResult}>
-           <Table
-             columns={this.columns}
-             rowKey={(record) => record.login.uuid}
-             dataSource={data}
-             pagination={pagination}
-             loading={loading}
-             onChange={this.handleTableChange}
-             scroll={{ x: 1500, y: 800 }}
-             bordered
-           />
-         </div>
-       </div>
-     );
-   }
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+        <div className={style.btnGroup}>
+          <ModalBox setStore={setModuleState} />
+        </div>
+        <div className={style.searchResult}>
+          <Table
+            columns={this.columns}
+            rowKey={(record) => record.login.uuid}
+            dataSource={data}
+            pagination={{
+              pageSize, current, total
+            }}
+            loading={loading}
+            onChange={this.handleTableChange}
+            scroll={{ x: 1500, y: 800 }}
+            bordered
+          />
+        </div>
+      </div>
+    );
+  }
 }
 Index.propTypes = {
   loadData: PropTypes.func,
-  submit: PropTypes.func,
-  addSend: PropTypes.func
+  setModuleState: PropTypes.func,
+  data: PropTypes.object,
+  pageSize: PropTypes.number,
+  current: PropTypes.number,
+  total: PropTypes.number,
+  loading: PropTypes.bool
+
+  // submit: PropTypes.func,
+  // addSend: PropTypes.func
 };
 export default Index;

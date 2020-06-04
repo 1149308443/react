@@ -10,6 +10,7 @@ import {
   message
 } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import PropTypes from 'prop-types';
 import clsn from 'classnames';
 import style from './style.scss';
 
@@ -37,7 +38,7 @@ function getBase64(img, callback) {
   reader.readAsDataURL(img);
 }
 
-const ModalBox = () => {
+const ModalBox = ({ setStore }) => {
   const [addSend] = Form.useForm();
   const [addLink] = Form.useForm();
   const [visibleLink, setVisibleLink] = useState(false);
@@ -47,7 +48,6 @@ const ModalBox = () => {
   const [title, setTitle] = useState('消息群推(个人)');
   const [type, setType] = useState('a');
   const [waring, setWaring] = useState(false);
-  const [sendObj, setSendObj] = useState({});
   const [uploadImg, setUploadImg] = useState(false);
   const [img, setImg] = useState(null);
   const [excelFile, setExcelFile] = useState([]);
@@ -80,20 +80,28 @@ const ModalBox = () => {
   // 群推框确认按钮
   const handleOk = () => {
     addSend.validateFields().then((values) => {
-      if (!textareaValue) {
+      if (!textareaValue && type === 'a') {
         setWaring(true);
         return;
       }
       console.log('send value', values);
+      delete values.upload;
       setConfirmLoading(true);
-      setSendObj({
+      // setSendObj({
+      //   ...values,
+      //   file: excelFile[0] || '',
+      //   textarea: textareaValue
+      // });
+
+      console.log({
         ...values,
+        file: excelFile[0] || '',
         textarea: textareaValue
       });
-      addSend.resetFields();
       setTimeout(() => {
         setVisible(false);
         setConfirmLoading(false);
+        addSend.resetFields();
       }, 2000);
     })
       .catch((info) => {
@@ -271,12 +279,12 @@ const ModalBox = () => {
               // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="text"
                 beforeUpload={beforeUploadExcel}
-                // showUploadList={{ showRemoveIcon: false }}
+                showUploadList={{ showRemoveIcon: false }}
                 onChange={onExcelChaneg}
                 fileList={excelFile}
-                customRequest={(opt) => {
-                console.log(opt);// 阻止表单默认提交
-              }}
+                customRequest={(option) => {
+                  console.log(option);// 阻止表单默认提交
+                }}
               >
                 <Button>选择文件</Button>
               </Upload>
@@ -333,6 +341,9 @@ const ModalBox = () => {
                     // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                     beforeUpload={beforeUpload}
                     onChange={handleChange}
+                    customRequest={(option) => {
+                      console.log(option);// 阻止表单默认提交
+                    }}
                   >
                     {img ? <img src={img} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                   </Upload>
@@ -355,17 +366,22 @@ const ModalBox = () => {
                     }
                   ]}
                 >
-                  <Upload
-                    name="PDF"
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    listType="picture"
-                    beforeUpload={beforeUploadPdf}
-                    showUploadList={{ showRemoveIcon: false }}
-                    onChange={onPdfChange}
-                    fileList={pdfFile}
-                  >
-                    <Button>选择PDF</Button>
-                  </Upload>
+                  <div className={style.upload}>
+                    <Upload
+                      name="PDF"
+                      // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                      listType="text"
+                      beforeUpload={beforeUploadPdf}
+                      showUploadList={{ showRemoveIcon: false }}
+                      onChange={onPdfChange}
+                      fileList={pdfFile}
+                      customRequest={(option) => {
+                        console.log(option);// 阻止表单默认提交
+                      }}
+                    >
+                      <Button>选择PDF</Button>
+                    </Upload>
+                  </div>
                 </Form.Item>
               </>
             )
@@ -436,6 +452,10 @@ const ModalBox = () => {
       </Modal>
     </div>
   );
+};
+
+ModalBox.propTypes = {
+  setStore: PropTypes.func
 };
 
 export default ModalBox;

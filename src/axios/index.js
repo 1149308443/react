@@ -1,10 +1,15 @@
 import axios from 'axios';
 import qs from 'qs';
+import { getCookie } from '@/utils/cookieUtil';
 
+const ycasToken = getCookie('ycas_token');
 const commonParams = {};
 
 const instance = axios.create({
-  timeout: 10000
+  timeout: 10000,
+  headers: {
+    ycas_token: ycasToken
+  }
 });
 
 // // 添加请求拦截器
@@ -40,22 +45,27 @@ export default instance;
  * @param config  axios请求配置项
  * @returns {Promise<AxiosResponse>}
  */
-export function getData(urlLink, param = {}, config = {}) {
+export function get(urlLink, param = {}, config = {
+  // headers: {
+  //   ycas_token: 'ycas_token'
+  // }
+}) {
   const url = urlLink;
   const data = { ...commonParams, ...param };
 
-  return instance.get(url, {
-    params: data,
-    ...config
-  })
-    .then((res) => {
-      console.info('then', res);
-      return Promise.resolve(res.data);
+  return new Promise((resolve, reject) => {
+    instance.get(url, {
+      params: data,
+      ...config
     })
-    .catch((error) => {
-      console.info('error', error);
-      return Promise.resolve(error.data);
-    });
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        console.info('error', error);
+        reject(error);
+      });
+  });
 }
 
 /**
@@ -65,12 +75,19 @@ export function getData(urlLink, param = {}, config = {}) {
    * @param config  axios请求配置项
    * @returns {Promise<AxiosResponse>}
    */
-export function postData(urlLink, param = {}, config = {}) {
+export function post(urlLink, param = {}, config = {
+  // headers: {
+  //   ycas_token: 'ycas_token'
+  // }
+}) {
   const data = { ...commonParams, ...param };
-  return instance.post(urlLink, qs.stringify(data), config)
-    .then((res) => Promise.resolve(res.data))
+
+  return new Promise((resolve, reject) => {
+    instance.post(urlLink, qs.stringify(data), config)
+    .then((res) => resolve(res))
     .catch((error) => {
       console.info('postDataerror', error);
-      return Promise.resolve(error);
+      return reject(error);
     });
+  });
 }

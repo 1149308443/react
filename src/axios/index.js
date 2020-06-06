@@ -11,6 +11,7 @@ const instance = axios.create({
 instance.interceptors.request.use((config) => {
 // 在发送请求之前做些什么
   console.log(config);
+  return config;
 },
 (error) => {
   console.log();
@@ -22,6 +23,7 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use((response) => {
   // 对响应数据做点什么
   console.log(response);
+  return response;
 },
 (error) => {
   console.log(error);
@@ -43,18 +45,20 @@ export function getData(urlLink, param, config = {}) {
   const url = urlLink;
   const data = { ...commonParams, ...param };
 
-  return instance.get(url, {
-    params: data,
-    ...config
-  })
-    .then((res) => {
-      console.info('then', res);
-      return Promise.resolve(res.data);
+  return new Promise((resolve, reject) => {
+    instance.get(url, {
+      params: data,
+      ...config
     })
-    .catch((error) => {
-      console.info('error', error);
-      return Promise.resolve(error.data);
-    });
+      .then((res) => {
+        console.info('then', res);
+        resolve(res.data);
+      })
+      .catch((error) => {
+        console.info('error', error);
+        reject(error.data);
+      });
+  });
 }
 
 /**
@@ -66,10 +70,12 @@ export function getData(urlLink, param, config = {}) {
    */
 export function postData(urlLink, param, config = {}) {
   const data = { ...commonParams, ...param };
-  return instance.post(urlLink, qs.stringify(data), config)
-    .then((res) => Promise.resolve(res.data))
-    .catch((error) => {
-      console.info('postDataerror', error);
-      return Promise.resolve(error);
-    });
+  return new Promise((resolve, reject) => {
+    instance.post(urlLink, qs.stringify(data), config)
+      .then((res) => resolve(res.data))
+      .catch((error) => {
+        console.info('postDataerror', error);
+        reject(error);
+      });
+  });
 }

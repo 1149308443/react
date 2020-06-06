@@ -29,14 +29,25 @@ module.exports = merge(common, {
       {
         test: /\.css$/,
         include: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [MiniCssExtractPlugin.loader, {
+          loader: 'css-loader',
+          options: {
+            modules: false
+          }
+        }]
       },
       {
         test: /\.(scss|css|sass)$/,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader', // translates CSS into CommonJS
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 2
+            }
+          }, // translates CSS into CommonJS
           {
             loader: 'postcss-loader',
             options: {

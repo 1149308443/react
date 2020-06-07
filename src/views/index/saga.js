@@ -6,7 +6,8 @@ import * as actions from './action';
 import { loadDatas } from '@/axios/api';
 
 
-function* loadData() {
+function* loadData(params) {
+  console.log('参数测试', params);
   try {
     yield put(
       actions.setModuleState({

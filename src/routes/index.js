@@ -31,24 +31,17 @@ const renderRoute = (routerArr) => routerArr.map((el, index) => {
 });
 
 const BasicRoute = () => (
+  // <BrowserRouter>
   <HashRouter>
     <Router history={history}>
       {/* <ConnectedRouter history={history}> */}
       <Switch history={history}>
-        {/* <Route exact path="/" component={Demo} />
-        <Route
-          path="/detail"
-          component={() => (
-            <Detail>
-              <Route path="/detail/nofind" component={NoFind} />
-            </Detail>
-          )}
-        /> */}
         {renderRoute(router)}
       </Switch>
       {/* </ConnectedRouter> */}
     </Router>
   </HashRouter>
+  // </BrowserRouter>
 );
 
 export default BasicRoute;

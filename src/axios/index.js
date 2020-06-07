@@ -28,6 +28,7 @@ const instance = axios.create({
 // instance.interceptors.response.use((response) => {
 //   // 对响应数据做点什么
 //   console.log(response);
+//    return response;
 // },
 // (error) => {
 //   console.log(error);

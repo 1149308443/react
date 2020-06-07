@@ -11,8 +11,8 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/'
+    path: path.resolve(__dirname, '../dist')
+    // publicPath: '/'
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -36,7 +36,8 @@ module.exports = {
       tags: [
         'css/normalize.css'
       ],
-      publicPath: '/static'
+      publicPath: './static'
+      // publicPath: '/static'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()

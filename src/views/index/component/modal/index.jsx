@@ -12,7 +12,10 @@ import {
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import clsn from 'classnames';
+// import imgURL from '../../../../../static/images/timg.jpg';
 import style from './style.scss';
+
+const imgURL = 'static/images/timg.jpg';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -42,7 +45,7 @@ const ModalBox = ({ setStore }) => {
   const [addSend] = Form.useForm();
   const [addLink] = Form.useForm();
   const [visibleLink, setVisibleLink] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [textareaValue, setTextareaValue] = useState(null);
   const [title, setTitle] = useState('消息群推(个人)');
@@ -213,6 +216,10 @@ const ModalBox = ({ setStore }) => {
       <div className="ant-upload-text">Upload</div>
     </div>
   );
+
+  const test = (e) => {
+    console.log(e);
+  };
   return (
     <div className={style.container}>
       <div className={style.btnGroup}>
@@ -244,6 +251,28 @@ const ModalBox = ({ setStore }) => {
             'radio-group': 'a'
           }}
         >
+          <Form.Item
+            // name="file"
+            label="上传测试"
+            rules={[
+              {
+                required: true
+              }
+            ]}
+          >
+            <input type="file" onChange={(envnt) => { console.log(envnt.target.files); }} />
+          </Form.Item>
+          <Form.Item
+            name="test"
+            label="图片测试"
+            rules={[
+              {
+                required: true
+              }
+            ]}
+          >
+            <img src={imgURL} alt="" />
+          </Form.Item>
           <Form.Item
             name="serverType"
             label="客户服务类型"

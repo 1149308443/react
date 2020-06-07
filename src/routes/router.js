@@ -23,5 +23,9 @@ export default [
     path: '/login',
     component: loadable(() => import('../views/login')),
     exact: true
+  },
+  { // 所有错误页面都跳转这边,必须放置在最后
+    component: loadable(() => import('../views/404')),
+    exact: true
   }
 ];

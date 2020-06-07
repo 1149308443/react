@@ -105,7 +105,7 @@ class Index extends PureComponent {
     // addSend();
     // submit();
     setCookie(' ycas_token', 'wwx');
-    loadData();
+    loadData({ nihao: 'nihao' });
   }
 
   // 点击表格分页

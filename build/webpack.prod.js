@@ -23,7 +23,8 @@ module.exports = merge(common, {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
-      'process.env.BASE_API': JSON.stringify(prod.BASE_API)
+      // 'process.env.BASE_API': JSON.stringify(prod.BASE_API)
+      'process.env.BASE_API': JSON.stringify('/api')
     }),
     // 打包情况可视化插件
     new BundleAnalyzerPlugin({ analyzerPort: 8919 })

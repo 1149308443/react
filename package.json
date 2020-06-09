@@ -44,6 +44,7 @@
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.5",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
     "eslint": "^6.7.1",
@@ -74,10 +75,12 @@
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "build": "webpack --progress --colors -p --config ./build/webpack.prod.js",
-    "dev": "webpack-dev-server --progress --colors  --config ./build/webpack.dev.js",
+    "analyzer": "cross-env NODE_ENV=production webpack --progress --colors -p --config ./build/webpack.analyzer.js",
+    "build": " cross-env NODE_ENV=production webpack --progress --colors -p --config ./build/webpack.prod.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --progress --colors  --config ./build/webpack.dev.js",
     "server": "http-server dist",
-    "start": "node server/index.js"
+    "uat": "cross-env SERVER_ENV=uat node server/index.js",
+    "start": "cross-env SERVER_ENV=prod node server/index.js"
   },
   "author": "wuweixing",
   "license": "ISC"

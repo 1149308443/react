@@ -12,8 +12,7 @@ import {
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import clsn from 'classnames';
-// import imgURL from '../../../../../static/images/timg.jpg';
-import style from './style.scss';
+import style from './style';
 
 const imgURL = 'static/images/timg.jpg';
 
@@ -41,11 +40,11 @@ function getBase64(img, callback) {
   reader.readAsDataURL(img);
 }
 
-const ModalBox = ({ setStore }) => {
+const ModalBox = () => {
   const [addSend] = Form.useForm();
   const [addLink] = Form.useForm();
   const [visibleLink, setVisibleLink] = useState(false);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [textareaValue, setTextareaValue] = useState(null);
   const [title, setTitle] = useState('消息群推(个人)');

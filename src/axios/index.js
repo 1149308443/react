@@ -12,29 +12,29 @@ const instance = axios.create({
   }
 });
 
-// // 添加请求拦截器
-// instance.interceptors.request.use((config) => {
-// // 在发送请求之前做些什么
-//   console.log(config);
-//   return config; // 添加这一行
-// },
-// (error) => {
-//   console.log();
-//   // 对请求错误做些什么
-//   Promise.reject(error);
-// });
+// 添加请求拦截器
+instance.interceptors.request.use((config) => {
+// 在发送请求之前做些什么
+  console.log(config);
+  return config; // 添加这一行
+},
+(error) => {
+  console.log();
+  // 对请求错误做些什么
+  Promise.reject(error);
+});
 
-// // 添加响应拦截器
-// instance.interceptors.response.use((response) => {
-//   // 对响应数据做点什么
-//   console.log(response);
-//    return response;
-// },
-// (error) => {
-//   console.log(error);
-//   // 对响应错误做点什么
-//   Promise.reject(error);
-// });
+// 添加响应拦截器
+instance.interceptors.response.use((response) => {
+  // 对响应数据做点什么
+  console.log(response);
+   return response;
+},
+(error) => {
+  console.log(error);
+  // 对响应错误做点什么
+  Promise.reject(error);
+});
 
 export default instance;
 
@@ -46,11 +46,7 @@ export default instance;
  * @param config  axios请求配置项
  * @returns {Promise<AxiosResponse>}
  */
-export function get(urlLink, param = {}, config = {
-  // headers: {
-  //   ycas_token: 'ycas_token'
-  // }
-}) {
+export function get(urlLink, param = {}, config = {}) {
   const url = urlLink;
   const data = { ...commonParams, ...param };
 
@@ -76,15 +72,18 @@ export function get(urlLink, param = {}, config = {
    * @param config  axios请求配置项
    * @returns {Promise<AxiosResponse>}
    */
-export function post(urlLink, param = {}, config = {
-  // headers: {
-  //   ycas_token: 'ycas_token'
-  // }
-}) {
-  const data = { ...commonParams, ...param };
-
+export function post(urlLink, param = {}, config = {}) {
+  let data = { };
+  if (param instanceof FormData) {
+    Object.keys(commonParams).forEach((key) => {
+      param.append(key, commonParams[key]);
+    });
+  } else {
+    data = { ...commonParams, ...param };
+  }
   return new Promise((resolve, reject) => {
     instance.post(urlLink, qs.stringify(data), config)
+    // instance.post(urlLink, data, config)
     .then((res) => resolve(res))
     .catch((error) => {
       console.info('postDataerror', error);

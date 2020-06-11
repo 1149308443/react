@@ -37,7 +37,7 @@ module.exports = merge(common, {
         ]
       },
       {
-        test: /\.(scss|css|sass)$/,
+        test: /\.(l(c|e)ss)$/,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -56,12 +56,7 @@ module.exports = merge(common, {
               plugins: [require('autoprefixer'), require('postcss-import')()]
             }
           },
-          {
-            loader: 'sass-loader', // compiles Sass to CSS, using Node Sass by default
-            options: {
-              sourceMap: false
-            }
-          }
+          'less-loader'
         ]
       }
     ]

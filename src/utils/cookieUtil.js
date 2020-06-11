@@ -32,3 +32,38 @@ export const setCookie = (key, value, maxAge, cookie) => {
     ).toGMTString()}`;
   }
 };
+
+
+/**
+ * 设置localStorage
+ * @param {string} key
+ * @param {string} value
+ */
+export const setLocalStorage = (key, value) => {
+  localStorage.setItem(key, value);
+};
+
+/**
+ * 获取localStorage
+ * @param {string} key
+ */
+export const getLocalStorage = (key) => {
+  localStorage.getItem(key);
+};
+
+/**
+ * 设置sessionStorage
+ * @param {string} key
+ * @param {string} value
+ */
+export const setSessionStorage = (key, value) => {
+  sessionStorage.setItem(key, value);
+};
+
+/**
+ * 获取sessionStorage
+ * @param {string} key
+ */
+export const getSessionStorage = (key) => {
+  sessionStorage.getItem(key);
+};

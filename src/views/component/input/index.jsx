@@ -1,6 +1,6 @@
 import React from 'react';
 import PropType from 'prop-types';
-import * as style from './style.scss';
+import * as style from './style.less';
 
 const RenderInput = ({
   input,

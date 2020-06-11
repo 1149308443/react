@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import AddTodo from './containers/AddTodo';
 import VisibleTodoList from './containers/VisibleTodoList';
 import UndoRedo from './containers/UndoRedo';
-import * as style from './style.scss';
+import * as style from './style.less';
 
 const obj = {};
 class Index extends Component {

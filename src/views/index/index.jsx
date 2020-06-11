@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Form, Input, Select, Button, Table
 } from 'antd';
-import style from './style.scss';
+import style from './style';
 import {
   loadData, submit, addSend, setModuleState
 } from './action';

@@ -15,8 +15,9 @@ const instance = axios.create({
 // 添加请求拦截器
 instance.interceptors.request.use((config) => {
 // 在发送请求之前做些什么
-  console.log(config);
-  return config; // 添加这一行
+  // console.log(config);
+  const configs = config;
+  return configs; // 添加这一行
 },
 (error) => {
   console.log();
@@ -27,8 +28,9 @@ instance.interceptors.request.use((config) => {
 // 添加响应拦截器
 instance.interceptors.response.use((response) => {
   // 对响应数据做点什么
-  console.log(response);
-   return response;
+  // console.log(response);
+  const responses = response;
+   return responses;
 },
 (error) => {
   console.log(error);
@@ -77,6 +79,7 @@ export function post(urlLink, param = {}, config = {}) {
   if (param instanceof FormData) {
     Object.keys(commonParams).forEach((key) => {
       param.append(key, commonParams[key]);
+      data = param;
     });
   } else {
     data = { ...commonParams, ...param };

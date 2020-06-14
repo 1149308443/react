@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import {
-  Form, Input, Select, Button, Table
+  Form, Input, Select, Button, Table, DatePicker
 } from 'antd';
+import locale from 'antd/es/date-picker/locale/zh_CN';
 import style from './style';
 import {
   loadData, submit, addSend, setModuleState
@@ -15,6 +17,8 @@ import { setCookie } from '@/utils/cookieUtil';
 const { Option } = Select;
 
 const defaultSize = 10;
+
+const { RangePicker } = DatePicker;
 
 @connect(
   (state) => ({
@@ -32,6 +36,7 @@ class Index extends PureComponent {
     this.columns = [
       {
         title: '操作人',
+        fixed: 'left',
         dataIndex: 'name',
         width: '10%'
       },
@@ -84,6 +89,7 @@ class Index extends PureComponent {
         title: '操作',
         dataIndex: 'action',
         width: '20%',
+        fixed: 'right',
         render: (text, record) => (
           <span>
             <a style={{ marginRight: 16 }}>查看推送名单</a>
@@ -105,7 +111,7 @@ class Index extends PureComponent {
     // addSend();
     // submit();
     setCookie(' ycas_token', 'wwx');
-    loadData({ nihao: 'nihao' });
+    loadData();
   }
 
   // 点击表格分页
@@ -121,6 +127,10 @@ class Index extends PureComponent {
   // 点击查询
   onFinish = (data) => {
     console.log(data);
+    if (data.time) {
+      // 开始时间 时间戳 毫秒
+      console.log(moment(data.time[0]).valueOf());
+    }
     const { setModuleState, loadData } = this.props;
     setModuleState({
       current: 1,
@@ -146,6 +156,9 @@ class Index extends PureComponent {
     });
   }
 
+
+  // 日期选择 限制
+  disabledDate = (current) => current > moment().endOf('day')
 
   render() {
     const {
@@ -218,6 +231,15 @@ class Index extends PureComponent {
                 <Option value="2">发送中</Option>
               </Select>
             </Form.Item>
+            <Form.Item
+              name="time"
+              label="选择时间"
+            >
+              <RangePicker
+                locale={locale}
+                disabledDate={this.disabledDate}
+              />
+            </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 查询
@@ -238,7 +260,7 @@ class Index extends PureComponent {
             }}
             loading={loading}
             onChange={this.handleTableChange}
-            scroll={{ x: 1500, y: 800 }}
+            scroll={{ x: 1500, y: 300 }}
             bordered
           />
         </div>

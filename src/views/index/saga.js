@@ -6,8 +6,7 @@ import * as actions from './action';
 import { loadDatas } from '@/axios/api';
 
 
-function* loadData(params) {
-  console.log('参数测试', params);
+function* loadData() {
   try {
     yield put(
       actions.setModuleState({
@@ -22,7 +21,7 @@ function* loadData(params) {
     yield put(
       actions.setModuleState({
         data: data.results,
-        // total: data.results.length,
+        total: data.results.length,
         loading: false
       })
     );

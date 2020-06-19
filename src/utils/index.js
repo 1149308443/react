@@ -9,3 +9,5 @@ export { default as isNumber } from './isNumber';
 export { default as setScrollTop } from './setScroll';
 
 export { default as getUrlQuery } from './getUrlQuery';
+
+export { default as aDownload } from './downloadUtil';

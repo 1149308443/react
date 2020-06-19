@@ -1,7 +1,7 @@
 const merge = require('webpack-merge');
 // 打包情况可视化插件
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const build = require('./webpack.build.js');
+const build = require('./webpack.prod.js');
 
 module.exports = merge(build, {
     plugins: [

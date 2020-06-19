@@ -69,9 +69,18 @@ export function getData(urlLink, param, config = {}) {
    * @returns {Promise<AxiosResponse>}
    */
 export function postData(urlLink, param, config = {}) {
-  const data = { ...commonParams, ...param };
+  let data = {};
+  if (param instanceof FormData) {
+    Object.keys(commonParams).forEach((key) => {
+      param.append(key, commonParams[key]);
+    });
+    data = param;
+  } else {
+    data = { ...commonParams, ...param };
+  }
   return new Promise((resolve, reject) => {
-    instance.post(urlLink, qs.stringify(data), config)
+    // instance.post(urlLink, qs.stringify(data), config)
+    instance.post(urlLink, data, config)
       .then((res) => resolve(res.data))
       .catch((error) => {
         console.info('postDataerror', error);

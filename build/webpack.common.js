@@ -65,7 +65,7 @@ module.exports = {
   // 解析模块请求的选项
   resolve: {
     // 自动解析确定的扩展
-    extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.scss', '.html'],
+    extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.less', '.html'],
     // 模块别名列表
     alias: {
       '@': path.resolve(__dirname, '../src'),

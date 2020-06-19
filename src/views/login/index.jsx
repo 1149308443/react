@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import HOC from '../common/HOC';
-import style from './style.scss';
+import style from './style';
 
 @HOC('login')
 export default class Login extends PureComponent {

@@ -4,7 +4,7 @@ import { DatePicker, Button } from 'antd';
 import PropTypes from 'prop-types';
 import Qs from 'qs';
 import HOC from '@views/common/HOC';
-import * as style from './style.scss';
+import * as style from './style';
 import MessageList from './component/Context';
 import ContextNew from './component/ContextNew';
 import UseRedux from './component/useRedux';

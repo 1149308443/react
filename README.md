@@ -60,6 +60,8 @@ options: {
 ```
 2. 如果需要覆盖其他库的样式入antd之类的需要 在:global中添加样式
 
+3. 更换`scss`为`less`, 执行`npm i less less-loader -D`安装,`webpack`配置修改 `sass-loader`为`less-loader`
+
 ### 配置打包后查看包大小可视化`webpack-bundle-analyzer`插件 
 1. 下载 npm i webpack-bundle-analyzer -D
 2. webpack配置如下
@@ -187,3 +189,12 @@ const router = [
     }
   },
 ```
+
+
+## 遗留 
+1. 打包之后暂时没有启动本地node服务代理接口功能,后续加入koa启动服务
+
+2. 后续如果有环境变量去分需求,引入`cross-env` 注入环境变量
+
+3. 路由权限拦截,`dev`分支`redux`更新时候全局刷新优化
+

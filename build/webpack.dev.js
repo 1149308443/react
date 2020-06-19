@@ -13,14 +13,18 @@ module.exports = merge(common, {
     compress: true, // 开启虚拟服务器时，为你的代码进行压缩
     port: 8080
     // open:true
-    // proxy:{
-    //     "/api": {
-    //         target: urlEnv.api,
-    // 如果是https接口，需要配置这个参数为false
-    //         secure: true,
-    //         changeOrigin: true
-    //     }
-    // }
+    // proxy: [
+    //   {
+    //     context: ['/api'],
+    //     pathRewrite: { '^/api': '' },
+    //     // 接口域名
+    //     target: dev.BASE_API,
+    //     // 如果是https接口，需要配置这个参数为false
+    //     secure: false,
+    //     // 如果接口跨域，需要进行这个参数配置
+    //     changeOrigin: true
+    //   }
+    // ]
   },
   module: {
     rules: [
@@ -34,7 +38,7 @@ module.exports = merge(common, {
         ]
       },
       {
-        test: /\.s(c|a)ss$/,
+        test: /\.l(c|e)ss$/,
         include: path.resolve(__dirname, '../src'),
         use: [
           'style-loader',
@@ -56,12 +60,7 @@ module.exports = merge(common, {
               ]
             }
           },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
-          }
+          'less-loader'
         ]
       }
     ]

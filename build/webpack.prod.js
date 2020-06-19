@@ -7,8 +7,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // 压缩js
 const TerserPlugin = require('terser-webpack-plugin');
-// 打包情况可视化插件
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -21,8 +19,7 @@ module.exports = merge(common, {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-    new BundleAnalyzerPlugin({ analyzerPort: 8919 })
+    })
   ],
   module: {
     rules: [
@@ -37,7 +34,7 @@ module.exports = merge(common, {
         }]
       },
       {
-        test: /\.(scss|css|sass)$/,
+        test: /\.(l(e|c)ss)$/,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -56,12 +53,7 @@ module.exports = merge(common, {
               plugins: [require('autoprefixer'), require('postcss-import')()]
             }
           },
-          {
-            loader: 'sass-loader', // compiles Sass to CSS, using Node Sass by default
-            options: {
-              sourceMap: false
-            }
-          }
+          'less-loader'
         ]
       }
     ]

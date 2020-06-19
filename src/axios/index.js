@@ -79,8 +79,8 @@ export function post(urlLink, param = {}, config = {}) {
   if (param instanceof FormData) {
     Object.keys(commonParams).forEach((key) => {
       param.append(key, commonParams[key]);
-      data = param;
     });
+    data = param;
   } else {
     data = { ...commonParams, ...param };
   }

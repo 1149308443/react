@@ -20,7 +20,7 @@ instance.interceptors.request.use((config) => {
   return configs; // 添加这一行
 },
 (error) => {
-  console.log();
+  console.log(error);
   // 对请求错误做些什么
   Promise.reject(error);
 });
@@ -51,20 +51,24 @@ export default instance;
 export function get(urlLink, param = {}, config = {}) {
   const url = urlLink;
   const data = { ...commonParams, ...param };
-
-  return new Promise((resolve, reject) => {
-    instance.get(url, {
-      params: data,
-      ...config
-    })
-      .then((res) => {
-        resolve(res);
-      })
-      .catch((error) => {
-        console.info('error', error);
-        reject(error);
-      });
+  return instance.get(url, {
+    params: data,
+    ...config
   });
+
+  // return new Promise((resolve, reject) => {
+  //   instance.get(url, {
+  //     params: data,
+  //     ...config
+  //   })
+  //     .then((res) => {
+  //       resolve(res);
+  //     })
+  //     .catch((error) => {
+  //       console.info('error', error);
+  //       reject(error);
+  //     });
+  // });
 }
 
 /**
@@ -84,13 +88,16 @@ export function post(urlLink, param = {}, config = {}) {
   } else {
     data = { ...commonParams, ...param };
   }
-  return new Promise((resolve, reject) => {
-    instance.post(urlLink, qs.stringify(data), config)
-    // instance.post(urlLink, data, config)
-    .then((res) => resolve(res))
-    .catch((error) => {
-      console.info('postDataerror', error);
-      return reject(error);
-    });
-  });
+  // return instance.post(urlLink, qs.stringify(data), config);
+  return instance.post(urlLink, data, config);
+
+  // return new Promise((resolve, reject) => {
+  //   instance.post(urlLink, qs.stringify(data), config)
+  //   // instance.post(urlLink, data, config)
+  //   .then((res) => resolve(res))
+  //   .catch((error) => {
+  //     console.info('postDataerror', error);
+  //     return reject(error);
+  //   });
+  // });
 }

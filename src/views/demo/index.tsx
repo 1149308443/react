@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
-import style from './style.scss';
+import style from './style.less';
+import Test from './test';
 
 const Index = (): JSX.Element => {
   // 声明一个新的叫做 “count” 的 state 变量
@@ -10,11 +11,13 @@ const Index = (): JSX.Element => {
   useEffect(() => {
     // 使用浏览器的 API 更新页面标题
     document.title = '测试页面';
-
+    const xxx = Test;
+    console.log(xxx.tick());
     return (): void => {
       console.log('componentWillUnmount');
     };
   }, []);
+
   return (
     <div className={style.container}>
       <DatePicker disabledTime={(): object => ({})} />

@@ -34,7 +34,7 @@ module.exports = merge(common, {
         ]
       },
       {
-        test: /\.s(c|a)ss$/,
+        test: /\.l(c|e)ss$/,
         include: path.resolve(__dirname, '../src'),
         use: [
           'style-loader',
@@ -56,12 +56,7 @@ module.exports = merge(common, {
               ]
             }
           },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
-          }
+          'less-loader'
         ]
       }
     ]

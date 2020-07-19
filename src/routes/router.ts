@@ -13,15 +13,16 @@ const router: RouterBuildOptions[] = [
   {
     path: '/',
     component: Demo,
-    exact: true
+    exact: true,
   },
   {
     path: '/detail',
     component: Detail,
     children: [{
       path: '/detail/nofind',
-      component: NoFind
-    }]
-  }
+      component: NoFind,
+    }],
+  },
 ];
+
 export default router;

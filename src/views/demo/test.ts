@@ -1,29 +1,39 @@
-interface ClockConstructor {
-    new (hour: number, minute: number): ClockInterface;
-}
-interface ClockInterface {
-    tick(): number;
-    currentTime: number;
-}
+/* eslint-disable max-classes-per-file */
+class Animal {
+    name: string;
 
-function createClock(Ctor: ClockConstructor, hour: number, minute: number): ClockInterface {
-  return new Ctor(hour, minute);
-}
-class AnalogClock implements ClockInterface {
-  constructor(h: number, m: number) {
-    console.log(h, m);
-  }
+    constructor(theName: string) { this.name = theName; }
 
-    currentTime = 1;
-
-    tick(): number {
-      const n = this.currentTime;
-      console.log('tick tock');
-      return n;
+    move(distanceInMeters = 0): void {
+      console.log(`${this.name} moved ${distanceInMeters}m.`);
     }
 }
 
-const analog = createClock(AnalogClock, 7, 32);
+class Snake extends Animal {
+//   constructor(name: string) { super(name); }
 
+  move(distanceInMeters = 5): void {
+    console.log('Slithering...');
+    super.move(distanceInMeters);
+  }
+}
 
-export default analog;
+class Horse extends Animal {
+//   constructor(name: string) { super(name); }
+
+  move(distanceInMeters = 45): void {
+    console.log('Galloping...');
+    super.move(distanceInMeters);
+  }
+}
+
+const sam = new Snake('Sammy the Python');
+
+export const tom: Animal = new Horse('Tommy the Palomino');
+
+sam.move();
+tom.move(34);
+
+export default sam;
+
+// export const xxx = tom;

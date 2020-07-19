@@ -7,6 +7,7 @@ interface DetialProps {
 export default class Detial extends PureComponent<DetialProps> {
   render(): JSX.Element {
     const { children } = this.props;
+
     return (
       <div>
         <NavLink to="/">去index</NavLink>

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
 // const path = require('path');
 const merge = require('webpack-merge');
@@ -15,18 +17,18 @@ module.exports = merge(common, {
     // 样式分离
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash:5].css',
-      chunkFilename: 'css/[name].[hash:5].css'
+      chunkFilename: 'css/[name].[hash:5].css',
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    })
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
         include: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.(l(e|c)ss)$/,
@@ -39,13 +41,13 @@ module.exports = merge(common, {
             options: {
               ident: 'postcss',
               sourceMap: false,
-              plugins: [require('autoprefixer'), require('postcss-import')()]
-            }
+              plugins: [require('autoprefixer'), require('postcss-import')()],
+            },
           },
-          'less-loader'
-        ]
-      }
-    ]
+          'less-loader',
+        ],
+      },
+    ],
   },
   optimization: {
     minimizer: [
@@ -53,14 +55,14 @@ module.exports = merge(common, {
       new OptimizeCSSAssetsPlugin({
         cssProcessor: require('cssnano'), // 引入cssnano配置压缩选项
         cssProcessorOptions: {
-          discardComments: { removeAll: true }
+          discardComments: { removeAll: true },
         },
-        canPrint: true // 表示插件能够在console中打印信息，默认值是true
+        canPrint: true, // 表示插件能够在console中打印信息，默认值是true
       }),
       // 压缩JS
       new TerserPlugin({
-        sourceMap: false
-      })
+        sourceMap: false,
+      }),
     ],
     // 代码分离
     splitChunks: {
@@ -76,29 +78,29 @@ module.exports = merge(common, {
           name: 'chunk-style',
           test: /\.(scss|css)$/,
           chunks: 'all',
-          enforce: true
+          enforce: true,
         },
         react: {
           name: 'js/chunk-react',
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          priority: 10
+          priority: 10,
         },
         antd: {
           name: 'js/chunk-antd',
           test: /[\\/]node_modules[\\/](antd)[\\/]/,
-          priority: 10 // 权重
+          priority: 10, // 权重
         },
         // 默认配置
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10 // 权重
+          priority: -10, // 权重
         },
         default: {
           minChunks: 2,
           priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
-  }
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
 });

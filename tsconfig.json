@@ -80,7 +80,7 @@
     "emitDecoratorMetadata": true,         /* 给源码里的装饰器声明加上设计类型元数据。 */
     /*===== 高级选项 =====*/
     "forceConsistentCasingInFileNames": true, /* 禁止对同一个文件的不一致的引用。 */
-    "newLine": "lf", /* 当生成文件时指定行结束符： "crlf"（windows）或 "lf"（unix）。 */
+    // "newLine": "lf", /* 当生成文件时指定行结束符： "crlf"（windows）或 "lf"（unix）。 */
     "preserveWatchOutput": true, /* 保留watch模式下过时的控制台输出。 */
     "pretty": true, /* 给错误和消息设置样式，使用颜色和上下文。 */
     "suppressImplicitAnyIndexErrors": true, /* 阻止 --noImplicitAny对缺少索引签名的索引对象报错。查看 issue #1232了解详情。 */

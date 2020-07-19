@@ -1,3 +1,6 @@
+/* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable import/no-extraneous-dependencies */
 const merge = require('webpack-merge');
 const path = require('path');
 const common = require('./webpack.common');
@@ -11,7 +14,7 @@ module.exports = merge(common, {
     clientLogLevel: 'none',
     historyApiFallback: true, // 页面出错不会弹出 404 页面。
     compress: true, // 开启虚拟服务器时，为你的代码进行压缩
-    port: 8080
+    port: 8080,
     // open:true
     // proxy:{
     //     "/api": {
@@ -28,10 +31,10 @@ module.exports = merge(common, {
         test: /\.css$/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
           },
-          'css-loader'
-        ]
+          'css-loader',
+        ],
       },
       {
         test: /\.l(c|e)ss$/,
@@ -42,9 +45,9 @@ module.exports = merge(common, {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[local]_[sha1:hash:base64:5]'
-              }
-            }
+                localIdentName: '[local]_[sha1:hash:base64:5]',
+              },
+            },
           }, // translates CSS into CommonJS
           {
             loader: 'postcss-loader',
@@ -52,13 +55,13 @@ module.exports = merge(common, {
               ident: 'postcss',
               sourceMap: true,
               plugins: [
-                require('autoprefixer')
-              ]
-            }
+                require('autoprefixer'),
+              ],
+            },
           },
-          'less-loader'
-        ]
-      }
-    ]
-  }
+          'less-loader',
+        ],
+      },
+    ],
+  },
 });

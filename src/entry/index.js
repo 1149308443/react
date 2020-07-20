@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
+import ZHCN from 'antd/es/locale/zh_CN';
+import { ConfigProvider } from 'antd';
 import createStore from '../store';
 import Router from '../routes';
 
@@ -9,7 +11,9 @@ const store = createStore();
 const renderDom = () => {
   ReactDom.render(
     <Provider store={store}>
-      <Router />
+      <ConfigProvider>
+        <Router locale={ZHCN} />
+      </ConfigProvider>
     </Provider>,
     document.getElementById('root')
   );

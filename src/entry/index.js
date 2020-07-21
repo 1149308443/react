@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import ZHCN from 'antd/es/locale/zh_CN';
+import { ConfigProvider } from 'antd';
 import Router from '../routes';
 
 const renderDom = () => {
   ReactDom.render(
-    <Router />,
+    <ConfigProvider>
+      <Router locale={ZHCN} />
+    </ConfigProvider>,
     document.getElementById('root')
   );
 };

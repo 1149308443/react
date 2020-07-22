@@ -4,9 +4,11 @@
         "@babel/plugin-proposal-class-properties",
         ["import", {
             "libraryName": "antd",
-            "libraryDirectory": "es",
+            "libraryDirectory": "es",//表示从库的package.json的main入口；否则默认为lib文件夹
+            // "camel2DashComponentName": false,  // default: true，将引入的组件名转化为"-"连接的文件名
             "style": "css" // `style: true` 会加载 less 文件
-        }],
+        },"antd"],
+        ["import", { "libraryName": "ahooks","camel2DashComponentName": false},"ahooks"],
         ["@babel/plugin-transform-runtime"]
     ],
     "presets": [

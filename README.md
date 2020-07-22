@@ -125,3 +125,21 @@ const router = [
     }
   },
 ```
+
+
+## 添加ahooks 
+1. 安装  `npm i ahooks -S` 
+2. 配置 按需加载,.babelrc文件配置如下
+```
+"plugins":[
+    ["import", { "libraryName": "ahooks"},"ahooks"],
+],
+```
+3. api文档参考 [这里](https://ahooks.js.org/zh-CN/hooks/async)
+
+## 添加mockjs进行mock接口数据
+
+1. 安装 `npm i mockjs -D`
+2. 新建 一个js文件配置,具体的配置语法规则可以参考 [这里](https://github.com/nuysoft/Mock/wiki)
+3. 在接口`api.js`文件中引入配置的js文件,注意这种方式是通过拦截`ajax`请求,本地返回数据,所以说不能再`network`上面看到请求,如果是`get`请求的话也不能直接在浏览器里面模拟请求,或者是用`postman`模拟也是不行的.
+4. 如果不通过自己写`mockjs`配置文件的方式来实现的话也是可以通过网上的一些可视化平台来进行配置

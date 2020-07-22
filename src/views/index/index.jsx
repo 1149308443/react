@@ -5,13 +5,14 @@ import moment from 'moment';
 import {
   Form, Input, Select, Button, Table, DatePicker
 } from 'antd';
-import locale from 'antd/es/date-picker/locale/zh_CN';
 import style from './style';
 import {
   loadData, submit, addSend, setModuleState
 } from './action';
+import { test } from '@/axios/api';
 import ModalBox from './component/modal';
 import ModalRow from './component/modalRow';
+import TableComponent from './component/table';
 import { setCookie } from '@/utils/cookieUtil';
 
 const { Option } = Select;
@@ -112,6 +113,12 @@ class Index extends PureComponent {
     // submit();
     setCookie(' ycas_token', 'wwx');
     loadData();
+    this.loadTest();
+  }
+
+  loadTest = async () => {
+    const response = await test();
+    console.log('mock请求到的数据', response);
   }
 
   // 点击表格分页
@@ -236,7 +243,6 @@ class Index extends PureComponent {
               label="选择时间"
             >
               <RangePicker
-                locale={locale}
                 disabledDate={this.disabledDate}
               />
             </Form.Item>
@@ -251,16 +257,20 @@ class Index extends PureComponent {
           <ModalBox setStore={setModuleState} />
         </div>
         <div className={style.searchResult}>
-          <Table
+          <TableComponent
             columns={this.columns}
             rowKey={(record) => record.login.uuid}
             dataSource={data}
             pagination={{
-              pageSize, current, total
+              pageSize,
+              current,
+              total,
+              showSizeChanger: true,
+              showTotal: (total, range) => `当前展示${range[0]}-${range[1]}条, 总共 ${total} 条`
             }}
             loading={loading}
             onChange={this.handleTableChange}
-            scroll={{ x: 1500, y: 300 }}
+            // scroll={{ x: 1500, y: 300 }}
             bordered
           />
         </div>

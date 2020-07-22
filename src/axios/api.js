@@ -1,4 +1,5 @@
 import { get } from '@/axios';
+import './mock';
 
 // const { BASE_API } = process.env;
 
@@ -11,3 +12,5 @@ const apiObject = {
 export default apiObject;
 
 export const loadDatas = (params) => get(apiObject.server, params);
+
+export const test = (params) => get('http://test/mock', params);

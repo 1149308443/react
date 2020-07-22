@@ -16,8 +16,9 @@ function* loadData() {
     const store = yield select();
     const { index } = store.module;
     const { current = 1, pageSize = 10, conditions = {} } = index;
-    const { data } = yield call(loadDatas, { current, pageSize, conditions });
-    console.log(data);
+    const xxx = yield call(loadDatas, { current, pageSize, conditions });
+    const { data } = xxx;
+    console.log(data, xxx);
     yield put(
       actions.setModuleState({
         data: data.results,

@@ -5,14 +5,15 @@ import ZHCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd';
 import createStore from '../store';
 import Router from '../routes';
+import '../../static/mock';
 
 const store = createStore();
 
 const renderDom = () => {
   ReactDom.render(
     <Provider store={store}>
-      <ConfigProvider>
-        <Router locale={ZHCN} />
+      <ConfigProvider locale={ZHCN}>
+        <Router />
       </ConfigProvider>
     </Provider>,
     document.getElementById('root')

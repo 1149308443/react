@@ -1,16 +1,20 @@
 .container{
+    box-sizing: border-box;
     padding: 10px;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    // overflow: hidden;
     .searchBar{
         padding: 10px;
         background-color: rgb(245,245,245);
     }
 
-    .btnGroup{
-        margin: 20px 0;
-    }
-
     .searchResult{
         color: #000;
+        flex: 1;
+        overflow: hidden;
         :global{
             .ant-table-thead {
                 tr{

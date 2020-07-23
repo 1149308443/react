@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal,
   Button,
@@ -12,9 +12,11 @@ import {
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import clsn from 'classnames';
+// import E from 'wangeditor';
 import style from './style';
 
-const imgURL = 'static/images/timg.jpg';
+// const imgURL = 'static/images/timg.jpg';
+import Editor from '../editor';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -54,6 +56,14 @@ const ModalBox = () => {
   const [img, setImg] = useState(null);
   const [excelFile, setExcelFile] = useState([]);
   const [pdfFile, setPdfFile] = useState([]);
+
+
+// useEffect(() => {
+//   // const E = window.wangEditor;
+//         const editor = new E('#editor');
+//         // 或者 var editor = new E( document.getElementById('editor') )
+//         editor.create();
+// }, []);
 
   const showModal = (type) => {
     setTitle(type);
@@ -219,6 +229,10 @@ const ModalBox = () => {
   const test = (e) => {
     console.log(e);
   };
+
+  const keydown = (e) => {
+    console.log({ ...e.target }, e.target.selectionStart);
+  };
   return (
     <div className={style.container}>
       <div className={style.btnGroup}>
@@ -270,7 +284,8 @@ const ModalBox = () => {
               }
             ]}
           >
-            <img src={imgURL} alt="" />
+            {/* <img src={imgURL} alt="" /> */}
+            <Editor />
           </Form.Item>
           <Form.Item
             name="serverType"
@@ -335,9 +350,13 @@ const ModalBox = () => {
               <>
                 <div className={clsn([style.textContet, { [style.waring]: waring }])}>
                   <span>内容摘要: </span>
+                  {/* <div contentEditable onKeyDown={keydown}>
+                    {textareaValue}
+                  </div> */}
                   <Input.TextArea
                     value={textareaValue}
                     onChange={changeTextarea}
+                    onKeyDownCapture={keydown}
                     placeholder="请输入内容"
                   />
                   <p>请输入内容</p>

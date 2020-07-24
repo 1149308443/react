@@ -29,6 +29,15 @@
 
 新增
 
+### 链判断运算符语法`?`支持
+1. 安装插件`npm i @babel/plugin-proposal-optional-chaining`.
+2. 在`.babelrc`文件中配置如下
+```
+ "plugins":[ 
+    ["@babel/plugin-proposal-optional-chaining"]
+  ],
+```
+
 ### css模块化
 1. 配置webpack css-loader;
 ```
@@ -142,4 +151,11 @@ const router = [
 1. 安装 `npm i mockjs -D`
 2. 新建 一个js文件配置,具体的配置语法规则可以参考 [这里](https://github.com/nuysoft/Mock/wiki)
 3. 在接口`api.js`文件中引入配置的js文件,注意这种方式是通过拦截`ajax`请求,本地返回数据,所以说不能再`network`上面看到请求,如果是`get`请求的话也不能直接在浏览器里面模拟请求,或者是用`postman`模拟也是不行的.
-4. 如果不通过自己写`mockjs`配置文件的方式来实现的话也是可以通过网上的一些可视化平台来进行配置
+4. 如果不通过自己写`mockjs`配置文件的方式来实现的话也是可以通过网上的一些可视化平台来进行配置,这边推荐以下两个平台
+ - [easy-mock](https://easy-mock.com/) 
+ - [淘宝rap2](http://rap2.taobao.org/)
+
+
+ ## 添加富文本插件`wangeditor`
+ 1. 安装 `npm i wangeditor -S`
+ 2. 具体的配置和使用见[文档](https://www.kancloud.cn/wangfupeng/wangeditor3/332599)

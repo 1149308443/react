@@ -9,7 +9,8 @@
             "style": "css" // `style: true` 会加载 less 文件
         },"antd"],
         ["import", { "libraryName": "ahooks","camel2DashComponentName": false},"ahooks"],
-        ["@babel/plugin-transform-runtime"]
+        ["@babel/plugin-transform-runtime"],
+        ["@babel/plugin-proposal-optional-chaining"]
     ],
     "presets": [
         ["@babel/preset-env",{

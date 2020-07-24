@@ -12,11 +12,12 @@ import {
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import clsn from 'classnames';
-// import E from 'wangeditor';
+import { useThrottleFn, useDebounceFn } from 'ahooks';
+import { throttle, debounce } from 'lodash';
 import style from './style';
 
-// const imgURL = 'static/images/timg.jpg';
-import Editor from '../editor';
+import Editor from '../../../component/editor';
+
 
 const { Option } = Select;
 const formItemLayout = {
@@ -48,7 +49,6 @@ const ModalBox = () => {
   const [visibleLink, setVisibleLink] = useState(false);
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [textareaValue, setTextareaValue] = useState(null);
   const [title, setTitle] = useState('消息群推(个人)');
   const [type, setType] = useState('a');
   const [waring, setWaring] = useState(false);
@@ -57,13 +57,8 @@ const ModalBox = () => {
   const [excelFile, setExcelFile] = useState([]);
   const [pdfFile, setPdfFile] = useState([]);
 
-
-// useEffect(() => {
-//   // const E = window.wangEditor;
-//         const editor = new E('#editor');
-//         // 或者 var editor = new E( document.getElementById('editor') )
-//         editor.create();
-// }, []);
+  const [cursorPos, setCursorPos] = useState(null); // 获取到的文本框光标位置
+  const [cursorEle, setCursorEle] = useState(null); // 获取到的光标焦点元素
 
   const showModal = (type) => {
     setTitle(type);
@@ -74,8 +69,31 @@ const ModalBox = () => {
   const handleLinkOk = () => {
     addLink.validateFields().then((values) => {
       console.log('link value', values);
-      const tag = `${textareaValue || ''}<a href="${values.link}">${values.text}</a>`;
-      setTextareaValue(tag);
+
+      const a = document.createElement('a');
+      a.href = values.link;
+      a.innerHTML = values.text;
+      const target = document.querySelector('#editor');
+
+      if (cursorEle !== null) {
+        if (cursorEle.parentNode.nodeName === 'A') {
+          if (cursorPos === 0) {
+            target.insertBefore(a, cursorEle.parentNode);
+          } else {
+            target.insertBefore(a, cursorEle.parentNode.nextSibling);
+          }
+        } else {
+          const { data } = cursorEle;
+          const strBefore = document.createTextNode(data.slice(0, cursorPos));
+          const strAfter = document.createTextNode(data.slice(cursorPos));
+          cursorEle.parentNode.insertBefore(strAfter, cursorEle.nextSibling);
+          cursorEle.parentNode.insertBefore(a, cursorEle.nextSibling);
+          cursorEle.parentNode.insertBefore(strBefore, cursorEle.nextSibling);
+          cursorEle.remove();
+        }
+      } else {
+        target.appendChild(a);
+      }
       setVisibleLink(false);
       addLink.resetFields();
     })
@@ -83,6 +101,35 @@ const ModalBox = () => {
         console.log('Link Failed:', info);
       });
   };
+
+  // 点击输入或者键盘抬起的时候监获取光标在输入框的位置
+  const getAtPos = () => {
+    const obj = {};
+    const x = obj?.x || '1';
+    console.log(x);
+    const anchor = window.getSelection().getRangeAt(0);
+    const target = document.querySelector('#editor');
+    if (target.innerHTML) {
+      setWaring(false);
+    } else {
+      setWaring(true);
+    }
+    const { endContainer, endOffset } = anchor;
+    if (endContainer !== target) {
+      setCursorEle(endContainer);
+      setCursorPos(endOffset);
+    }
+  };
+  // 防抖一下输入框的键盘事件
+  // 单位时间内多次触发只会执行最后一次
+  // const debounced = debounce(getAtPos, 1000); // lodash的防抖函数
+  // const debounced = useDebounceFn(getAtPos, { wait: 1500 }).run; // ahooks的防抖函数
+
+  // 单位时间内多次触发单位时间内会执行一次
+  // const debounced = throttle(getAtPos, 1000); // lodash的节流函数
+  const debounced = useThrottleFn(getAtPos, { wait: 1000 }).run; // ahooks的节流函数
+
+
   // 点击添加超链接框取消按钮
   const handleLickCancel = () => {
     addLink.resetFields();
@@ -92,24 +139,15 @@ const ModalBox = () => {
   // 群推框确认按钮
   const handleOk = () => {
     addSend.validateFields().then((values) => {
-      if (!textareaValue && type === 'a') {
+      const target = document.querySelector('#editor');
+      if (!target.innerHTML && type === 'a') {
         setWaring(true);
         return;
       }
       console.log('send value', values);
       delete values.upload;
       setConfirmLoading(true);
-      // setSendObj({
-      //   ...values,
-      //   file: excelFile[0] || '',
-      //   textarea: textareaValue
-      // });
 
-      console.log({
-        ...values,
-        file: excelFile[0] || '',
-        textarea: textareaValue
-      });
       setTimeout(() => {
         setVisible(false);
         setConfirmLoading(false);
@@ -140,16 +178,6 @@ const ModalBox = () => {
 
   const radioChange = (e) => {
     setType(e.target.value);
-  };
-
-  // 文本状态下 输入框事件监听
-  const changeTextarea = ({ target: { value } }) => {
-    if (value) {
-      setWaring(false);
-    } else {
-      setWaring(true);
-    }
-    setTextareaValue(value);
   };
 
   // 点击添加文本超链接
@@ -226,13 +254,6 @@ const ModalBox = () => {
     </div>
   );
 
-  const test = (e) => {
-    console.log(e);
-  };
-
-  const keydown = (e) => {
-    console.log({ ...e.target }, e.target.selectionStart);
-  };
   return (
     <div className={style.container}>
       <div className={style.btnGroup}>
@@ -243,7 +264,6 @@ const ModalBox = () => {
           消息群推(团队)
         </Button>
       </div>
-
       <Modal
         title={title}
         okText="确定"
@@ -276,15 +296,8 @@ const ModalBox = () => {
             <input type="file" onChange={(envnt) => { console.log(envnt.target.files); }} />
           </Form.Item>
           <Form.Item
-            name="test"
-            label="图片测试"
-            rules={[
-              {
-                required: true
-              }
-            ]}
+            label="富文本编辑器"
           >
-            {/* <img src={imgURL} alt="" /> */}
             <Editor />
           </Form.Item>
           <Form.Item
@@ -349,17 +362,9 @@ const ModalBox = () => {
             type === 'a' && (
               <>
                 <div className={clsn([style.textContet, { [style.waring]: waring }])}>
-                  <span>内容摘要: </span>
-                  {/* <div contentEditable onKeyDown={keydown}>
-                    {textareaValue}
-                  </div> */}
-                  <Input.TextArea
-                    value={textareaValue}
-                    onChange={changeTextarea}
-                    onKeyDownCapture={keydown}
-                    placeholder="请输入内容"
-                  />
-                  <p>请输入内容</p>
+                  <span className={style.title}>内容摘要: </span>
+                  <div className={style.editor} id="editor" contentEditable onKeyUp={debounced} onClick={debounced} />
+                  <p className={style.waringP}>请输入内容</p>
                 </div>
                 <div className={style.insert} onClick={insertLink}>插入超链接</div>
               </>

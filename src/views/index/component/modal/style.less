@@ -54,26 +54,29 @@
 }
 .textContet{
     margin-bottom: 12px;
-    p{
+    p.waringP{
         display: none;
     }
-    :global{
-        textarea.ant-input{
-            max-width: 70%;
-        }
+    .editor{
+        display: inline-block;
+        width: 70%;
+        min-height: 100px;
+        border: 1px solid #c7c7c7;
+        padding: 3px 8px;
+        outline: none;    
     }
     &.waring{
-        textarea{
-            border-color: #ff4d4f !important;
+        .editor{
+            border-color: #ff4d4f;
         }
-        p{
+        p.waringP{
             display: block;
             padding-left: 25%;
             color: #ff4d4f !important;
             font-size: 12px;
         }
     }
-    span{
+    span.title{
         color:rgba(0, 0, 0, 0.85);
         display: inline-block;
         width: 25%;

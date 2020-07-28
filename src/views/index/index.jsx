@@ -9,7 +9,6 @@ import style from './style';
 import {
   loadData, submit, addSend, setModuleState
 } from './action';
-import { test } from '@/axios/api';
 import ModalBox from './component/modal';
 import ModalRow from './component/modalRow';
 import TableComponent from './component/table';
@@ -113,12 +112,6 @@ class Index extends PureComponent {
     // submit();
     setCookie(' ycas_token', 'wwx');
     loadData();
-    this.loadTest();
-  }
-
-  loadTest = async () => {
-    const response = await test();
-    console.log('mock请求到的数据', response);
   }
 
   // 点击表格分页

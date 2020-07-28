@@ -21,11 +21,21 @@ module.exports = merge(common, {
     // open: true
     // 设置代理
     proxy: [
-       {
+       { // 本地json文件
         context: ['/api'],
         pathRewrite: { '^/api': '' },
         // 接口域名
         target: dev.BASE_API,
+        // 如果是https接口，需要配置这个参数为false
+        secure: false,
+        // 如果接口跨域，需要进行这个参数配置
+        changeOrigin: true
+      },
+      { // 在线rap2
+        context: ['/rap2'],
+        pathRewrite: { '^/rap2': '' },
+        // 接口域名
+        target: dev.BASE_API_RAP2,
         // 如果是https接口，需要配置这个参数为false
         secure: false,
         // 如果接口跨域，需要进行这个参数配置

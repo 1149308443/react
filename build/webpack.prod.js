@@ -15,8 +15,8 @@ module.exports = merge(common, {
     // 样式分离
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash:5].css',
-      chunkFilename: 'css/[name].[hash:5].css',
-      ignoreOrder: true // 允许移除关于顺序冲突的警告
+      chunkFilename: 'css/[name].[hash:5].css'
+      // ignoreOrder: true // 允许移除关于顺序冲突的警告
     }),
     new webpack.DefinePlugin({
       // 'process.env.BASE_API': JSON.stringify(prod.BASE_API)

@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
-import method from 'lodash/intersection';
+// import method from 'lodash/intersection';
+import { test } from '@/axios/api';
 import Footer from './components/Footer';
 import AddTodo from './containers/AddTodo';
 import VisibleTodoList from './containers/VisibleTodoList';
 import UndoRedo from './containers/UndoRedo';
+import Ahooks from './components/ahooks';
 import * as style from './style.less';
 
 const obj = {};
 class Index extends Component {
   componentDidMount() {
-    const result = method([2, 1], [4, 2], [1, 3]);
-    console.log(result);
+    // const result = method([2, 1], [4, 2], [1, 3]);
+    // console.log(result);
+
+    this.loadTest();
     this.init().then(() => {
       console.log(obj);
     });
@@ -48,6 +52,11 @@ class Index extends Component {
     }, 500);
   })
 
+  loadTest = async () => {
+    const response = await test();
+    console.log('mock请求到的数据', response);
+  }
+
   render() {
     return (
       <div className={style.container}>
@@ -60,6 +69,7 @@ class Index extends Component {
         <VisibleTodoList listId="1" />
         <Footer />
         <UndoRedo />
+        <Ahooks />
       </div>
     );
   }

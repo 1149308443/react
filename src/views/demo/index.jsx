@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
 // import method from 'lodash/intersection';
-import { test } from '@/axios/api';
+import { test, testNode, testRap2 } from '@/axios/api';
 import Footer from './components/Footer';
 import AddTodo from './containers/AddTodo';
 import VisibleTodoList from './containers/VisibleTodoList';
@@ -16,7 +16,9 @@ class Index extends Component {
     // const result = method([2, 1], [4, 2], [1, 3]);
     // console.log(result);
 
-    this.loadTest();
+    // this.loadTest(); // 本地mockJs请求
+    // this.loadTestNode(); // 测试自己的服务端的node请求
+    this.loadRap2(); // 测试直接请求在线的mock,不存在跨域
     this.init().then(() => {
       console.log(obj);
     });
@@ -55,6 +57,16 @@ class Index extends Component {
   loadTest = async () => {
     const response = await test();
     console.log('mock请求到的数据', response);
+  }
+
+  loadTestNode = async () => {
+    const result = await testNode();
+    console.log(result);
+  }
+
+  loadRap2 = async () => {
+    const result = await testRap2();
+    console.log(result);
   }
 
   render() {

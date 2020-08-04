@@ -3,13 +3,15 @@ import qs from 'qs';
 import { getCookie } from '@/utils/cookieUtil';
 
 const ycasToken = getCookie('ycas_token');
-const commonParams = {};
+const commonParams = {
+};
 
 const instance = axios.create({
   timeout: 10000,
-  headers: {
-    ycas_token: ycasToken
-  }
+  withCredentials: true
+  // headers: {
+  //   ycas_token: ycasToken
+  // }
 });
 
 // 添加请求拦截器

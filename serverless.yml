@@ -1,0 +1,23 @@
+name: reactApp # (必填) 该组件创建的实例名称
+component: website  # (必填) 引用 component 的名称
+displayName: react前端项目架构 #项目模板展示在控制台的名称（中文）
+version: 0.0.3
+stage: dev # (可选) 用于区分环境信息，默认值是 dev
+repo: https://github.com/1149308443/react.git # 源代码
+
+inputs:
+  src:
+    src: ./src #你构建的项目代码目录
+    hook: npm run build #钩子脚本。在你项目代码上传之前执行。
+    dist: ./dist  #钩子脚本执行构建后，输出的目录。如果配置 hook， 此参数必填
+src: # 描述项目中的哪些文件需要作为模板发布
+  src: ./ # 指定具体的相对目录，此目录下的文件将作为模板发布
+  exclude: #描述在指定的目录内哪些文件应该被排除 
+    # 通常希望排除
+    # 1. 包含 secrets 的文件
+    # 2. .git git 源代码管理的相关文件
+    # 3. node_modules 等第三方依赖文件
+    - .env
+    - '.git/**'
+    - '**/node_modules'
+    - '**/package-lock.json'

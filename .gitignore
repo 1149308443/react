@@ -25,3 +25,9 @@ package-lock.json
 *.njsproj
 *.sln
 *.sw*
+
+
+#serverless 
+.serverless
+.env_temp
+.env

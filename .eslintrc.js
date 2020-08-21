@@ -59,6 +59,7 @@ module.exports = {
     //解决 Cannot read property 'range' of null
     "template-curly-spacing" : "off",
     "indent" : "off",
-    "react/jsx-props-no-spreading":"off" 
+    "react/jsx-props-no-spreading":"off" ,
+    "no-unused-expressions": "off"
   }
 };

@@ -1,0 +1,42 @@
+.container{
+    padding: 10px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    .searchBox{
+        border: 1px solid #cccccc;
+        .searchTitle{
+            padding: 5px 20px;
+            color: #333;
+            font-size: 16px;
+            border-bottom: 1px solid #cccccc ;
+        }
+        .searchContent{
+            background-color: #fbfbfb;
+            padding: 15px 20px 0px;
+        }
+        .searchBtn{
+          padding-top: 32px;
+        }
+    }
+
+    .action{
+        padding: 8px 20px;
+        background-color:#D3E6F6;
+        margin-top: 15px;
+    }
+
+    .result{
+        flex: 1;
+        overflow: hidden;
+    }
+}
+
+:global{
+    .ant-form-horizontal .ant-form-item-label{
+        flex-grow: 1;
+        text-align: left;
+        width: 100%;
+    }
+}

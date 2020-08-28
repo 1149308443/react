@@ -109,9 +109,20 @@ class Index extends PureComponent {
   componentDidMount() {
     const { loadData, addSend, submit } = this.props;
     // addSend();
-    // submit();
+    setTimeout(() => { addSend(); }, 5000); // 原本预计5s之后取消定时任务
+    submit();
     setCookie(' ycas_token', 'wwx');
     loadData();
+    // this.polling();// 利用setTimeout递归实现轮询写法
+  }
+
+  polling = () => {
+    setTimeout(() => { this.getDataPolling(this.polling); }, 1000);
+  }
+
+  getDataPolling = (cb) => {
+    console.log(1);
+    cb();
   }
 
   // 点击表格分页
@@ -278,9 +289,9 @@ Index.propTypes = {
   pageSize: PropTypes.number,
   current: PropTypes.number,
   total: PropTypes.number,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
 
-  // submit: PropTypes.func,
-  // addSend: PropTypes.func
+  submit: PropTypes.func,
+  addSend: PropTypes.func
 };
 export default Index;

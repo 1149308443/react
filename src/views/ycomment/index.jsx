@@ -1,204 +1,195 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Row, Col, Form, Input, Select, DatePicker, Button
-} from 'antd';
+import { Button, message as MessageHint, Modal } from 'antd';
 import { ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loadData, setModuleState } from './action';
+// import { bindActionCreators } from 'redux';
+// import * as actions from './action';
 import * as style from './style';
 import TableComponent from '../index/component/table';
+import SearchContent from './component/searchContent';
+import Section from './component/section';
 import { loadDatas } from '@/axios/api';
 
-
-const InputCom = (props) => <Input allowClear {...props} />;
-
-const SelsectCom = (props) => {
-  const { selectdata } = props;
-  return (
-    <Select allowClear {...props}>
-      { Object.keys(selectdata).map(
-        (el) => <Select.Option key={el} value={el}>{selectdata[el]}</Select.Option>
-      )}
-    </Select>
-    );
-};
-SelsectCom.propTypes = {
-  selectdata: PropTypes.object
-};
+const { confirm } = Modal;
 
 const columns = [
   {
-    title: '操作人',
+    title: '评论内容',
     fixed: 'left',
     dataIndex: 'name',
     width: '10%'
   },
   {
-    title: '服务类型',
+    title: '评论目标',
     dataIndex: 'serviceType',
     width: '12%'
   },
   {
-    title: '消息类型',
+    title: '评论状态',
     dataIndex: 'msgType',
     width: '10%'
   },
   {
-    title: '发送内容',
+    title: '评论类型',
     dataIndex: 'context',
     width: '20%'
   },
   {
-    title: '创建时间',
+    title: '举报数',
     dataIndex: 'time',
     width: '20%'
   },
   {
-    title: '审核转态',
+    title: '点赞数',
     dataIndex: 'status',
     width: '10%'
   },
   {
-    title: '审核理由',
+    title: '评论数',
     dataIndex: 'status',
     width: '10%'
   },
   {
-    title: '审核时间',
+    title: '评论人ID',
     dataIndex: 'time',
     width: '20%'
   },
   {
-    title: '发送状态',
-    dataIndex: 'status',
-    width: '10%'
-  },
-  {
-    title: '发送时间',
+    title: '评论时间',
     dataIndex: 'time',
     width: '20%'
   }
 ];
-
-const { RangePicker } = DatePicker;
-const selectData = {
-  1: '全部',
-  2: '投顾',
-  3: '股市直播'
-};
-
-export default (props) => {
+ const Index = (props) => {
   const {
-     pageSize = 20, current = 1, total = 100, loading = false
+     pageSize = 10, current = 1, total = 14, loading = false, loadData, setModuleState
   } = props;
 
   const [data, setData] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]); // 全选选中的项
+  const [showSection, setShowSection] = useState(false); // 是否展示抽屉栏
   const load = async () => {
     const res = await loadDatas();
     const { data: { results } } = res;
     setData(results);
   };
   useEffect(() => {
-    load();
+    load(); // mockJSON
+    loadData(); // saga
   }, []);
 
+  // 设置表格全选
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (data) => {
+      console.log(data);
+      setSelectedRowKeys(data);
+    }
+  };
+  // 点击表格分页
+  const handleTableChange = (pagination) => {
+    setModuleState({
+      current: pagination.current,
+      pageSize: pagination.pageSize
+    });
+    loadData(); // saga
+  };
+
+  /**
+   * 点击设置评论状态函数
+   * @param {number} 0 表示设为正常 1 表示设为违规
+   * */
+  const setCommentStatus = (type) => {
+    if (selectedRowKeys.length === 0) {
+      MessageHint.error('请选择要处理的项');
+      return;
+    }
+    const content = type ? `确定要将这${selectedRowKeys.length}条评论设为违规?` : `确定要将这${selectedRowKeys.length}条评论设为正常?`;
+    const okText = type ? '设为违规' : '设为正常';
+    confirm({
+      content,
+      okText,
+      okButtonProps: { danger: type },
+      onOk() {
+        return new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel() {
+        console.log('Cancel');
+      }
+    });
+  };
+
+  // 点击每一行弹出抽屉栏
+  const onTableRowClick = (record) => {
+    console.log('点击行', record);
+    setShowSection(true);
+  };
+  // 关闭抽屉栏
+  const onCloseSection = () => {
+    setShowSection(false);
+  };
 
   return (
-    <div className={style.container}>
-      <div className={style.searchBox}>
-        <div className={style.searchTitle}>查询条件</div>
-        <div className={style.searchContent}>
-          <Form
-            name="customized_form_controls"
-          >
-            <Row gutter={20}>
-              <Col span={5}>
-                <Form.Item label="评论内容">
-                  <InputCom placeholder="请输入评论内容" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="评论人ID">
-                  <InputCom placeholder="请输入评论人ID" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="主评论ID">
-                  <InputCom placeholder="请输入主评论ID" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="评论目标">
-                  <SelsectCom
-                    placeholder="请选择"
-                    selectdata={selectData}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Form.Item label="评论类型">
-                  <SelsectCom
-                    placeholder="请选择"
-                    selectdata={selectData}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={20}>
-              <Col span={5}>
-                <Form.Item label="评论状态">
-                  <SelsectCom
-                    placeholder="请选择"
-                    selectdata={selectData}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="是否举报">
-                  <SelsectCom
-                    placeholder="请选择"
-                    selectdata={selectData}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={10}>
-                <Form.Item label="评论时间">
-                  <RangePicker style={{ width: '100%' }} />
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <div className={style.searchBtn}>
-                  <Button type="primary" htmlType="submit">查询</Button>
-                  <Button style={{ marginLeft: '10px' }}>重置</Button>
-                </div>
-              </Col>
-            </Row>
-          </Form>
+    <>
+      <Section visible={showSection} onClose={onCloseSection} />
+      <div className={style.container}>
+        <div className={style.searchBox}>
+          <div className={style.searchTitle}>查询条件</div>
+          <div className={style.searchContent}>
+            <SearchContent />
+          </div>
         </div>
-      </div>
 
-      <div className={style.action}>
-        <Button icon={<ExclamationCircleOutlined />}>设为违规</Button>
-        <Button icon={<CheckCircleOutlined />} style={{ marginLeft: '10px' }}>设为正常</Button>
-      </div>
-      <div className={style.result}>
-        <TableComponent
-          columns={columns}
-          rowKey={(record) => record.login.uuid}
-          dataSource={data}
-          pagination={{
+        <div className={style.action}>
+          <Button onClick={() => setCommentStatus(1)} icon={<ExclamationCircleOutlined />}>设为违规</Button>
+          <Button onClick={() => setCommentStatus(0)} icon={<CheckCircleOutlined />} style={{ marginLeft: '10px' }}>设为正常</Button>
+        </div>
+        <div className={style.result}>
+          <TableComponent
+            columns={columns}
+            rowKey={(record) => record.login.uuid}
+            dataSource={data}
+            pagination={{
             pageSize,
             current,
             total,
             showSizeChanger: true,
             showTotal: (total, range) => `当前展示${range[0]}-${range[1]}条, 总共 ${total} 条`
           }}
-          loading={loading}
-          // onChange={this.handleTableChange}
-          // scroll={{ x: 1500, y: 300 }}
-          bordered
-        />
+            loading={loading}
+            onChange={handleTableChange}
+            bordered
+            rowSelection={rowSelection}
+            onRow={(record) => ({
+              onClick: () => {
+                onTableRowClick(record);
+              }
+            })}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
+
+Index.propTypes = {
+  pageSize: PropTypes.number,
+  current: PropTypes.number,
+  total: PropTypes.number,
+  loading: PropTypes.bool,
+  loadData: PropTypes.func,
+  setModuleState: PropTypes.func
+};
+
+const mapStateToProps = (state) => ({ ...state.module.ycomment });
+const mapDispatchToProps = (dispatch) => ({
+  loadData: () => dispatch(loadData()),
+  setModuleState: (payload) => dispatch(setModuleState(payload))
+});
+// const mapDispatchToProps = (dispatch) => ({ actionAll: bindActionCreators(actions, dispatch) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Modal,
   Button,
@@ -12,12 +12,11 @@ import {
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import clsn from 'classnames';
-import { useThrottleFn, useDebounceFn } from 'ahooks';
-import { throttle, debounce } from 'lodash';
+
 import style from './style';
 
 import Editor from '../../../component/editor';
-
+import EditorAddLink from '../editor';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -45,8 +44,7 @@ function getBase64(img, callback) {
 
 const ModalBox = () => {
   const [addSend] = Form.useForm();
-  const [addLink] = Form.useForm();
-  const [visibleLink, setVisibleLink] = useState(false);
+  const editor = useRef();
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [title, setTitle] = useState('消息群推(个人)');
@@ -57,91 +55,19 @@ const ModalBox = () => {
   const [excelFile, setExcelFile] = useState([]);
   const [pdfFile, setPdfFile] = useState([]);
 
-  const [cursorPos, setCursorPos] = useState(null); // 获取到的文本框光标位置
-  const [cursorEle, setCursorEle] = useState(null); // 获取到的光标焦点元素
-
   const showModal = (type) => {
     setTitle(type);
     setVisible(true);
   };
 
-  // 点击添加超链接框确认按钮
-  const handleLinkOk = () => {
-    addLink.validateFields().then((values) => {
-      console.log('link value', values);
-
-      const a = document.createElement('a');
-      a.href = values.link;
-      a.innerHTML = values.text;
-      const target = document.querySelector('#editor');
-
-      if (cursorEle !== null) {
-        if (cursorEle.parentNode.nodeName === 'A') {
-          if (cursorPos === 0) {
-            target.insertBefore(a, cursorEle.parentNode);
-          } else {
-            target.insertBefore(a, cursorEle.parentNode.nextSibling);
-          }
-        } else {
-          const { data } = cursorEle;
-          const strBefore = document.createTextNode(data.slice(0, cursorPos));
-          const strAfter = document.createTextNode(data.slice(cursorPos));
-          cursorEle.parentNode.insertBefore(strAfter, cursorEle.nextSibling);
-          cursorEle.parentNode.insertBefore(a, cursorEle.nextSibling);
-          cursorEle.parentNode.insertBefore(strBefore, cursorEle.nextSibling);
-          cursorEle.remove();
-        }
-      } else {
-        target.appendChild(a);
-      }
-      setVisibleLink(false);
-      addLink.resetFields();
-    })
-      .catch((info) => {
-        console.log('Link Failed:', info);
-      });
-  };
-
-  // 点击输入或者键盘抬起的时候监获取光标在输入框的位置
-  const getAtPos = () => {
-    const obj = {};
-    const x = obj?.x || '1';
-    console.log(x);
-    const anchor = window.getSelection().getRangeAt(0);
-    const target = document.querySelector('#editor');
-    if (target.innerHTML) {
-      setWaring(false);
-    } else {
-      setWaring(true);
-    }
-    const { endContainer, endOffset } = anchor;
-    if (endContainer !== target) {
-      setCursorEle(endContainer);
-      setCursorPos(endOffset);
-    }
-  };
-  // 防抖一下输入框的键盘事件
-  // 单位时间内多次触发只会执行最后一次
-  // const debounced = debounce(getAtPos, 1000); // lodash的防抖函数
-  // const debounced = useDebounceFn(getAtPos, { wait: 1500 }).run; // ahooks的防抖函数
-
-  // 单位时间内多次触发单位时间内会执行一次
-  // const debounced = throttle(getAtPos, 1000); // lodash的节流函数
-  const debounced = useThrottleFn(getAtPos, { wait: 1000 }).run; // ahooks的节流函数
-
-
-  // 点击添加超链接框取消按钮
-  const handleLickCancel = () => {
-    addLink.resetFields();
-    setVisibleLink(false);
-  };
-
   // 群推框确认按钮
   const handleOk = () => {
+    const inner = editor.current.getEditorInner();
+    console.log(inner);
+
     addSend.validateFields().then((values) => {
       const target = document.querySelector('#editor');
       if (!target.innerHTML && type === 'a') {
-        setWaring(true);
         return;
       }
       console.log('send value', values);
@@ -163,26 +89,12 @@ const ModalBox = () => {
   const handleCancel = () => {
     addSend.resetFields();
     setVisible(false);
-    setWaring(false);
     setUploadImg(false);
     setImg(null);
   };
 
-  const onFinishLink = (values) => {
-    console.log('Link values of form: ', values);
-  };
-
-  const onFinish = (values) => {
-    console.log('Send values of form: ', values);
-  };
-
   const radioChange = (e) => {
     setType(e.target.value);
-  };
-
-  // 点击添加文本超链接
-  const insertLink = () => {
-    setVisibleLink(true);
   };
 
   // 点击上传图片
@@ -210,7 +122,6 @@ const ModalBox = () => {
     }
     return isJpgOrPng && isLt2M;
   };
-
 
   // 上传 EXCEL
   const beforeUploadExcel = (file) => new Promise((resolve, reject) => {
@@ -279,7 +190,6 @@ const ModalBox = () => {
           form={addSend}
           name="add_send"
           {...formItemLayout}
-          onFinish={onFinish}
           initialValues={{
             'radio-group': 'a'
           }}
@@ -363,10 +273,9 @@ const ModalBox = () => {
               <>
                 <div className={clsn([style.textContet, { [style.waring]: waring }])}>
                   <span className={style.title}>内容摘要: </span>
-                  <div className={style.editor} id="editor" contentEditable onKeyUp={debounced} onClick={debounced} />
+                  <div className={style.editor}><EditorAddLink ref={editor} /></div>
                   <p className={style.waringP}>请输入内容</p>
                 </div>
-                <div className={style.insert} onClick={insertLink}>插入超链接</div>
               </>
             )
           }
@@ -468,38 +377,6 @@ const ModalBox = () => {
               </>
             )
           }
-        </Form>
-      </Modal>
-      <Modal
-        title="超链接设置"
-        okText="确定"
-        cancelText="取消"
-        visible={visibleLink}
-        onOk={handleLinkOk}
-        onCancel={handleLickCancel}
-        maskClosable={false}
-        destroyOnClose
-      >
-        <Form
-          form={addLink}
-          name="add_link"
-          {...formItemLayout}
-          onFinish={onFinishLink}
-        >
-          <Form.Item
-            name="text"
-            label="显示文字"
-            rules={[{ required: true, message: '请输入内容' }]}
-          >
-            <Input type="text" />
-          </Form.Item>
-          <Form.Item
-            name="link"
-            label="链接地址"
-            rules={[{ required: true, message: '请输入链接地址' }]}
-          >
-            <Input type="text" />
-          </Form.Item>
         </Form>
       </Modal>
     </div>

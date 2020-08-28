@@ -1,6 +1,6 @@
 
 import {
-  takeLatest, put, all, select, call
+  takeLatest, put, all, select, call, delay, cancel, cancelled, fork
 } from 'redux-saga/effects';
 import * as actions from './action';
 import { loadDatas } from '@/axios/api';
@@ -38,13 +38,40 @@ function* loadData() {
 }
 
 function* serach() {
-  const xxx = yield select();
-  console.log(xxx, 'search');
+  try {
+    const xxx = yield select();
+    while (true) {
+      console.log('search');
+      yield delay(1000);
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    if (yield cancelled()) {
+      console.log('task取消了');
+      // yield put(actions.SUBMIT.cancel());
+    }
+  }
 }
 
 function* addSend() {
-  const xxx = yield select();
-  console.log(xxx, 'addsend');
+  try {
+    const xxx = yield select();
+    const task = yield fork(serach);
+    yield cancel(task);
+  } catch (e) {
+    console.error(e);
+  }
+  // while (true) {
+  //   try {
+  //     const xxx = yield select();
+  //     console.log(11);
+  //   } catch (e) {
+  //     console.log(e);
+  //   } finally {
+  //     yield delay(1000);
+  //   }
+  // }
 }
 
 export default function* () {

@@ -75,6 +75,7 @@ module.exports = merge(common, {
       // 压缩JS
       new TerserPlugin({
         sourceMap: false,
+        extractComments: false, // 去除打包出来的.license文件
         terserOptions: {
           compress: {
             warnings: false,

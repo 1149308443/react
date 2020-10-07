@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
@@ -7,7 +8,7 @@ import {
 } from 'antd';
 import style from './style';
 import {
-  loadData, submit, addSend, setModuleState
+  loadData, submit, addSend, setModuleState, watch
 } from './action';
 import ModalBox from './component/modal';
 import ModalRow from './component/modalRow';
@@ -23,12 +24,15 @@ const { RangePicker } = DatePicker;
 @connect(
   (state) => ({
     ...state.module.index
-  }), {
-  setModuleState,
-  loadData: loadData.request,
-  submit: submit.request,
-  addSend: addSend.request
-}
+  }), (dispatch) => ({
+  dispatch,
+  setModuleState: () => dispatch(setModuleState()),
+  loadData: () => dispatch(loadData.request()),
+  submit: () => dispatch(submit.request()),
+  addSend: () => dispatch(addSend.request()),
+  watch: () => dispatch(watch.watch()),
+  unwatch: () => dispatch(watch.unwatch())
+})
 )
 class Index extends PureComponent {
   constructor(props) {
@@ -107,13 +111,23 @@ class Index extends PureComponent {
   }
 
   componentDidMount() {
-    const { loadData, addSend, submit } = this.props;
-    // addSend();
-    setTimeout(() => { addSend(); }, 5000); // 原本预计5s之后取消定时任务
-    submit();
+    const {
+    loadData, addSend, submit, watch
+    } = this.props;
+    console.log(this.props);
+    addSend();
+    // // submit();
     setCookie(' ycas_token', 'wwx');
     loadData();
     // this.polling();// 利用setTimeout递归实现轮询写法
+    watch({
+      code: 1
+    });
+  }
+
+  componentWillUnmount() {
+    const { unwatch } = this.props;
+    unwatch();
   }
 
   polling = () => {
@@ -185,6 +199,7 @@ class Index extends PureComponent {
           handleRowCancel={this.channelRowModal}
           data={rowData}
         />
+        <NavLink to="/demo">demo</NavLink>
         <div className={style.searchBar}>
           <Form
             name="customized_form_controls"
@@ -292,6 +307,8 @@ Index.propTypes = {
   loading: PropTypes.bool,
 
   submit: PropTypes.func,
-  addSend: PropTypes.func
+  addSend: PropTypes.func,
+  unwatch: PropTypes.func,
+  watch: PropTypes.func
 };
 export default Index;

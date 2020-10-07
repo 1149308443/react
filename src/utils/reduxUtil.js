@@ -47,6 +47,17 @@ export const makeAsyncActionCreator = ({ REQUEST, SUCCESS, FAILURE }) => ({
   })
 });
 
+export const makeActionWatchCreator = (actionType) => ({
+  watch: (payload) => ({
+    type: actionType,
+    payload
+  }),
+  unwatch: (payload) => ({
+    type: `un${actionType}`,
+    payload
+  })
+});
+
 /**
  * @description Reducers 生成器
  * @param {object} initialState state初始化默认值

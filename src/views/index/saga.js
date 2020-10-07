@@ -1,6 +1,6 @@
 
 import {
-  takeLatest, put, all, select, call, delay, cancel, cancelled, fork
+  takeLatest, put, all, select, call, delay, cancel, cancelled, fork, race, take
 } from 'redux-saga/effects';
 import * as actions from './action';
 import { loadDatas } from '@/axios/api';
@@ -49,35 +49,62 @@ function* serach() {
   } finally {
     if (yield cancelled()) {
       console.log('task取消了');
-      // yield put(actions.SUBMIT.cancel());
     }
   }
 }
 
 function* addSend() {
   try {
-    const xxx = yield select();
     const task = yield fork(serach);
+    yield delay(5 * 1000);
     yield cancel(task);
   } catch (e) {
     console.error(e);
   }
-  // while (true) {
-  //   try {
-  //     const xxx = yield select();
-  //     console.log(11);
-  //   } catch (e) {
-  //     console.log(e);
-  //   } finally {
-  //     yield delay(1000);
-  //   }
-  // }
+}
+
+function* pollingEffect(watchKey, callback, timer) {
+  // watch
+  const doWatch = function* (action) {
+    try {
+      while (true) {
+        if (callback) {
+          yield callback(action);
+          console.log(11);
+        }
+        yield delay(timer || 1000);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  //
+  let cancelTask = null;
+  while (true) {
+    console.log('watch start');
+    const { watch } = yield race({
+      watch: take(watchKey),
+      unwatch: take(`un${watchKey}`)
+    });
+    console.log('watch start 1');
+    if (cancelTask) {
+      yield cancel(cancelTask);
+    }
+    if (watch) {
+      cancelTask = yield fork(doWatch, watch.payload);
+    }
+  }
 }
 
 export default function* () {
   yield all([
     takeLatest(actions.LOAD_DATA.REQUEST, loadData),
     takeLatest(actions.SUBMIT.REQUEST, serach),
-    takeLatest(actions.ADDSEND.REQUEST, addSend)
+    takeLatest(actions.ADDSEND.REQUEST, addSend),
+    pollingEffect('INDEX_WATCH', function* (...arg) {
+      yield delay(100);
+      // console.log(arg);
+    })
   ]);
 }

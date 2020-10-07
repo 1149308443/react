@@ -1,4 +1,9 @@
-import { makeActionCreator, makeAsyncActionCreator, createRequestTypes } from '@/utils/reduxUtil';
+import {
+ makeActionCreator,
+ makeAsyncActionCreator,
+ createRequestTypes,
+ makeActionWatchCreator
+} from '@/utils/reduxUtil';
 import { moduleStateActionCreator } from '../common/action';
 
 const PREFIX = 'INDEX';
@@ -10,6 +15,7 @@ export const LOAD_DATA = createRequestTypes(`${PREFIX}_LOAD_DATA`);
 export const SUBMIT = createRequestTypes(`${PREFIX}_SUBMIT`);
 
 export const ADDSEND = createRequestTypes(`${PREFIX}_ADDSEND`);
+
 /**
  * action 创建函数
  */
@@ -20,3 +26,9 @@ export const loadData = makeAsyncActionCreator(LOAD_DATA);
 export const submit = makeAsyncActionCreator(SUBMIT);
 
 export const addSend = makeAsyncActionCreator(ADDSEND);
+
+// export const watch = makeActionCreator('watch', 'code');
+
+// export const unwatch = makeActionCreator('unwatch');
+
+export const watch = makeActionWatchCreator(`${PREFIX}_WATCH`);

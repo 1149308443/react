@@ -11,3 +11,5 @@ export { default as setScrollTop } from './setScroll';
 export { default as getUrlQuery } from './getUrlQuery';
 
 export { default as aDownload } from './downloadUtil';
+
+export { default as reduxPolling } from './reduxPolling';

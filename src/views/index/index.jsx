@@ -4,8 +4,9 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
-  Form, Input, Select, Button, Table, DatePicker
+  Form, Input, Select, Button, DatePicker
 } from 'antd';
+import { setCookie } from '@/utils/cookieUtil';
 import style from './style';
 import {
   loadData, submit, addSend, setModuleState, watch
@@ -13,7 +14,6 @@ import {
 import ModalBox from './component/modal';
 import ModalRow from './component/modalRow';
 import TableComponent from './component/table';
-import { setCookie } from '@/utils/cookieUtil';
 
 const { Option } = Select;
 
@@ -30,7 +30,7 @@ const { RangePicker } = DatePicker;
   loadData: () => dispatch(loadData.request()),
   submit: () => dispatch(submit.request()),
   addSend: () => dispatch(addSend.request()),
-  watch: () => dispatch(watch.watch()),
+  watch: (payload) => dispatch(watch.watch(payload)),
   unwatch: () => dispatch(watch.unwatch())
 })
 )
@@ -112,22 +112,14 @@ class Index extends PureComponent {
 
   componentDidMount() {
     const {
-    loadData, addSend, submit, watch
+    loadData, addSend, submit
     } = this.props;
     console.log(this.props);
-    addSend();
+    // addSend();
     // // submit();
     setCookie(' ycas_token', 'wwx');
     loadData();
     // this.polling();// 利用setTimeout递归实现轮询写法
-    watch({
-      code: 1
-    });
-  }
-
-  componentWillUnmount() {
-    const { unwatch } = this.props;
-    unwatch();
   }
 
   polling = () => {
@@ -137,6 +129,18 @@ class Index extends PureComponent {
   getDataPolling = (cb) => {
     console.log(1);
     cb();
+  }
+
+  reduxPolling = () => {
+    const { watch } = this.props;
+    watch({
+      code: 1
+    });
+  }
+
+  stopReduxPolling = () => {
+    const { unwatch } = this.props;
+    unwatch();
   }
 
   // 点击表格分页
@@ -199,7 +203,9 @@ class Index extends PureComponent {
           handleRowCancel={this.channelRowModal}
           data={rowData}
         />
-        <NavLink to="/demo">demo</NavLink>
+        <NavLink to="/demo">去demo页面</NavLink>
+        <span onClick={this.reduxPolling}>reduxPolling</span>
+        <span onClick={this.stopReduxPolling}>stopReduxPolling</span>
         <div className={style.searchBar}>
           <Form
             name="customized_form_controls"

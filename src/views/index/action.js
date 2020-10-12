@@ -2,7 +2,7 @@ import {
  makeActionCreator,
  makeAsyncActionCreator,
  createRequestTypes,
- makeActionWatchCreator
+ makeWatchActionCreator
 } from '@/utils/reduxUtil';
 import { moduleStateActionCreator } from '../common/action';
 
@@ -27,8 +27,6 @@ export const submit = makeAsyncActionCreator(SUBMIT);
 
 export const addSend = makeAsyncActionCreator(ADDSEND);
 
-// export const watch = makeActionCreator('watch', 'code');
+export const WATCH = `${PREFIX}_WATCH`;
 
-// export const unwatch = makeActionCreator('unwatch');
-
-export const watch = makeActionWatchCreator(`${PREFIX}_WATCH`);
+export const watch = makeWatchActionCreator(WATCH);

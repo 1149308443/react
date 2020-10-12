@@ -47,13 +47,16 @@ export const makeAsyncActionCreator = ({ REQUEST, SUCCESS, FAILURE }) => ({
   })
 });
 
-export const makeActionWatchCreator = (actionType) => ({
+/**
+ * 创建 轮询询的action和取消轮询的action函数
+*/
+export const makeWatchActionCreator = (actionType) => ({
   watch: (payload) => ({
     type: actionType,
     payload
   }),
   unwatch: (payload) => ({
-    type: `un${actionType}`,
+    type: `UN_${actionType}`,
     payload
   })
 });

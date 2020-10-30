@@ -4,14 +4,19 @@ import { DatePicker, Button } from 'antd';
 import PropTypes from 'prop-types';
 import Qs from 'qs';
 import HOC from '@views/common/HOC';
+import { apiTest } from '@/axios/api';
 import * as style from './style';
 import MessageList from './component/Context';
 import ContextNew from './component/ContextNew';
 import UseRedux from './component/useRedux';
 import UseMemo from './component/useMemo';
 import StyledComponent from './component/styleComponent';
+import { generateCancelToken } from '@/utils/cancelToken';
 
-const Index = ({ globalData, history }) => {
+let cancelFn;
+const Index = ({
+  globalData, history
+}) => {
   console.log('isLogin:', globalData);
   const message = [{
     color: 'purple', text: 'one'
@@ -35,6 +40,16 @@ const Index = ({ globalData, history }) => {
     });
   };
 
+  const req = async () => {
+    const { cancelToken, cancel } = generateCancelToken();
+    cancelFn = cancel;
+    const data = await apiTest({}, { cancelToken });
+    console.log(data);
+  };
+
+  const stop = () => {
+    cancelFn('quxiao');
+  };
   // 声明一个新的叫做 “count” 的 state 变量
   const [count, setCount] = useState(0);
   // 相当于 componentDidMount 和 componentDidUpdate:
@@ -70,7 +85,8 @@ const Index = ({ globalData, history }) => {
       <UseRedux />
       <StyledComponent />
       <UseMemo />
-
+      <div onClick={req}>send Request</div>
+      <div onClick={stop}>stop Request</div>
     </div>
   );
 };

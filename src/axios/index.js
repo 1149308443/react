@@ -20,15 +20,14 @@ instance.interceptors.request.use((config) => {
 });
 
 // 添加响应拦截器
-instance.interceptors.response.use((response) => {
+instance.interceptors.response.use((response) =>
   // 对响应数据做点什么
-  console.log(response);
-  return response;
-},
+  // console.log(response);
+  response.data,
 (error) => {
-  console.log(error);
+  console.log(error.message);
   // 对响应错误做点什么
-  Promise.reject(error);
+  // Promise.reject(error);
 });
 
 export default instance;
@@ -41,23 +40,12 @@ export default instance;
  * @param config  axios请求配置项
  * @returns {Promise<AxiosResponse>}
  */
-export function getData(urlLink, param, config = {}) {
+export function get(urlLink, param, config = {}) {
   const url = urlLink;
   const data = { ...commonParams, ...param };
-
-  return new Promise((resolve, reject) => {
-    instance.get(url, {
-      params: data,
-      ...config
-    })
-      .then((res) => {
-        console.info('then', res);
-        resolve(res.data);
-      })
-      .catch((error) => {
-        console.info('error', error);
-        reject(error.data);
-      });
+  return instance.get(url, {
+    params: data,
+    ...config
   });
 }
 
@@ -68,7 +56,7 @@ export function getData(urlLink, param, config = {}) {
    * @param config  axios请求配置项
    * @returns {Promise<AxiosResponse>}
    */
-export function postData(urlLink, param, config = {}) {
+export function post(urlLink, param, config = {}) {
   let data = {};
   if (param instanceof FormData) {
     Object.keys(commonParams).forEach((key) => {
@@ -78,13 +66,6 @@ export function postData(urlLink, param, config = {}) {
   } else {
     data = { ...commonParams, ...param };
   }
-  return new Promise((resolve, reject) => {
-    // instance.post(urlLink, qs.stringify(data), config)
-    instance.post(urlLink, data, config)
-      .then((res) => resolve(res.data))
-      .catch((error) => {
-        console.info('postDataerror', error);
-        reject(error);
-      });
-  });
+  // return instance.post(urlLink, qs.stringify(data), config)
+  return instance.post(urlLink, data, config);
 }

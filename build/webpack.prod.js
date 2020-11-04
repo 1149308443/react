@@ -87,6 +87,9 @@ module.exports = merge(common, {
       minChunks: 1, // 分割前必须共享模块的最小块数
       maxAsyncRequests: 5, // 按需加载时的最大并行请求数
       maxInitialRequests: 3, // 入口点处的最大并行请求数
+      // 表示拆分出的chunk的名称连接符。默认为~。如chunk~vendors.js
+      automaticNameDelimiter: '~',
+      // 设置chunk的文件名。默认为true。当为true时，splitChunks基于chunk和cacheGroups的key自动命名。
       name: true,
       cacheGroups: {
         // styles: {

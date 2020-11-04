@@ -13,6 +13,12 @@ const router = [
     requiresAuth: false
   },
   {
+    path: '/def',
+    component: '/classHook',
+    exact: true,
+    requiresAuth: false
+  },
+  {
     path: '/detail',
     component: '/detial',
     requiresAuth: true,

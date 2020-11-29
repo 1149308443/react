@@ -24,9 +24,9 @@ const pollingEffect = function* (watchKey, callback, timer) {
 
     // 这边会注册轮询和关闭轮询两个任务, 当触发其中任意一个action时都会关闭轮询,如果触发的是轮询是会重置进行轮询
     let cancelTask = null;
-    console.log(1);
+    // console.log(1);
     while (true) {
-        console.log(2);
+        // console.log(2);
         const { watch } = yield race({
             watch: take(watchKey),
             unwatch: take(`UN_${watchKey}`)

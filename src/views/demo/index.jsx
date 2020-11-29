@@ -8,6 +8,8 @@ import AddTodo from './containers/AddTodo';
 import VisibleTodoList from './containers/VisibleTodoList';
 import UndoRedo from './containers/UndoRedo';
 import Ahooks from './components/ahooks';
+import SortTable from './components/dragSortantdTable';
+import BaseTable from './components/antdTable';
 import * as style from './style.less';
 
 const obj = {};
@@ -20,16 +22,16 @@ class Index extends Component {
 
     // this.loadTest(); // 本地mockJs请求
     // this.loadTestNode(); // 测试自己的服务端的node请求
-    this.loadRap2(); // 测试直接请求在线的mock,不存在跨域
+    // this.loadRap2(); // 测试直接请求在线的mock,不存在跨域
     this.init().then(() => {
-      console.log(obj);
+      // console.log(obj);
     });
   }
 
   init = async () => {
     await this.promise().then(async (data) => {
       await this.promise2().then((data2) => {
-        console.log(data2);
+        // console.log(data2);
         obj.name = data2.age;
       });
       obj.age = data.age;
@@ -37,7 +39,7 @@ class Index extends Component {
   }
 
   promise = () => new Promise((resolve) => {
-    console.log(1);
+    // console.log(1);
     setTimeout(() => {
       resolve({
         name: '张三',
@@ -47,7 +49,7 @@ class Index extends Component {
   })
 
   promise2 = () => new Promise((resolve) => {
-    console.log(2);
+    // console.log(2);
     setTimeout(() => {
       resolve({
         name: '张三2',
@@ -98,6 +100,10 @@ class Index extends Component {
         <UndoRedo />
         <Ahooks />
         <div>serverless测试</div>
+        <SortTable />
+
+        <h2>基础表格action排序</h2>
+        <BaseTable />
       </div>
     );
   }

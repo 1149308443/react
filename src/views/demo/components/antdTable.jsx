@@ -1,27 +1,9 @@
 import React, { useState } from 'react';
 import { Table, Button } from 'antd';
+import PropTypes from 'prop-types';
 
 let sort = null;
-const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
+let onShow = null;
 
 const columns = [
     {
@@ -38,11 +20,11 @@ const columns = [
     },
     {
         title: 'action',
-        render(text, record) {
+        render(text, record, index) {
             return (
               <>
                 <Button style={{ marginRight: '10px' }} onClick={sort}>up</Button>
-                <Button>down</Button>
+                <Button onClick={() => onShow(record, index)}>查看</Button>
               </>
             );
         }
@@ -50,7 +32,9 @@ const columns = [
   ];
 
 
-const Index = () => {
+const Index = (props) => {
+  const { data, onShowModal } = props;
+  onShow = onShowModal;
     const [arr, setArr] = useState(data);
     sort = () => {
         const newArr = [...arr];
@@ -63,5 +47,9 @@ const Index = () => {
     return (
       <Table columns={columns} dataSource={arr} size="small" />
     );
+};
+Index.propTypes = {
+  data: PropTypes.array,
+  onShowModal: PropTypes.func
 };
 export default Index;

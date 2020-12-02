@@ -10,12 +10,42 @@ import UndoRedo from './containers/UndoRedo';
 import Ahooks from './components/ahooks';
 import SortTable from './components/dragSortantdTable';
 import BaseTable from './components/antdTable';
+import TestEffect from './components/testEffect';
 import * as style from './style.less';
 
 const obj = {};
 
+const tableData = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park'
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park'
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park'
+  }
+];
+
 let start = 0; // 存储按帧执行动画的第一帧
 class Index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      showObj: {}
+    };
+  }
+
   componentDidMount() {
     // const result = method([2, 1], [4, 2], [1, 3]);
     // console.log(result);
@@ -86,7 +116,21 @@ class Index extends Component {
     }
   }
 
+  handleOk = () => {
+    this.setState({
+      visible: false
+    });
+  }
+
+  onShowModal = (record) => {
+    this.setState({
+      visible: true,
+      showObj: record
+    });
+  }
+
   render() {
+    const { visible, showObj } = this.state;
     return (
       <div className={style.container}>
         <DatePicker />
@@ -103,7 +147,8 @@ class Index extends Component {
         <SortTable />
 
         <h2>基础表格action排序</h2>
-        <BaseTable />
+        <BaseTable data={tableData} onShowModal={(record, index) => this.onShowModal(record, index)} />
+        <TestEffect visible={visible} handleOk={this.handleOk} showObj={showObj} />
       </div>
     );
   }

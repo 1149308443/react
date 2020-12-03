@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
+import Name from '@utils/index';
 import style from './style.less';
 import Test from './test';
 
@@ -12,6 +13,13 @@ const Index = (): JSX.Element => {
   useEffect(() => {
     // 使用浏览器的 API 更新页面标题
     document.title = '测试页面';
+
+    const obj = new Name();
+    const newobj: any = {};
+
+    console.log('?', newobj?.name ?? 'nihao');
+
+    console.log(obj?.getData(), obj.apiUrl, '11111111111', obj, Name);
 
     console.log(Test.move());
     return (): void => {

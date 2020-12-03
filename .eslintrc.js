@@ -355,7 +355,7 @@ module.exports = {
     'react/jsx-key': 2, // 在数组或迭代器中验证JSX具有key属性
     'react/jsx-no-bind': 0, // JSX中不允许使用箭头函数和bind
     'react/jsx-no-duplicate-props': 2, // 防止在JSX中重复的props
-    'react/jsx-no-literals': 1, // 防止使用未包装的JSX字符串
+    'react/jsx-no-literals': 0, // 防止使用未包装的JSX字符串
     'react/jsx-no-undef': 2, // 在JSX中禁止未声明的变量
     'react/jsx-pascal-case': 2, // 为用户定义的JSX组件强制使用PascalCase
     'react/jsx-uses-react': 2, // 防止反应被错误地标记为未使用
@@ -388,11 +388,11 @@ module.exports = {
     'import/no-extraneous-dependencies': 2,
     'import/prefer-default-export': 1,
     'import/no-unresolved': [
-      2,
-      { ignore: ['^@src', '^@pages', '^@util', '^@common', '^@components'] }
+      0,
+      { ignore: ['^@src', '^@pages', '^@utils', '^@common', '^@components'] }
     ],
     'import/extensions': [
-      'error',
+      'off',
       'always',
       {
         js: 'never',

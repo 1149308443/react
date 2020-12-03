@@ -48,8 +48,8 @@
       "@/*": [
         "src/*"
       ],
-      "@util/*": [
-        "src/util/*"
+      "@utils/*": [
+        "src/utils/*"
       ],
       "@common/*": [
         "src/common/*"

@@ -13,6 +13,29 @@ import BaseTable from './components/antdTable';
 import TestEffect from './components/testEffect';
 import * as style from './style.less';
 
+import BinaryTree from '@/utils/binaryTree';
+
+const nodes = [8, 3, 6, 4, 9, 11, 2, 5, 7];
+const binaryTree = new BinaryTree(nodes);
+const tree = binaryTree.showTree();
+console.log(tree);
+
+const rrl = binaryTree.mapRang(tree);
+console.log(rrl);
+
+// comonJs模块和ES6模块的区别小实验
+// import ESObj, { count, Add } from '@/config/es6.js';
+// const CommonJSObj = require('@/config/common.js');
+// CommonJSObj.name = 'wwx';
+// CommonJSObj.Add(); // 修改的是一个普通类型
+// CommonJSObj.changeInfo(); // 修改的是一个引用类型
+// console.log('CommonJSObj', CommonJSObj);
+// ESObj.age = '18岁';
+// ESObj.inAdd();
+// console.log('before', count);
+// Add();
+// console.log('ESObj', ESObj, count);
+
 const obj = {};
 
 const tableData = [

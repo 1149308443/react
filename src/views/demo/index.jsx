@@ -13,15 +13,14 @@ import BaseTable from './components/antdTable';
 import TestEffect from './components/testEffect';
 import * as style from './style.less';
 
-import BinaryTree from '@/utils/binaryTree';
-
-const nodes = [8, 3, 6, 4, 9, 11, 2, 5, 7];
-const binaryTree = new BinaryTree(nodes);
-const tree = binaryTree.showTree();
-console.log(tree);
-
-const rrl = binaryTree.mapRang(tree);
-console.log(rrl);
+// 二叉树遍历小实验
+// import BinaryTree from '@/utils/binaryTree';
+// const nodes = [8, 3, 6, 4, 9, 11, 2, 5, 7];
+// const binaryTree = new BinaryTree(nodes);
+// const tree = binaryTree.showTree();
+// console.log('构建的二叉树是:', tree);
+// const mapBinaryTree = binaryTree.mapRang(tree);
+// console.log('二叉树广度遍历', mapBinaryTree);
 
 // comonJs模块和ES6模块的区别小实验
 // import ESObj, { count, Add } from '@/config/es6.js';
@@ -170,7 +169,10 @@ class Index extends Component {
         <SortTable />
 
         <h2>基础表格action排序</h2>
-        <BaseTable data={tableData} onShowModal={(record, index) => this.onShowModal(record, index)} />
+        <BaseTable
+          data={tableData}
+          onShowModal={(record, index) => this.onShowModal(record, index)}
+        />
         <TestEffect visible={visible} handleOk={this.handleOk} showObj={showObj} />
       </div>
     );

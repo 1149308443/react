@@ -35,7 +35,7 @@ class BinaryTree {
     };
 
     _insertNode = (oldNode, newNode) => {
-        if (newNode.key < oldNode.key) { // 小于的时候存放左子树
+        if (newNode.key < oldNode.key) { // 小于的时候存放节点左子树(生成规则)
             if (oldNode.right === null) {
                 // 判断左节点是否为空
                 oldNode.right = newNode;
@@ -90,7 +90,14 @@ class BinaryTree {
 
     // 二叉树的广度优先遍历
     mapRang(tree) {
+        // 输出根节点(保存到要输出的数组)
         if (tree.key && this.mapTree.length === 0) this.mapTree.push(tree.key);
+        // 当有子树的情况下,输出子树(保存到要输出的数组)
+        // 判断队列是否为空
+        // 如果队列不为空, 把子树存放到队列末尾, 取队列第一个进行递归
+        // 如果队列不为空, 左右子树都不存在, 取队列第一个进行递归
+        // 如果队列为空, 且左右子树都存在, 将右子树存放队列, 递归左子树
+        // 如果队列为空, 只存在左子树或者右子树, 递归 左/右子树
         if (tree.right && tree.left) {
             this.mapTree.push(tree.right.key);
             this.mapTree.push(tree.left.key);
@@ -108,6 +115,7 @@ class BinaryTree {
          if (tree.right && !tree.left) {
             this.mapTree.push(tree.right.key);
             if (this.empty.length > 0) {
+                this.empty.push(tree.right);
                 const obj = this.empty.shift();
                 this.mapRang(obj);
             } else {
@@ -117,6 +125,7 @@ class BinaryTree {
         if (!tree.right && tree.left) {
             this.mapTree.push(tree.left.key);
             if (this.empty.length > 0) {
+                this.empty.push(tree.left);
                 const obj = this.empty.shift();
                 this.mapRang(obj);
             } else {

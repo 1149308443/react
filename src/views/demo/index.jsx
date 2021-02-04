@@ -12,6 +12,7 @@ import UseRedux from './component/useRedux';
 import UseMemo from './component/useMemo';
 import StyledComponent from './component/styleComponent';
 import { generateCancelToken } from '@/utils/cancelToken';
+import './component/test-class';
 
 let cancelFn;
 const Index = ({
@@ -56,7 +57,7 @@ const Index = ({
   useEffect(() => {
     // 使用浏览器的 API 更新页面标题
     document.title = '测试页面';
-    console.log('componentDidmount');
+    // console.log('componentDidmount');
 
     return () => {
       console.log('componentWillUnmount');

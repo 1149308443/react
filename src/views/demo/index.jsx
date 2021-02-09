@@ -11,6 +11,7 @@ import ContextNew from './component/ContextNew';
 import UseRedux from './component/useRedux';
 import UseMemo from './component/useMemo';
 import StyledComponent from './component/styleComponent';
+import ReactKey from './component/ReactKey';
 import { generateCancelToken } from '@/utils/cancelToken';
 import './component/test-class';
 
@@ -88,6 +89,8 @@ const Index = ({
       <UseMemo />
       <div onClick={req}>send Request</div>
       <div onClick={stop}>stop Request</div>
+
+      <ReactKey />
     </div>
   );
 };

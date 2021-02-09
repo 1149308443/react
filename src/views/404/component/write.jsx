@@ -27,6 +27,10 @@ const TypeWriter = () => {
       output: output.current
     });
     typing.start();
+    return () => {
+      // 组件卸载的时候关闭定时器
+      clearTimeout(timer);
+    };
   }, []);
   // useEffect(() => {
   //   let i = 1;

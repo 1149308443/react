@@ -57,7 +57,8 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn", // 检查 effect 的依赖
     "max-len":"off",
     "react/jsx-props-no-spreading":"off",
-    'import/no-unresolved': 'off',
+    'import/no-unresolved': 'off',    
+    "no-unused-expressions": "off",//禁止无用的表达式
     'import/extensions': [
       'error',
       'always',

@@ -17,3 +17,61 @@
         background: yellow;
     }
 }
+
+
+// 三角形css组件的样式
+.cssDemo{
+    .triangle{
+        display: flex;
+        // margin-top: 20px;
+        .triangleBorder{
+            border: 50px solid yellowgreen;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: yellowgreen;
+        }
+        .linearGradient{
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg,  deeppink, deeppink 50%, yellowgreen 50%, yellowgreen 100%);
+        }
+        .font{
+            width: 100px;
+            line-height: 100px;
+            font-size: 100px;
+            color: deeppink;
+        }
+        .out{
+            width: 141px;
+            height: 100px;
+            position: relative;
+            overflow: hidden;
+            .inner{
+                width: 100px;
+                height: 100px;
+                position: absolute;
+                background-color: red;
+                transform-origin: left bottom;
+                transform: rotate(45deg);
+            }
+        }
+        .clipPath{
+            width: 100px;
+            height: 100px;
+            background: chocolate;
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+        }
+    }
+
+    // .sequl{
+    //     width: 200px;
+    //     height: 200px;
+    //     .sequlInner{
+    //         width: 50%;
+    //         padding-top: 50%;
+    //         background: chocolate;
+    //     }
+    // }
+}
+

@@ -12,14 +12,28 @@ import UseRedux from './component/useRedux';
 import UseMemo from './component/useMemo';
 import StyledComponent from './component/styleComponent';
 import ReactKey from './component/ReactKey';
+import CssDemo from './component/cssTest';
 import { generateCancelToken } from '@/utils/cancelToken';
 import './component/test-class';
 
 let cancelFn;
 const Index = ({
-  globalData, history
+  // globalData,
+  history
 }) => {
-  console.log('isLogin:', globalData);
+  // console.log('isLogin:', globalData);
+  const pattern = /\{\{\s*(.*?)\s*\}\}/g;
+  const data = {
+    name: '李田所',
+    age: 24,
+    job: '学生'
+  };
+  const text = '我是{{name}}，今年{{ age }}岁，是个{{ job}}。';
+  const renderResult = text.replace(pattern, (match, p1, offset, string) => {
+    console.log(match, p1, offset, string);
+    return data[p1];
+  });
+  console.log(renderResult);
   const message = [{
     color: 'purple', text: 'one'
   }];
@@ -50,7 +64,7 @@ const Index = ({
   };
 
   const stop = () => {
-    cancelFn('quxiao');
+    cancelFn && cancelFn('quxiao');
   };
   // 声明一个新的叫做 “count” 的 state 变量
   const [count, setCount] = useState(0);
@@ -91,6 +105,7 @@ const Index = ({
       <div onClick={stop}>stop Request</div>
 
       <ReactKey />
+      <CssDemo />
     </div>
   );
 };

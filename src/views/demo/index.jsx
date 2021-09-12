@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
-import * as style from './style.scss';
+import * as style from './style.less';
 import MessageList from './component/Context';
 import ContextNew from './component/ContextNew';
 import UseRedux from './component/useRedux';

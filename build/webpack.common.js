@@ -42,7 +42,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.scss', '.html'],
+    extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.less', '.html'],
     alias: {
       '@': path.resolve(__dirname, '../src')
     }

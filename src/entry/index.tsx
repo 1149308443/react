@@ -4,7 +4,7 @@ import { Provider } from 'mobx-react';
 import Router from '../routes';
 import store from '../store';
 
-const renderDom = () => {
+const renderDom = (): void => {
   ReactDom.render(
     <Provider store={store}>
       <Router />

@@ -3,7 +3,6 @@ import Detail from '../views/detial';
 import NoFind from '../views/404';
 import Mobx from '../views/mobx';
 
-
 const router = [
   {
     path: '/',

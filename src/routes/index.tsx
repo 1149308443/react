@@ -5,8 +5,7 @@ import {
 import history from '../utils/historyUtil';
 import router from './router';
 
-
-const renderRoute = (routerArr) => routerArr.map((el, index) => {
+const renderRoute = (routerArr: any): JSX.Element => routerArr.map((el: any, index: number) => {
   if (el.children) {
     return (
       <Route
@@ -30,7 +29,7 @@ const renderRoute = (routerArr) => routerArr.map((el, index) => {
   );
 });
 
-const BasicRoute = () => (
+const BasicRoute = (): JSX.Element => (
   <BrowserRouter>
     <Router history={history}>
       <Switch>

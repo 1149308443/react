@@ -7,7 +7,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    index: '@/entry/index.js'
+    index: '@src/entry/index'
   },
   output: {
     filename: '[name].bundle.js',
@@ -42,9 +42,11 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.vue', '.json', '.css', '.less', '.html'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.vue', '.json', '.css', '.less', '.html'],
     alias: {
-      '@': path.resolve(__dirname, '../src')
+      '@src': path.resolve(__dirname, '../src'),
+      '@views': path.resolve(__dirname, '../src/views'),
+      '@utils': path.resolve(__dirname, '../src/utils'),
     }
   },
   // 防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)
@@ -69,6 +71,13 @@ module.exports = {
         //     '@babel/transform-runtime'
         //   ]
         // }
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader'
+        }
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,

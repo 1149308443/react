@@ -1,11 +1,8 @@
 import React, { PureComponent } from 'react';
 import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 export default class Detial extends PureComponent {
-  componentDidMount() {}
-
-  render() {
+  render(): JSX.Element {
     const { children } = this.props;
     return (
       <div>
@@ -19,6 +16,3 @@ export default class Detial extends PureComponent {
     );
   }
 }
-Detial.propTypes = {
-  children: PropTypes.node
-};

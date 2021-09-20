@@ -1,7 +1,8 @@
 
 import RootStore from './rootStore';
+import type {StoreType} from './typings';
 
-const store = {
+const store: StoreType = {
   RootStore
 };
 

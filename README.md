@@ -1,7 +1,7 @@
 # react
 
 ## webpack配置
-搭建webpack基础配置详情见 https://github.com/1149308443/webpack
+搭建webpack基础配置详情见 [这里](#https://github.com/1149308443/webpack)
 
 ## 配置eslint
 1. 安装 npm i eslint -D
@@ -61,4 +61,17 @@ npm i @umijs/fabric -D
 ]
 ```
 5. 修改所有的.jsx, .js文件为.tsx, .ts文件
+
+## Jest单元测试
+1. 可以参照[火生](#https://github.com/1512751361/react-cli/blob/master/doc/JEST.md)的写法 
+2. package.json新增如下配置
+```
+ "test": "jest --watchAll",
+ "test:cov": "jest --coverage"
+
+```
+
+## git 提交规范
+
+## Prettier代码格式化规范
 

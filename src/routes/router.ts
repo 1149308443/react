@@ -2,6 +2,7 @@ import Demo from '../views/demo';
 import Detail from '../views/detial';
 import NoFind from '../views/404';
 import Mobx from '../views/mobx';
+import Skeleton from '../views/skeleton';
 
 const router = [
   {
@@ -21,6 +22,11 @@ const router = [
       path: '/detail/nofind',
       component: NoFind
     }]
-  }
+  },
+  {
+    path: '/skeleton',
+    component: Skeleton,
+    exact: true
+  },
 ];
 export default router;

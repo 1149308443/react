@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`get child component AddTodo length 1`] = `"<div>111</div>"`;

@@ -150,7 +150,13 @@ module.exports = {
   // snapshotSerializers: [],
 
   // 将用于测试的测试环境
-  // testEnvironment: "jest-environment-jsdom",
+  // 将用于测试的测试环境
+  testEnvironment: "jest-environment-jsdom",
+  // setupFilesAfterEnv: ['jest-enzyme'],
+  // testEnvironment: 'enzyme',
+  // testEnvironmentOptions: {
+  //   enzymeAdapter: 'react16',
+  // },
 
   // 将传递给测试环境的选项
   // testEnvironmentOptions: {},

@@ -1,39 +1,38 @@
-import React from 'react';
-import {
-  BrowserRouter, Route, Switch, Router
-} from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { BrowserRouter, Route, Switch, Router } from 'react-router-dom';
 import history from '../utils/historyUtil';
+import type { RouterType } from './router';
 import router from './router';
+import loadable from './loadable';
 
-const renderRoute = (routerArr: any): JSX.Element => routerArr.map((el: any, index: number) => {
-  if (el.children) {
+const renderRoute = (routerArr: any): JSX.Element =>
+  routerArr.map((el: RouterType, index: number) => {
+    const Com = loadable(el.componentPath)
+    if (el.children) {
+      return (
+        <Route
+          key={index.toString()}
+          path={el.path}
+          component={() => <Com>{renderRoute(el.children)}</Com>}
+        />
+      )
+    }
     return (
       <Route
         key={index.toString()}
+        exact={el.exact}
         path={el.path}
-        component={() => (
-          <el.component>
-            {renderRoute(el.children)}
-          </el.component>
-        )}
+        component={Com}
       />
-    );
-  }
-  return (
-    <Route
-      key={index.toString()}
-      exact={el.exact}
-      path={el.path}
-      component={el.component}
-    />
-  );
-});
+    )
+  })
 
 const BasicRoute = (): JSX.Element => (
   <BrowserRouter>
     <Router history={history}>
-      <Switch>
-        {/* <Route exact path="/" component={Demo} />
+      <Suspense fallback={<>loading</>}>
+        <Switch>
+          {/* <Route exact path="/" component={Demo} />
         <Route
           path="/detail"
           component={() => (
@@ -42,10 +41,11 @@ const BasicRoute = (): JSX.Element => (
             </Detail>
           )}
         /> */}
-        {renderRoute(router)}
-      </Switch>
+          {renderRoute(router)}
+        </Switch>
+      </Suspense>
     </Router>
   </BrowserRouter>
-);
+)
 
-export default BasicRoute;
+export default BasicRoute

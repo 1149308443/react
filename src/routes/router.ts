@@ -1,31 +1,37 @@
-import Demo from '../views/demo';
-import Detail from '../views/detial';
-import NoFind from '../views/404';
-import Mobx from '../views/mobx';
-import Skeleton from '../views/skeleton';
+// componentPath 是组件相对于 views文件夹的位置 需要加上 /
 
-const router = [
+export interface routerItem {
+  path: string
+  componentPath: string
+  exact?: boolean
+}
+
+export interface RouterType  extends routerItem{
+  children?: routerItem[]
+}
+
+const router: RouterType[] = [
   {
     path: '/',
-    component: Demo,
+    componentPath:'/demo',
     exact: true
   },
   {
     path: '/mobx',
-    component: Mobx,
+    componentPath:'/mobx',
     exact: true
   },
   {
     path: '/detail',
-    component: Detail,
+    componentPath:'/detail',
     children: [{
       path: '/detail/nofind',
-      component: NoFind
+      componentPath:'/nofind',
     }]
   },
   {
     path: '/skeleton',
-    component: Skeleton,
+    componentPath:'/skeleton',
     exact: true
   },
 ];

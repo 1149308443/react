@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { BrowserRouter, Route, Switch, Router } from 'react-router-dom';
 import history from '../utils/historyUtil';
 import type { RouterType } from './router';

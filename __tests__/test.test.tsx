@@ -1,4 +1,3 @@
-import React from 'react';
 import NoFound from '@src/views/404/';
 import { mount } from 'enzyme';
 

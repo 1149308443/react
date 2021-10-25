@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import { observer, inject } from 'mobx-react';
 import { toJS } from 'mobx';
 import type {StoreType} from '@src/store/typings'

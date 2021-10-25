@@ -1,5 +1,4 @@
 
-import React from 'react'
 // https://hub.fastgit.org//danilowoz/react-content-loader
 import ContentLoader from 'react-content-loader'
 import Style from './style.less'

@@ -26,7 +26,7 @@ const router: RouterType[] = [
     componentPath:'/detail',
     children: [{
       path: '/detail/nofind',
-      componentPath:'/nofind',
+      componentPath:'/404',
     }]
   },
   {

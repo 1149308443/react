@@ -26,6 +26,7 @@ const rules = {
 
   // any类型时的警告报错
   '@typescript-eslint/no-explicit-any': 1,
+  // semi: [2, 'always'],
   // 只要求自定义的方法设置返回类型
   '@typescript-eslint/explicit-function-return-type': [
     2,
@@ -34,7 +35,9 @@ const rules = {
     }
   ],
   // 关闭接口不能以 I 为前缀
-  '@typescript-eslint/interface-name-prefix': 0
+  '@typescript-eslint/interface-name-prefix': 0,
+  "react/jsx-uses-react": "off",
+  "react/react-in-jsx-scope": "off"
 
   /// ///////////
   // TS.相关 end //

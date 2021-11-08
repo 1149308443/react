@@ -16,7 +16,13 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([path.resolve(__dirname, '../static/**/*')]),
+    new CopyWebpackPlugin({
+      patterns:[
+        {
+          from: path.resolve(__dirname, '../static/**/*')
+        }
+      ]
+    }),
     new HtmlWebpackPlugin({
       title: 'react',
       template: './src/entry/index.html',
@@ -38,7 +44,6 @@ module.exports = {
       ],
       publicPath: '/static'
     }),
-    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {

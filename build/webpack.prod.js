@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 // const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 // 主要用于提取css
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // 主要用于css压缩、去重
@@ -33,7 +33,14 @@ module.exports = merge(common, {
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader', // translates CSS into CommonJS
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]_[sha1:hash:base64:5]'
+              }
+            }
+          }, // translates CSS into CommonJS, // translates CSS into CommonJS
           {
             loader: 'postcss-loader',
             options: {
@@ -58,9 +65,7 @@ module.exports = merge(common, {
         canPrint: true // 表示插件能够在console中打印信息，默认值是true
       }),
       // 压缩JS
-      new TerserPlugin({
-        sourceMap: false
-      })
+      new TerserPlugin()
     ],
     // 代码分离
     splitChunks: {
@@ -70,7 +75,6 @@ module.exports = merge(common, {
       minChunks: 1, // 分割前必须共享模块的最小块数
       maxAsyncRequests: 5, // 按需加载时的最大并行请求数
       maxInitialRequests: 3, // 入口点处的最大并行请求数
-      name: true,
       cacheGroups: {
         styles: {
           name: 'chunk-style',
@@ -88,10 +92,21 @@ module.exports = merge(common, {
           test: /[\\/]node_modules[\\/](antd)[\\/]/,
           priority: 10 // 权重
         },
+        '@ant-design': {
+          name: 'js/chunk-@ant-design',
+          test: /[\\/]node_modules[\\/](@ant-design)[\\/]/,
+          priority: 10 // 权重
+        },
+        moment: {
+          name: 'js/chunk-moment',
+          test: /[\\/]node_modules[\\/](moment)[\\/]/,
+          priority: 10 // 权重
+        },
         // 默认配置
-        vendors: {
+        defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10 // 权重
+          priority: -10,
+          reuseExistingChunk: true,
         },
         default: {
           minChunks: 2,

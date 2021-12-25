@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DatePicker, Button } from 'antd';
 import style from './style.less';
+import MapMathod from './components/map'
 
 const Index = (): JSX.Element => {
   // 声明一个新的叫做 “count” 的 state 变量
@@ -15,6 +16,7 @@ const Index = (): JSX.Element => {
       console.log('componentWillUnmount');
     };
   }, []);
+
   return (
     <div className={style.container}>
       <DatePicker />
@@ -27,7 +29,7 @@ const Index = (): JSX.Element => {
       <button onClick={() => setCount(count + 1)}>
         Click me
       </button>
-
+      <MapMathod />
     </div>
   );
 };

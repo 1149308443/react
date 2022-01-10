@@ -13,7 +13,7 @@ const loadCom = (component: string):  any => {
     //   },3000)
     // })
     // );
-    return lazy(()=>import(`../views${component}`))
+    return lazy(()=>import(`../views${component}`));
   }
   return component;
 };

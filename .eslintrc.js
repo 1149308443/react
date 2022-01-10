@@ -15,6 +15,10 @@ const rules = {
   'func-names': 0,
   // 不禁用console
   'no-console': 1,
+  'import/no-unresolved': 0,
+  'react/button-has-type': 0,
+  'no-multiple-empty-lines': 2,
+  semi: 2,
 
   /// ///////////
   // 代码风格及规范限制.相关 end //
@@ -72,15 +76,5 @@ module.exports = {
   },
   // 第三方插件
   plugins: ['react', '@typescript-eslint'],
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config:
-          process.env.NODE_ENV === 'production'
-            ? './build/webpack.prod.js'
-            : './build/webpack.dev.js'
-      }
-    },
-    'import/ignore': ['node_modules']
-  }
+  
 };

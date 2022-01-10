@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import { observer, inject } from 'mobx-react';
 import { toJS } from 'mobx';
-import type {StoreType} from '@src/store/typings'
+import type {StoreType} from '@src/store/typings';
 
 interface MobxPropsType  {
   store: StoreType
@@ -11,11 +11,11 @@ interface MobxPropsType  {
 class Mobx extends PureComponent<MobxPropsType> {
 constructor(props: MobxPropsType){
   super(props);
-  this.state = {}
+  this.state = {};
 }
 
 clickBtn = (): void =>{
-  this.props.store.RootStore.add()
+  this.props.store.RootStore.add();
 }
 
 render(): JSX.Element {

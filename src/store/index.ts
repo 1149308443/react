@@ -1,4 +1,3 @@
-
 import RootStore from './rootStore';
 import type {StoreType} from './typings';
 

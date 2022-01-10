@@ -1,9 +1,9 @@
 import ReactDom from 'react-dom';
 import { Provider } from 'mobx-react';
-import Router from '../routes';
-import store from '../store';
 import ZHCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd';
+import Router from '../routes';
+import store from '../store';
 
 const renderDom = (): void => {
   ReactDom.render(

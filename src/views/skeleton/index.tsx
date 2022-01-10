@@ -1,7 +1,7 @@
-
+// eslint-disable-next-line import/no-extraneous-dependencies
+import ContentLoader from 'react-content-loader';
+import Style from './style.less';
 // https://hub.fastgit.org//danilowoz/react-content-loader
-import ContentLoader from 'react-content-loader'
-import Style from './style.less'
 
 const Skeleton = (): JSX.Element => {
   // const MyLoader = (): JSX.Element => <ContentLoader />
@@ -15,12 +15,11 @@ const Skeleton = (): JSX.Element => {
         <rect x="80" y="40" rx="3" ry="3" width="250" height="10" />
       </ContentLoader>
 
-
       <div className={Style.skeleton}>
         <div className={Style.progress} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Skeleton
+export default Skeleton;

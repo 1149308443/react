@@ -10,7 +10,7 @@ class RootStore {
     @computed // 当age发生改变是，触发函数
     get douleAge(): number {
       // 此this值得是class类的实例
-      console.log('age改变了')
+      console.log('age改变了');
       return this.age + 2;
     }
 
@@ -23,4 +23,4 @@ class RootStore {
 
 const rootStore: RootStoreType = new RootStore();
 
-export default rootStore
+export default rootStore;

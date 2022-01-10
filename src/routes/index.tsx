@@ -7,7 +7,7 @@ import loadable from './loadable';
 
 const renderRoute = (routerArr: any): JSX.Element =>
   routerArr.map((el: RouterType, index: number) => {
-    const Com = loadable(el.componentPath)
+    const Com = loadable(el.componentPath);
     if (el.children) {
       return (
         <Route
@@ -15,7 +15,7 @@ const renderRoute = (routerArr: any): JSX.Element =>
           path={el.path}
           component={() => <Com>{renderRoute(el.children)}</Com>}
         />
-      )
+      );
     }
     return (
       <Route
@@ -24,8 +24,8 @@ const renderRoute = (routerArr: any): JSX.Element =>
         path={el.path}
         component={Com}
       />
-    )
-  })
+    );
+  });
 
 const BasicRoute = (): JSX.Element => (
   <BrowserRouter>
@@ -46,6 +46,6 @@ const BasicRoute = (): JSX.Element => (
       </Suspense>
     </Router>
   </BrowserRouter>
-)
+);
 
-export default BasicRoute
+export default BasicRoute;

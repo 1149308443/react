@@ -1,3 +1,3 @@
-export { default as createBrowserHistory } from './historyUtil';
+export { history, historyUtil } from './history';
 
 export { default as service } from './axiosUtil';

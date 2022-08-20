@@ -58,6 +58,7 @@
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.5.1",
     "file-loader": "^4.2.0",
+    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "html-webpack-tags-plugin": "^3.0.1",
     "jest": "^27.2.0",
@@ -90,7 +91,9 @@
     "start": "npm run build && http-server dist",
     "test": "jest --watchAll",
     "test:cov": "jest --coverage",
-    "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx src/"
+    "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d dist"
   },
   "author": "wuweixing",
   "license": "ISC"

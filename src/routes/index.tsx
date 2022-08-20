@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
-import { BrowserRouter, Route, Switch, Router } from 'react-router-dom';
-import history from '../utils/historyUtil';
+import { HashRouter, Route, Switch, Router } from 'react-router-dom';
+import { history } from '../utils';
 import type { RouterType } from './router';
 import router from './router';
 import loadable from './loadable';
@@ -28,7 +28,7 @@ const renderRoute = (routerArr: any): JSX.Element =>
   });
 
 const BasicRoute = (): JSX.Element => (
-  <BrowserRouter>
+  <HashRouter>
     <Router history={history}>
       <Suspense fallback={<>loading</>}>
         <Switch>
@@ -45,7 +45,7 @@ const BasicRoute = (): JSX.Element => (
         </Switch>
       </Suspense>
     </Router>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 export default BasicRoute;

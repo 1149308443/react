@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
@@ -11,8 +12,8 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/'
+    path: path.resolve(__dirname, '../dist')
+    // publicPath: '/'
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -42,7 +43,7 @@ module.exports = {
       tags: [
         'css/normalize.css'
       ],
-      publicPath: '/static'
+      publicPath: './static'
     }),
     new webpack.HotModuleReplacementPlugin()
   ],

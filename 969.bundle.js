@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkreact_cli=self.webpackChunkreact_cli||[]).push([[969],{4969:(e,s,l)=>{l.r(s),l.d(s,{default:()=>t});const t={skeleton:"skeleton_47VGh",progress:"progress_2TjVV","ant-skeleton-loading":"ant-skeleton-loading_cA25O"};var o=l(4783)(e.id,{locals:!0});e.hot.dispose(o)}}]);

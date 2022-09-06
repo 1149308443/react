@@ -36,5 +36,10 @@ const router: RouterType[] = [
     componentPath: '/skeleton',
     exact: true,
   },
+  {
+    path: '/funMobx',
+    componentPath: '/funMobx',
+    exact: true,
+  },
 ];
 export default router;

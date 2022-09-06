@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import { NavLink } from 'react-router-dom';
 
-export default class Detial extends PureComponent {
+export default class Detial extends PureComponent<any> {
   render(): JSX.Element {
     const { children } = this.props;
     return (

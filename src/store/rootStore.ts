@@ -15,7 +15,7 @@ class RootStore {
     }
 
     @action // 用户操作,action唯一可以更改state。数据请求直接在action中书写
-    add(): void {
+    add = (): void => {
       // 数据更改
       this.age += 1;
     }
